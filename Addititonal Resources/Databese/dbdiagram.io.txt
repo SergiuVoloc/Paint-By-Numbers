@@ -1,0 +1,139 @@
+Table users as U {
+  id long  [pk, increment]
+  email varchar [unique]
+  full_name varchar
+  date_of_birth date
+  phone varchar(30)
+  password varchar
+  created_at timestamp
+  deleted boolean
+}
+
+Table address as A {
+   id long [pk, increment]
+   user_id long [ref: > U.id]
+   full_name varchar
+   address1 varchar
+   address2 varchar
+   postcode varchar
+   phone varchar(30)
+}
+
+Table basket_item {
+  id long [pk, increment]
+  user_id long [ref: > U.id]
+  product_details_id long [ref: > product_details.id]
+  saved_for_later boolean
+  quantity int
+  time_added datetime
+}
+
+Table orders as O {
+  id long [pk, increment]
+  user_id long [ref: > U.id]
+  address_id long [ref: > A.id]
+  discount_id long [ref: > D.id]
+  status_id long [ref: > order_status.id]
+  created_at datetime
+  modified datetime
+  shipping_cost float
+  amount float
+  order_note varchar
+}
+
+Table order_status {
+   id long [pk, increment]
+   name varchar
+}
+
+Table order_item as OI {
+   id long [pk, increment]
+   order_id long [ref: > O.id]
+   product_details_id long [ref: > product_details.id]
+   quantity int
+}
+
+Table discounts as D {
+  id long [pk, increment]
+  name varchar
+  discount float
+  created_at datetime
+  valid datetime
+}
+
+Table products as P {
+  id long [pk, increment]
+  name varchar
+  description varchar
+  price float
+  category_id long [ref: > PC.id]
+}
+
+Table product_details {
+  id long [pk, increment]
+  size varchar
+  product_id long [ref: > P.id]
+}
+
+Table categories as PC {
+  id long [pk, increment]
+  name varchar
+}
+
+Table tags {
+  id long [pk, increment]
+  product_id long [ref: > P.id]
+  name varchar
+}
+
+Table product_photos {
+  id long [pk, increment]
+  product_id long [ref: > P.id]
+  name varchar
+  photo byte
+}
+
+
+Table file_storage {
+   id long [pk, increment]
+   product_id long [ref: > P.id]
+   name varchar
+   value varchar
+}
+
+
+Table product_details_attribute_values {
+  id long [pk, increment]
+  product_details_id long [ref: > product_details.id]
+  attribute_values_id long [ref: > attribute_values.id] 
+}
+
+
+
+
+
+// The simplest implementation of EAV may have just three tables: entity, attribute and value.
+Table entities {
+  id long [pk, increment]
+  name varchar
+}
+
+Table attributes {
+  id long [pk, increment]
+  name varchar
+}
+
+Table attribute_values {
+  id long [pk, increment]
+  attribute_id long [ref: > attributes.id]
+  entity_id long [ref: > entities.id]
+  value varchar
+}
+
+
+
+
+
+
+
+
