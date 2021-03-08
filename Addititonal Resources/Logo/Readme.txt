@@ -4,6 +4,8 @@ https://onlinelogomaker.com
 Fonts used in this project:
 
 https://assets.onlinelogomaker.com/fonts/FFF_Tusj.ttf
+https://assets.onlinelogomaker.com/fonts/FFF_Tusj.ttf
+https://assets.onlinelogomaker.com/fonts/FFF_Tusj.ttf
 
 
 Instructions to install fonts on windows: 

@@ -90,7 +90,7 @@ Table product_photos {
   id long [pk, increment]
   product_id long [ref: > P.id]
   name varchar
-  photo byte
+  photo blob
 }
 
 

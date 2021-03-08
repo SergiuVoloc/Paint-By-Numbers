@@ -38,12 +38,12 @@ public class User {
     }
 
 
-    public void setId(Long id) {
-        this.id = id;
+    public long getId() {
+        return id;
     }
 
-    public Long getId() {
-        return id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -94,11 +94,22 @@ public class User {
         this.created_at = created_at;
     }
 
-    public Boolean getDeleted() {
+    public boolean isDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+
+
 }

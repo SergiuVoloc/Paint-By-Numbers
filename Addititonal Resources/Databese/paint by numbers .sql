@@ -1,5 +1,5 @@
 CREATE TABLE `users` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `email` varchar(255) UNIQUE,
   `full_name` varchar(255),
   `date_of_birth` date,
@@ -10,8 +10,8 @@ CREATE TABLE `users` (
 );
 
 CREATE TABLE `address` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `user_id` long,
   `full_name` varchar(255),
   `address1` varchar(255),
   `address2` varchar(255),
@@ -20,20 +20,20 @@ CREATE TABLE `address` (
 );
 
 CREATE TABLE `basket_item` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int,
-  `product_details_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `user_id` long,
+  `product_details_id` long,
   `saved_for_later` boolean,
   `quantity` int,
   `time_added` datetime
 );
 
 CREATE TABLE `orders` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int,
-  `address_id` int,
-  `discount_id` int,
-  `status_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `user_id` long,
+  `address_id` long,
+  `discount_id` long,
+  `status_id` long,
   `created_at` datetime,
   `modified` datetime,
   `shipping_cost` float,
@@ -42,19 +42,19 @@ CREATE TABLE `orders` (
 );
 
 CREATE TABLE `order_status` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255)
 );
 
 CREATE TABLE `order_item` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `order_id` int,
-  `product_details_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `order_id` long,
+  `product_details_id` long,
   `quantity` int
 );
 
-CREATE TABLE `discount` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE `discounts` (
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
   `discount` float,
   `created_at` datetime,
@@ -62,64 +62,64 @@ CREATE TABLE `discount` (
 );
 
 CREATE TABLE `products` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
   `description` varchar(255),
   `price` float,
-  `category_id` int
+  `category_id` long
 );
 
 CREATE TABLE `product_details` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `size` varchar(255),
-  `product_id` int
+  `product_id` long
 );
 
 CREATE TABLE `categories` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255)
 );
 
 CREATE TABLE `tags` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `product_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `product_id` long,
   `name` varchar(255)
 );
 
 CREATE TABLE `product_photos` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `product_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `product_id` long,
   `name` varchar(255),
-  `photo` byte
+  `photo` blob
 );
 
 CREATE TABLE `file_storage` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `product_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `product_id` long,
   `name` varchar(255),
   `value` varchar(255)
 );
 
 CREATE TABLE `product_details_attribute_values` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `product_details_id` int,
-  `attribute_values_id` int
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `product_details_id` long,
+  `attribute_values_id` long
 );
 
 CREATE TABLE `entities` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255)
 );
 
 CREATE TABLE `attributes` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255)
 );
 
 CREATE TABLE `attribute_values` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `attribute_id` int,
-  `entity_id` int,
+  `id` long PRIMARY KEY AUTO_INCREMENT,
+  `attribute_id` long,
+  `entity_id` long,
   `value` varchar(255)
 );
 
@@ -133,7 +133,7 @@ ALTER TABLE `orders` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 ALTER TABLE `orders` ADD FOREIGN KEY (`address_id`) REFERENCES `address` (`id`);
 
-ALTER TABLE `orders` ADD FOREIGN KEY (`discount_id`) REFERENCES `discount` (`id`);
+ALTER TABLE `orders` ADD FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`);
 
 ALTER TABLE `orders` ADD FOREIGN KEY (`status_id`) REFERENCES `order_status` (`id`);
 

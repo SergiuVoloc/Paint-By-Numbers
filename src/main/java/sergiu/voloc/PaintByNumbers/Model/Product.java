@@ -25,18 +25,18 @@ public class Product {
 
 
 
-    //    Setting up Many to Many Relationship with Session
-    @ManyToMany(mappedBy = "speakers")
-    @JsonIgnore
-    private List<Session> sessions;
-
-
-    //    Setting up Many to Many Relationship with Speaker
-    @ManyToMany
-    @JoinTable(
-            name = "session_speakers",
-            joinColumns = @JoinColumn(name = "session_id"),
-            inverseJoinColumns = @JoinColumn(name = "speaker_id"))
-    private List<Speaker> speakers;
+//    //    Setting up Many to Many Relationship with Session
+//    @ManyToMany(mappedBy = "speakers")
+//    @JsonIgnore
+//    private List<Session> sessions;
+//
+//
+//    //    Setting up Many to Many Relationship with Speaker
+//    @ManyToMany
+//    @JoinTable(
+//            name = "session_speakers",
+//            joinColumns = @JoinColumn(name = "session_id"),
+//            inverseJoinColumns = @JoinColumn(name = "speaker_id"))
+//    private List<Speaker> speakers;
 
 }
