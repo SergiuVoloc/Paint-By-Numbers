@@ -1,8 +1,27 @@
-
+/* 
  * {
-   border: 1px solid #ff0000;
- }
+   border: 1px solid #3ee665;
+ } */
 
 body {
   padding-top: 56px;
+}
+
+.fill {
+  object-fit: cover;
+  width: 900px;
+  height: 350px;
+}
+
+
+.centered_slider_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.img_oppacity{
+  opacity: 0.5;
 }
