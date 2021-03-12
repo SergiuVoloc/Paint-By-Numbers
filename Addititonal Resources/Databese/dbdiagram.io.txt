@@ -9,6 +9,16 @@ Table users as U {
   deleted boolean
 }
 
+Table users_roles {
+  user_id long [ref: < U.id]
+  role_id long [ref: > role.id]
+}
+
+Table role {
+  id long [pk, increment]
+  name varchar
+}
+
 Table address as A {
    id long [pk, increment]
    user_id long [ref: > U.id]
