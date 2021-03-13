@@ -4,7 +4,7 @@
  } */
 
 body {
-  padding-top: 56px;
+  padding-top: 56px!important;
 }
 
 .fill {
@@ -25,3 +25,10 @@ body {
 .img_oppacity{
   opacity: 0.5;
 }
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+

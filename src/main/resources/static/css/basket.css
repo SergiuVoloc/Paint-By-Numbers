@@ -1,16 +1,14 @@
-body {
+#basket_body {
     background: #ddd;
-    min-height: 100vh;
+    margin-top: 50px;
+    min-height: 80vh;
     vertical-align: middle;
-    display: flex;
-    font-family: sans-serif;
-    font-size: 0.8rem;
-    font-weight: bold;
-    padding-top: 56px;
+    /*display: flex;*/
+    padding-top: 56px!important;
 }
 
 .title {
-    margin-bottom: 5vh
+    margin-bottom: 5vh;
 }
 
 .card {
@@ -94,7 +92,7 @@ a {
     font-size: 0.7rem
 }
 
-img {
+.img_basket {
     width: 3.5rem
 }
 
@@ -110,7 +108,7 @@ hr {
     margin-top: 1.25rem
 }
 
-form {
+.form_basket {
     padding: 2vh 0
 }
 
@@ -123,7 +121,7 @@ select {
     background-color: rgb(247, 247, 247)
 }
 
-input {
+.input_basket {
     border: 1px solid rgba(0, 0, 0, 0.137);
     padding: 1vh;
     margin-bottom: 4vh;
@@ -132,11 +130,11 @@ input {
     background-color: rgb(247, 247, 247)
 }
 
-input:focus::-webkit-input-placeholder {
+.input_basket:focus::-webkit-input-placeholder {
     color: transparent
 }
 
-.btn {
+.basket_btn {
     background-color: #000;
     border-color: #000;
     color: white;
@@ -147,7 +145,7 @@ input:focus::-webkit-input-placeholder {
     border-radius: 0
 }
 
-.btn:focus {
+.basket_btn:focus {
     box-shadow: none;
     outline: none;
     box-shadow: none;
@@ -157,7 +155,7 @@ input:focus::-webkit-input-placeholder {
     transition: none
 }
 
-.btn:hover {
+.basket_btn:hover {
     color: white
 }
 
