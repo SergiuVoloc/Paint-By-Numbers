@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="blocks/head :: head" />
+
+<title>Admin - Categories </title>
+
+<head th:replace="blocks/head :: head" ></head>
+
+<div th:insert="~{blocks/navigation :: navigation}"></div>
+
 <body>
 <nav th:replace="blocks/navigation :: navigation"></nav>
 <div class="container mt-5">
     <div class="row">
-        <div class="col-lg-2 d-none d-lg-block">
-            <div th:replace="blocks/categories :: categories"></div>
-        </div>
+        <div class="col-lg-2 d-none d-lg-block"></div>
         <div class="col-lg-10">
             <div class="row">
                 <div>
-                    <h1>Categoies</h1>
-                    <table class="table">
+                    <div id="outer">
+                        <h1 class="mb-2 inner d-inline-block">Categories</h1>
+                        <a class="btn btn-primary inner float-right mt-3 d-inline-block" th:href="@{/category/create}"
+                           role="button">Create New Category</a>
+                    </div>
+                    <table class="table table-hover  mt-4">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Name</th>
                             <th scope="col">Slug</th>
                             <th scope="col">Actions</th>
@@ -28,6 +36,7 @@
                             <td th:text="${category.slug}"></td>
                             <td>
                                 <a th:href="'/category/' + ${category.id} + '/edit'">Edit</a>
+                                <a>&nbsp;|&nbsp;</a>
                                 <a th:href="'/category/' + ${category.id} + '/delete'">Delete</a>
                             </td>
                         </tr>
@@ -39,13 +48,9 @@
     </div>
 </div>
 
-<footer th:replace="blocks/footer :: footer"/></footer>
+<!-- Footer -->
+<div th:insert="~{blocks/footer :: footer}"></div>
 
-<!-- Bootstrap core JavaScript -->
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>

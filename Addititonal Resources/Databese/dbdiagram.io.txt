@@ -22,6 +22,7 @@ Table address as A {
 Table basket_item {
   id UUID [pk, increment]
   user_id UUID [ref: > U.id]
+  product_id UUID [ref: > P.id]
   product_details_id UUID [ref: > product_details.id]
   saved_for_later boolean
   quantity int

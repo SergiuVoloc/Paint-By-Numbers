@@ -17,7 +17,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/add")
+    @GetMapping("/create")
     public  String addPage(Model model){
         return "pages/category/create";
     }
