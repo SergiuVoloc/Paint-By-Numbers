@@ -17,31 +17,48 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/add")
+    public  String addPage(Model model){
+        return "pages/category/create";
+    }
+
     @GetMapping()
-    public String product(Model model){
+    public String all(Model model){
         Iterable<Category> o = categoryService.all();
         model.addAttribute("list", (ArrayList<Category>) o);
-        return "/pages/homepage/index";
+        return "/pages/category/index";
     }
+
     @GetMapping(value ="/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", categoryService.read(id));
-        return "/pages/homepage/index";
+        return "pages/category/edit";
     }
+
     @PostMapping()
-    public String create(@RequestBody Category o){
-        categoryService.create(o);
-        return "/pages/homepage/index";
+    public String create(@RequestParam String name){
+        categoryService.create(name);
+        return "redirect:/category";
     }
-    @PutMapping("/{id}")
-    public String update(@PathVariable(value = "id") UUID id, @RequestBody Category o){
-        categoryService.update(id, o);
-        return "/pages/homepage/index";
+
+    @GetMapping("/{id}/edit")
+    public String editPage(@PathVariable(value = "id") UUID id, Model model){
+        model.addAttribute("item", categoryService.read(id));
+        return "pages/category/edit";
     }
-    @DeleteMapping("/{id}")
+
+    @PostMapping("/{id}/edit")
+    public String update(@PathVariable(value = "id") UUID id, @RequestParam String name){
+        Category c = categoryService.read(id);
+        c.setName(name);
+        categoryService.update(id, c);
+        return "redirect:/category";
+    }
+
+    @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
         categoryService.delete(id);
-        return "/pages/homepage/index";
+        return "redirect:/category";
     }
 
 }

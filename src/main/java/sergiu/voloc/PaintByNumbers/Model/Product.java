@@ -35,6 +35,10 @@ public class Product {
     @OneToMany(mappedBy = "id")
     private List<Product_Photo> productPhotos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product")
+    private List<Basket_Item> basket_item_List = new ArrayList<>();
+
+
 
     public Product() {
     }

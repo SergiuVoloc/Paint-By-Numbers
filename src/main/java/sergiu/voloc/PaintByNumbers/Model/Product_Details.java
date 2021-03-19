@@ -1,10 +1,9 @@
 package sergiu.voloc.PaintByNumbers.Model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "product_details")
@@ -14,6 +13,9 @@ public class Product_Details {
     private UUID id;
     private UUID product_id;
     private String size;
+
+    @OneToMany(mappedBy = "product_details")
+    private List<Basket_Item> basket_item_List = new ArrayList<>();
 
 
     public Product_Details() {

@@ -2,8 +2,11 @@ package sergiu.voloc.PaintByNumbers.Model;
 
 
 import javax.persistence.*;
+import java.text.Normalizer;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Entity(name = "categories")
 public class Category {
@@ -11,12 +14,27 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String name;
+    private String slug;
 
 
 
     //    <--- Relationship --->
     @ManyToMany(mappedBy = "categories")
     private List<Product> products;
+
+    public Category(String name) {
+        this.name = name;
+        this.slug = toSlug(name);
+    }
+
+    public String toSlug(String input) {
+        final Pattern NONLATIN = Pattern.compile("[^\\w-]");
+        final Pattern WHITESPACE = Pattern.compile("[\\s]");
+        String nowhitespace = WHITESPACE.matcher(input).replaceAll("-");
+        String normalized = Normalizer.normalize(nowhitespace, Normalizer.Form.NFD);
+        String slug = NONLATIN.matcher(normalized).replaceAll("");
+        return slug.toLowerCase(Locale.ENGLISH);
+    }
 
     public Category() {
     }
@@ -40,5 +58,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 }

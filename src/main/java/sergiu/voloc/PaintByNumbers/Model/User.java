@@ -2,7 +2,9 @@ package sergiu.voloc.PaintByNumbers.Model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "users")
@@ -22,6 +24,9 @@ public class User {
                           CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name="address_id")
     private Address address;
+
+    @OneToMany(mappedBy = "user")
+    private List<Basket_Item> basket_item_List = new ArrayList<>();
 
 
     public User() {

@@ -1,10 +1,7 @@
 package sergiu.voloc.PaintByNumbers.Model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,23 +11,34 @@ public class Basket_Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private UUID user_id;
-    private UUID product_details_id;
-    private boolean saved_for_later;
     private int quantity;
-    private Date time_added;
+
+// Relationships
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "product_details_id")
+    private Product_Details product_details;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
 
     public Basket_Item() {
     }
 
-    public Basket_Item(UUID id, UUID user_id, UUID product_details_id, boolean saved_for_later, int quantity, Date time_added) {
+    public Basket_Item(UUID id, UUID user_id, UUID product_details_id, UUID product_id, int quantity, Product product, Product_Details product_details, User user) {
         this.id = id;
-        this.user_id = user_id;
-        this.product_details_id = product_details_id;
-        this.saved_for_later = saved_for_later;
         this.quantity = quantity;
-        this.time_added = time_added;
+        this.product = product;
+        this.product_details = product_details;
+        this.user = user;
     }
+
 
     public UUID getId() {
         return id;
@@ -38,30 +46,6 @@ public class Basket_Item {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public UUID getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
-    }
-
-    public UUID getProduct_details_id() {
-        return product_details_id;
-    }
-
-    public void setProduct_details_id(UUID product_details_id) {
-        this.product_details_id = product_details_id;
-    }
-
-    public boolean isSaved_for_later() {
-        return saved_for_later;
-    }
-
-    public void setSaved_for_later(boolean saved_for_later) {
-        this.saved_for_later = saved_for_later;
     }
 
     public int getQuantity() {
@@ -72,11 +56,27 @@ public class Basket_Item {
         this.quantity = quantity;
     }
 
-    public Date getTime_added() {
-        return time_added;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setTime_added(Date time_added) {
-        this.time_added = time_added;
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Product_Details getProduct_details() {
+        return product_details;
+    }
+
+    public void setProduct_details(Product_Details product_details) {
+        this.product_details = product_details;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

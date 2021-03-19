@@ -5,12 +5,11 @@ import sergiu.voloc.PaintByNumbers.Repository.FileStorageRepository;
 import sergiu.voloc.PaintByNumbers.Utility.FileStorageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,11 +23,7 @@ public class FileStorageService {
     @Autowired
     private FileStorageRepository fileStorageRepository;
 
-    @Autowired
-    ServletContext context;
-
-    @Value("${app.upload.dir}")
-    public String uploadDir;
+    public String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
     public File_Storage read(UUID id){
         return fileStorageRepository.findById(id).orElse(null);

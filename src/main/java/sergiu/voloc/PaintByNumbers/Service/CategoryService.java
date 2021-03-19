@@ -23,15 +23,17 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow();
     }
 
-    public Category create(@RequestBody Category o){
+    public Category create(String name){
         Category n = new Category();
-        n.setName(o.getName());
+        n.setName(name);
+        n.setSlug(n.toSlug(name));
         categoryRepository.save(n);
         return n;
     }
-    public Category update(@PathVariable(value = "id") UUID id, @RequestBody Category o){
+    public Category update(@PathVariable(value = "id") UUID id, Category o){
         Category c = categoryRepository.findById(id).orElseThrow();
         c.setName(o.getName());
+        c.setSlug(o.getName());
         categoryRepository.save(c);
         return c;
     }
