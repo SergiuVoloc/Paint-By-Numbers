@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="blocks/head :: head"></head>
+
+    <title> PaintByNumbers - Homepage</title>
+
+<body>
+
+<nav th:replace="blocks/navigation :: navigation"></nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 d-none d-lg-block">
+
+            <div th:replace="blocks/categories :: categories"></div>
+
+        </div>
+        <div class="col-lg-10 ">
+
+            <div th:replace="blocks/slider :: slider"></div>
+
+            <div class="row">
+                <div th:each="product : ${products}" class="col-lg-3 col-md-4 col-6 mb-3 ">
+                    <div class="card h-100">
+                        <a th:href="'/products/' + ${product.id}"><img class="card-img-top" th:src="@{images/Products/1/1.webp}" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a th:text="${product.name}" th:href="'/products/' + ${product.id}"></a>
+                            </h4>
+                            <h5 th:text="${product.price}"></h5>
+                            <p th:text="${product.description}" class="card-text"> </p>
+                            <ul>
+                                <li th:each="pc : ${product.categories}" th:text="${pc.getName()}"></li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<div th:insert="~{blocks/footer :: footer}"></div>
+
+
+</body>
+</html>
+
+

@@ -6,12 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity(name = "discounts")
 public class Discount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String name;
     private float discount;
     private Date created_at;
@@ -21,7 +22,7 @@ public class Discount {
     public Discount() {
     }
 
-    public Discount(long id, String name, float discount, Date created_at, Date valid) {
+    public Discount(UUID id, String name, float discount, Date created_at, Date valid) {
         this.id = id;
         this.name = name;
         this.discount = discount;
@@ -30,11 +31,11 @@ public class Discount {
     }
 
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -4,7 +4,7 @@
  } */
 
 body {
-  padding-top: 56px!important;
+  padding-top:56px;
 }
 
 .fill {
@@ -26,9 +26,33 @@ body {
   opacity: 0.5;
 }
 
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
+.jumbotron{
+  height: 650px;
+}
+
+.display-3{
+  padding-top: 100px;
 }
 
 
+@media (min-width:1200px) {
+  #navbarResponsive {
+    margin-left: -120px;
+  }
+  nav {
+    max-height: 60px;
+  }
+  .img_width_lg{
+    width: 110%;
+  }
+}
+
+
+@media (min-width:992px) {
+  #navbarResponsive{
+    margin-left: -280px;
+  }
+  nav {
+    max-height: 60px;
+  }
+}

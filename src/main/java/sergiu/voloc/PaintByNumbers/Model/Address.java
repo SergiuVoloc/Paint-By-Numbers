@@ -4,20 +4,21 @@ package sergiu.voloc.PaintByNumbers.Model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Entity(name = "address")
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @OneToMany(mappedBy = "address",
                 cascade = {CascadeType.DETACH, CascadeType.MERGE,
                            CascadeType.PERSIST, CascadeType.REFRESH})
     private List<User> userList = new ArrayList<>();
 
-    private long user_id;
+    private UUID user_id;
     private String full_name;
     private String address1;
     private String address2;
@@ -42,7 +43,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(long id, long user_id, String full_name, String address1, String address2, String postcode, String phone) {
+    public Address(UUID id, UUID user_id, String full_name, String address1, String address2, String postcode, String phone) {
         this.id = id;
         this.user_id = user_id;
         this.full_name = full_name;
@@ -53,23 +54,21 @@ public class Address {
     }
 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public long getId() {
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public long getUser_id() {
+    public UUID getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(long user_id) {
+    public void setUser_id(UUID user_id) {
         this.user_id = user_id;
     }
 

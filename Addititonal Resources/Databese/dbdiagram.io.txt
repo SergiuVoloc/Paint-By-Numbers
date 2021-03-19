@@ -1,5 +1,5 @@
 Table users as U {
-  id long  [pk, increment]
+  id  UUID [pk, increment]
   email varchar [unique]
   full_name varchar
   date_of_birth date
@@ -9,19 +9,9 @@ Table users as U {
   deleted boolean
 }
 
-Table users_roles {
-  user_id long [ref: < U.id]
-  role_id long [ref: > role.id]
-}
-
-Table role {
-  id long [pk, increment]
-  name varchar
-}
-
 Table address as A {
-   id long [pk, increment]
-   user_id long [ref: > U.id]
+   id UUID [pk, increment]
+   user_id UUID [ref: > U.id]
    full_name varchar
    address1 varchar
    address2 varchar
@@ -30,20 +20,20 @@ Table address as A {
 }
 
 Table basket_item {
-  id long [pk, increment]
-  user_id long [ref: > U.id]
-  product_details_id long [ref: > product_details.id]
+  id UUID [pk, increment]
+  user_id UUID [ref: > U.id]
+  product_details_id UUID [ref: > product_details.id]
   saved_for_later boolean
   quantity int
   time_added datetime
 }
 
 Table orders as O {
-  id long [pk, increment]
-  user_id long [ref: > U.id]
-  address_id long [ref: > A.id]
-  discount_id long [ref: > D.id]
-  status_id long [ref: > order_status.id]
+  id UUID [pk, increment]
+  user_id UUID [ref: > U.id]
+  address_id UUID [ref: > A.id]
+  discount_id UUID [ref: > D.id]
+  status_id UUID [ref: > order_status.id]
   created_at datetime
   modified datetime
   shipping_cost float
@@ -52,19 +42,19 @@ Table orders as O {
 }
 
 Table order_status {
-   id long [pk, increment]
+   id UUID [pk, increment]
    name varchar
 }
 
 Table order_item as OI {
-   id long [pk, increment]
-   order_id long [ref: > O.id]
-   product_details_id long [ref: > product_details.id]
+   id UUID [pk, increment]
+   order_id UUID [ref: > O.id]
+   product_details_id UUID [ref: > product_details.id]
    quantity int
 }
 
 Table discounts as D {
-  id long [pk, increment]
+  id UUID [pk, increment]
   name varchar
   discount float
   created_at datetime
@@ -72,50 +62,50 @@ Table discounts as D {
 }
 
 Table products as P {
-  id long [pk, increment]
+  id UUID [pk, increment]
   name varchar
   description varchar
   price float
-  category_id long [ref: > PC.id]
+  category_id UUID [ref: > PC.id]
 }
 
 Table product_details {
-  id long [pk, increment]
+  id UUID [pk, increment]
   size varchar
-  product_id long [ref: > P.id]
+  product_id UUID [ref: > P.id]
 }
 
 Table categories as PC {
-  id long [pk, increment]
+  id UUID [pk, increment]
   name varchar
 }
 
 Table tags {
-  id long [pk, increment]
-  product_id long [ref: > P.id]
+  id UUID [pk, increment]
+  product_id UUID [ref: > P.id]
   name varchar
 }
 
 Table product_photos {
-  id long [pk, increment]
-  product_id long [ref: > P.id]
+  id UUID [pk, increment]
+  product_id UUID [ref: > P.id]
   name varchar
   photo blob
 }
 
 
 Table file_storage {
-   id long [pk, increment]
-   product_id long [ref: > P.id]
+   id UUID [pk, increment]
+   product_id UUID [ref: > P.id]
    name varchar
    value varchar
 }
 
 
 Table product_details_attribute_values {
-  id long [pk, increment]
-  product_details_id long [ref: > product_details.id]
-  attribute_values_id long [ref: > attribute_values.id] 
+  id UUID [pk, increment]
+  product_details_id UUID [ref: > product_details.id]
+  attribute_values_id UUID [ref: > attribute_values.id]
 }
 
 
@@ -124,19 +114,19 @@ Table product_details_attribute_values {
 
 // The simplest implementation of EAV may have just three tables: entity, attribute and value.
 Table entities {
-  id long [pk, increment]
+  id UUID [pk, increment]
   name varchar
 }
 
 Table attributes {
-  id long [pk, increment]
+  id UUID [pk, increment]
   name varchar
 }
 
 Table attribute_values {
-  id long [pk, increment]
-  attribute_id long [ref: > attributes.id]
-  entity_id long [ref: > entities.id]
+  id UUID [pk, increment]
+  attribute_id UUID [ref: > attributes.id]
+  entity_id UUID [ref: > entities.id]
   value varchar
 }
 

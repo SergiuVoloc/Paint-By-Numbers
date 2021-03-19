@@ -5,39 +5,40 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity(name = "product_details")
 public class Product_Details {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long product_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private UUID product_id;
     private String size;
 
 
     public Product_Details() {
     }
 
-    public Product_Details(long id, long product_id, String size) {
+    public Product_Details(UUID id, UUID product_id, String size) {
         this.id = id;
         this.product_id = product_id;
         this.size = size;
     }
 
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public long getProduct_id() {
+    public UUID getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(long product_id) {
+    public void setProduct_id(UUID product_id) {
         this.product_id = product_id;
     }
 

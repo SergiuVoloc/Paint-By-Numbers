@@ -3,12 +3,13 @@ package sergiu.voloc.PaintByNumbers.Model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String email;
     private String full_name;
     private Date date_of_birth;
@@ -26,7 +27,7 @@ public class User {
     public User() {
     }
 
-    public User(long id, String email, String full_name, Date date_of_birth, String phone, String password, Timestamp created_at, Boolean deleted) {
+    public User(UUID id, String email, String full_name, Date date_of_birth, String phone, String password, Timestamp created_at, Boolean deleted) {
         this.id = id;
         this.email = email;
         this.full_name = full_name;
@@ -38,11 +39,11 @@ public class User {
     }
 
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

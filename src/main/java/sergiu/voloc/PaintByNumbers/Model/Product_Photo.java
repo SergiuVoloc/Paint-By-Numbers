@@ -4,13 +4,16 @@ package sergiu.voloc.PaintByNumbers.Model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "product_photos")
 public class Product_Photo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long product_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private UUID product_id;
     private String name;
 
     //    Setting up photo storage for products
@@ -18,10 +21,14 @@ public class Product_Photo {
     @Type(type = "org.hibernate.type.BinaryType")       //handle binary data
     private byte[] photo;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<File_Storage> fileStorage = new ArrayList<>();
+
+
     public Product_Photo() {
     }
 
-    public Product_Photo(long id, long product_id, String name, byte[] photo) {
+    public Product_Photo(UUID id, UUID product_id, String name, byte[] photo) {
         this.id = id;
         this.product_id = product_id;
         this.name = name;
@@ -29,19 +36,19 @@ public class Product_Photo {
     }
 
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public long getProduct_id() {
+    public UUID getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(long product_id) {
+    public void setProduct_id(UUID product_id) {
         this.product_id = product_id;
     }
 
@@ -59,5 +66,17 @@ public class Product_Photo {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public List<File_Storage> getFileStorage() {
+        return fileStorage;
+    }
+
+    public void setFileStorage(List<File_Storage> fileStorage) {
+        this.fileStorage = fileStorage;
+    }
+
+    public void addPhoto(File_Storage fileStorage){
+        this.fileStorage.add(fileStorage);
     }
 }

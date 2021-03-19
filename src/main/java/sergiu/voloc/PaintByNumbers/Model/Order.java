@@ -6,17 +6,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.UUID;
 
 
 @Entity(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long user_id;
-    private long address_id;
-    private long discount_id;
-    private long status_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private UUID user_id;
+    private UUID address_id;
+    private UUID discount_id;
+    private UUID status_id;
     private Date created_at;
     private Date modified;
     private float shipping_cost;
@@ -27,7 +28,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(long id, long user_id, long address_id, long discount_id, long status_id, Date created_at, Date modified, float shipping_cost, float amount, String order_note) {
+    public Order(UUID id, UUID user_id, UUID address_id, UUID discount_id, UUID status_id, Date created_at, Date modified, float shipping_cost, float amount, String order_note) {
         this.id = id;
         this.user_id = user_id;
         this.address_id = address_id;
@@ -40,43 +41,43 @@ public class Order {
         this.order_note = order_note;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public long getUser_id() {
+    public UUID getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(long user_id) {
+    public void setUser_id(UUID user_id) {
         this.user_id = user_id;
     }
 
-    public long getAddress_id() {
+    public UUID getAddress_id() {
         return address_id;
     }
 
-    public void setAddress_id(long address_id) {
+    public void setAddress_id(UUID address_id) {
         this.address_id = address_id;
     }
 
-    public long getDiscount_id() {
+    public UUID getDiscount_id() {
         return discount_id;
     }
 
-    public void setDiscount_id(long discount_id) {
+    public void setDiscount_id(UUID discount_id) {
         this.discount_id = discount_id;
     }
 
-    public long getStatus_id() {
+    public UUID getStatus_id() {
         return status_id;
     }
 
-    public void setStatus_id(long status_id) {
+    public void setStatus_id(UUID status_id) {
         this.status_id = status_id;
     }
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<title>PaintByNumbers - Product Info</title>
+
+<head th:replace="blocks/head :: head" ></head>
+
+<body>
+<div th:insert="~{blocks/navigation :: navigation}"></div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-10">
+            <div>
+                <img src="" alt="">
+                <h1 th:text="${item.name}"></h1>
+                <h3 th:text="${item.price}"></h3>
+                <p th:text="${item.description}"></p>
+                <a class="btn btn-primary btn-sm basket_btn" th:href="@{/basket}"
+                   role="button">Add to Basket</a>
+                <ul>
+                    <li th:each="category : ${item.categories}">
+                        <a th:href="${category.id}" th:text="${category.name}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<div th:insert="~{blocks/footer :: footer}"></div>
+
+
+</body>
+</html>
+
+

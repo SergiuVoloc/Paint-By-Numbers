@@ -6,15 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.UUID;
 
 
 @Entity(name = "basket_item")
 public class Basket_Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long user_id;
-    private long product_details_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    private UUID user_id;
+    private UUID product_details_id;
     private boolean saved_for_later;
     private int quantity;
     private Date time_added;
@@ -22,7 +23,7 @@ public class Basket_Item {
     public Basket_Item() {
     }
 
-    public Basket_Item(long id, long user_id, long product_details_id, boolean saved_for_later, int quantity, Date time_added) {
+    public Basket_Item(UUID id, UUID user_id, UUID product_details_id, boolean saved_for_later, int quantity, Date time_added) {
         this.id = id;
         this.user_id = user_id;
         this.product_details_id = product_details_id;
@@ -31,27 +32,27 @@ public class Basket_Item {
         this.time_added = time_added;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public long getUser_id() {
+    public UUID getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(long user_id) {
+    public void setUser_id(UUID user_id) {
         this.user_id = user_id;
     }
 
-    public long getProduct_details_id() {
+    public UUID getProduct_details_id() {
         return product_details_id;
     }
 
-    public void setProduct_details_id(long product_details_id) {
+    public void setProduct_details_id(UUID product_details_id) {
         this.product_details_id = product_details_id;
     }
 
