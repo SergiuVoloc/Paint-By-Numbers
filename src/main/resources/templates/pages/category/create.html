@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<title>Admin - Create new Category </title>
+<title>Admin - Create Category </title>
 
 <head th:replace="blocks/head :: head" ></head>
 
-<div th:insert="~{blocks/navigation :: navigation}"></div>
+<div th:insert="~{blocks/navigation :: admin-navigation}"></div>
 
 <body>
-<nav th:replace="blocks/navigation :: navigation"></nav>
-<div class="container mt-5 mb-5">
+<div class="container my-5">
     <div class="row">
-        <div class="col-lg-2 d-none d-lg-block">
-        </div>
-        <div class="col-lg-10">
+        <div class="col-lg-10 mt-5">
             <div class="row">
                 <div>
                     <h1 >Add New Category</h1>

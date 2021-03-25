@@ -18,47 +18,61 @@ public class ProductService {
     private ProductRepository productRepository;
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private ProductPhotoService productPhotoService;
+
 
     public Iterable<Product> all(){
         return productRepository.findAll();
     }
 
+
     public Product read( UUID id){
         return productRepository.findById(id).orElseThrow();
     }
 
-    public Product create( Product o, MultipartFile file){
+
+    public Product create( String name, Float price, String description){
         Product n = new Product();
-        n.setName(o.getName());
-        n.setDescription(o.getDescription());
-        n.setPrice(o.getPrice());
-
-        Iterable<Category> categories = o.getCategories();
-        categories.forEach( category -> {
-            Category c = categoryService.read(category.getId());
-            n.addCategory(c);
-        });
-//        productPhotoService.create(file);
+        n.setName(name);
+        n.setPrice(price);
+        n.setDescription(description);
         productRepository.save(n);
         return n;
     }
-    public Product update( UUID id, @RequestBody Product o){
+
+//    public Product create( Product o, MultipartFile file){
+//        Product n = new Product();
+//        n.setName(o.getName());
+//        n.setDescription(o.getDescription());
+//        n.setPrice(o.getPrice());
+//
+//        Iterable<Category> categories = o.getCategories();
+//        categories.forEach( category -> {
+//            Category c = categoryService.read(category.getId());
+//            n.addCategory(c);
+//        });
+////        productPhotoService.create(file);
+//        productRepository.save(n);
+//        return n;
+//    }
+
+
+
+    public Product update( UUID id, String name, Float price, String description){
         Product n = productRepository.findById(id).orElseThrow();
-        n.setName(o.getName());
-        n.setDescription(o.getDescription());
-        n.setPrice(o.getPrice());
+        n.setName(name);
+        n.setPrice(price);
+        n.setDescription(description);
 
-        Iterable<Category> categories = o.getCategories();
-        categories.forEach( category -> {
-            Category c = categoryService.read(category.getId());
-            n.addCategory(c);
-        });
+//        categories.forEach( category -> {
+//            Category c = categoryService.read(UUID.fromString(category));
+//            n.addCategory(c);
+//        });
 
         productRepository.save(n);
         return n;
     }
+
+
 
     public void delete(@PathVariable(value = "id") UUID id){
         productRepository.deleteById(id);

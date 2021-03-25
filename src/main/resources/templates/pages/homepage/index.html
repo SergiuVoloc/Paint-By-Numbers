@@ -9,7 +9,7 @@
 
 <nav th:replace="blocks/navigation :: navigation"></nav>
 
-<div class="container">
+<div class="container my-5">
     <div class="row">
         <div class="col-lg-2 d-none d-lg-block">
 
@@ -23,10 +23,10 @@
             <div class="row">
                 <div th:each="product : ${products}" class="col-lg-3 col-md-4 col-6 mb-3 ">
                     <div class="card h-100">
-                        <a th:href="'/products/' + ${product.id}"><img class="card-img-top" th:src="@{images/Products/1/1.webp}" alt=""></a>
+                        <a th:href="'/product/' + ${product.id}"><img class="card-img-top" th:src="@{images/Products/1/1.webp}" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a th:text="${product.name}" th:href="'/products/' + ${product.id}"></a>
+                                <a th:text="${product.name}" th:href="'/product/' + ${product.id}"></a>
                             </h4>
                             <h5 th:text="${product.price}"></h5>
                             <p th:text="${product.description}" class="card-text"> </p>

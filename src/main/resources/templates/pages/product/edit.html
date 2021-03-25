@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<title>Admin - Edit Product</title>
+
+<head th:replace="blocks/head :: head" ></head>
+
+<body>
+<div th:insert="~{blocks/navigation :: navigation}"></div>
+
+<div class="container my-5">
+    <div class="row">
+        <form class="col-12" method="post">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label >Name</label>
+                    <input type="text" class="form-control" placeholder="Name" name="name" th:value="${item.name}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Price</label>
+                    <input type="number" step="0.01" class="form-control"  placeholder="Price" name="price" th:value="${item.price}">
+                </div>
+            </div>
+
+            <div class="form-group col-12">
+                <select class="form-control" name="categories[]" id="product-categories" multiple="multiple">
+                <option th:each="categ : ${categories}" th:text="${categ.name}" th:value="${categ.id}"></option>
+                </select>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" rows="3" name="description" th:text="${item.description}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/></footer>
+
+
+<script>
+    // var $ = jQuery;
+    $(document).ready(function() {
+        $('#product-categories').select2();
+    });
+</script>
+
+</body>
+</html>

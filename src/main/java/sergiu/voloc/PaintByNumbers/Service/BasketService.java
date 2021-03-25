@@ -14,8 +14,8 @@ public class BasketService {
     private BasketRepository basketRepository;
     @Autowired
     private BasketService basketService;
-    @Autowired
-    private ProductPhotoService productPhotoService;
+
+
 
 
     public Iterable<Basket_Item> all(){

@@ -15,6 +15,8 @@ public class Category {
     private UUID id;
     private String name;
     private String slug;
+    // A slug is a human-readable, unique identifier, used to identify a resource instead of
+    // a less human-readable identifier like an id
 
 
 
@@ -58,6 +60,7 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+        this.slug = toSlug(name);
     }
 
     public String getSlug() {

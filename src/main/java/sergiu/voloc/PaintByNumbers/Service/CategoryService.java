@@ -19,21 +19,22 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+
     public Category read(@PathVariable(value = "id") UUID id){
         return categoryRepository.findById(id).orElseThrow();
     }
 
+
     public Category create(String name){
-        Category n = new Category();
-        n.setName(name);
-        n.setSlug(n.toSlug(name));
+        Category n = new Category(name);
         categoryRepository.save(n);
         return n;
     }
+
+
     public Category update(@PathVariable(value = "id") UUID id, Category o){
         Category c = categoryRepository.findById(id).orElseThrow();
         c.setName(o.getName());
-        c.setSlug(o.getName());
         categoryRepository.save(c);
         return c;
     }

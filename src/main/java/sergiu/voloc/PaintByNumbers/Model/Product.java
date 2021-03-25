@@ -1,6 +1,5 @@
 package sergiu.voloc.PaintByNumbers.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,21 +18,21 @@ public class Product {
     private Float Price;
 
     //    Setting up photo storage for products
-    @Lob                                                //Large object
-    @Type(type = "org.hibernate.type.BinaryType")       //handle binary data
-    private byte[] product_photo;
+//    @Lob                                                //Large object
+//    @Type(type = "org.hibernate.type.BinaryType")       //handle binary data
+//    private byte[] product_photo;
 
 
     //    <--- Relationship --->
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "product_category",
-            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id",
-                    referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Category> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id")
-    private List<Product_Photo> productPhotos = new ArrayList<>();
+    @OneToMany(targetEntity = File_Storage.class, cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<File_Storage> photos = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
     private List<Basket_Item> basket_item_List = new ArrayList<>();
@@ -44,14 +43,12 @@ public class Product {
     }
 
     public Product(UUID id, String name, String description, Float price, byte[] product_photo,
-                   List<Category> categories, List<Product_Photo> productPhotos) {
+                   List<Category> categories) {
         this.id = id;
         Name = name;
         Description = description;
         Price = price;
-        this.product_photo = product_photo;
         this.categories = categories;
-        this.productPhotos = productPhotos;
     }
 
     public UUID getId() {
@@ -86,13 +83,13 @@ public class Product {
         Price = price;
     }
 
-    public byte[] getProduct_photo() {
-        return product_photo;
-    }
-
-    public void setProduct_photo(byte[] product_photo) {
-        this.product_photo = product_photo;
-    }
+//    public byte[] getProduct_photo() {
+//        return product_photo;
+//    }
+//
+//    public void setProduct_photo(byte[] product_photo) {
+//        this.product_photo = product_photo;
+//    }
 
     public List<Category> getCategories() {
         return categories;
@@ -102,20 +99,12 @@ public class Product {
         this.categories = categories;
     }
 
-    public List<Product_Photo> getProductPhotos() {
-        return productPhotos;
-    }
-
-    public void setProductPhotos(List<Product_Photo> productPhotos) {
-        this.productPhotos = productPhotos;
-    }
-
     public void addCategory(Category category) {
         this.categories.add(category);
     }
 
-    public void addPhoto(Product_Photo file){
-        this.productPhotos.add(file);
+    public void addPhoto(File_Storage file){
+        this.photos.add(file);
     }
 
 

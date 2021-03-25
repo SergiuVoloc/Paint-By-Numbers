@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<title>PaintByNumbers - Product Info</title>
+<title>Admin - Product Info</title>
 
 <head th:replace="blocks/head :: head" ></head>
 
 <body>
 <div th:insert="~{blocks/navigation :: navigation}"></div>
 
-<div class="container mt-5">
+<div class="container my-5">
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <div>
                 <img src="" alt="">
                 <h1 th:text="${item.name}"></h1>

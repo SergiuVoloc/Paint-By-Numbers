@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="blocks/head :: head" />
-<title>PaintByNumbers - ????</title>
+
+<title>PaintByNumbers - Admin</title>
+
+<head th:replace="blocks/head :: head" ></head>
+
 <body>
-<nav th:replace="blocks/navigation :: navigation"></nav>
-<div class="container my-5">
+<div th:insert="~{blocks/navigation :: admin-navigation}"></div>
+    <div class="container my-5">
     <div class="row">
         <div class="col-lg-2 d-none d-lg-block">
             <div th:replace="blocks/categories :: categories"></div>
@@ -19,11 +22,8 @@
     </div>
 </div>
 
-<footer th:replace="blocks/footer :: footer"/></footer>
-
+    <footer th:replace="blocks/footer :: footer"/></footer>
 
 
 </body>
 </html>
-
-
