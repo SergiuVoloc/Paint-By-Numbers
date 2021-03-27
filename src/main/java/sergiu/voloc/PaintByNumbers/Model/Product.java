@@ -13,9 +13,9 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String Name;
-    private String Description;
-    private Float Price;
+    private String name;
+    private String description;
+    private Float price;
 
     //    Setting up photo storage for products
 //    @Lob                                                //Large object
@@ -35,7 +35,7 @@ public class Product {
     private List<File_Storage> photos = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
-    private List<Basket_Item> basket_item_List = new ArrayList<>();
+    private List<Basket_Item> basketItemList = new ArrayList<>();
 
 
 
@@ -45,9 +45,9 @@ public class Product {
     public Product(UUID id, String name, String description, Float price, byte[] product_photo,
                    List<Category> categories) {
         this.id = id;
-        Name = name;
-        Description = description;
-        Price = price;
+        this.name = name;
+        this.description = description;
+        this.price = price;
         this.categories = categories;
     }
 
@@ -60,27 +60,27 @@ public class Product {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public Float getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(Float price) {
-        Price = price;
+        this.price = price;
     }
 
 //    public byte[] getProduct_photo() {
@@ -112,9 +112,9 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", name='" + Name + '\'' +
-                ", description='" + Description + '\'' +
-                ", price=" + Price +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
                 ", categories=" + categories +
                 '}';
     }

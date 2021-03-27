@@ -31,14 +31,6 @@ public class ProductController {
     }
 
 
-
-    @GetMapping("/create")
-    public  String addPage(Model model){
-        return "pages/product/create";
-    }
-
-
-
     @GetMapping(value = "/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", productService.read(id));
@@ -47,9 +39,17 @@ public class ProductController {
 
 
 
+    @GetMapping("/create")
+    public  String addPage(Model model){
+        return "pages/product/create";
+    }
+
+
+
     @PostMapping()
-    public String create(@RequestParam String name, @RequestParam Float price, @RequestParam String description){
+    public String create(@RequestParam String name, @RequestParam Float price, @RequestParam String description, Model model){
         productService.create(name, price, description);
+        model.addAttribute("categories", categoryService.all());
         return "redirect:/product";
     }
 

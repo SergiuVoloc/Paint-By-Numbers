@@ -15,7 +15,7 @@ public class Product_Details {
     private String size;
 
     @OneToMany(mappedBy = "product_details")
-    private List<Basket_Item> basket_item_List = new ArrayList<>();
+    private List<Basket_Item> basketItemList = new ArrayList<>();
 
 
     public Product_Details() {

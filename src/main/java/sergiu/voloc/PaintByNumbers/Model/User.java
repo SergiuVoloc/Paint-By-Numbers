@@ -26,7 +26,7 @@ public class User {
     private Address address;
 
     @OneToMany(mappedBy = "user")
-    private List<Basket_Item> basket_item_List = new ArrayList<>();
+    private List<Basket_Item> basketItemList = new ArrayList<>();
 
 
     public User() {

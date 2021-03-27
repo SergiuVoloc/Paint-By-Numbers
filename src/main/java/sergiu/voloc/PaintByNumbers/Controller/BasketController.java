@@ -12,8 +12,7 @@ public class BasketController {
 
     @Autowired
     private BasketService basketService;
-    @Autowired
-    private ProductService productService;
+
 
     @GetMapping("/basket")
     public String getBasket(){

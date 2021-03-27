@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -78,4 +79,9 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+
+    // this method implements Search field by product name
+    public Iterable<Product> searchByName(String productName) {
+        return productRepository.findByNameLike("%" + productName +"%");
+    }
 }

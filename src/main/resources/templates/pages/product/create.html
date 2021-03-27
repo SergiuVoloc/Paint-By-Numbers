@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <title>Admin - Create Product </title>
 
@@ -20,6 +20,11 @@
                         <label>Price</label>
                         <input type="number" step="0.01" class="form-control"  placeholder="Price" name="price">
                     </div>
+                <div class="form-group col-12">
+                    <select class="form-control" name="categories[]" id="product-categories" multiple="multiple">
+                        <option th:each="categ : ${categories}" th:text="${categ.name}" th:value="${categ.id}"></option>
+                    </select>
+                </div>
                 </div>
                 <div class="form-group">
                     <label>Description</label>

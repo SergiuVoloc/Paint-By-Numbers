@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import sergiu.voloc.PaintByNumbers.Service.CategoryService;
 import sergiu.voloc.PaintByNumbers.Service.ProductService;
 
@@ -16,10 +17,10 @@ public class HomeController {
     private ProductService productService;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @RequestParam(defaultValue = "") String productName){
 
         model
-                .addAttribute("products",   productService.all())
+                .addAttribute("products",   productService.searchByName(productName))
                 .addAttribute("categories", categoryService.all());
         return "/pages/homepage/index";
     }
