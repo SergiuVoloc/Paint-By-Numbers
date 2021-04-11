@@ -2,14 +2,14 @@ package sergiu.voloc.PaintByNumbers.Controller;
 
 import sergiu.voloc.PaintByNumbers.Model.Product;
 import sergiu.voloc.PaintByNumbers.Service.CategoryService;
-import sergiu.voloc.PaintByNumbers.Service.ProductService;
+import sergiu.voloc.PaintByNumbers.Service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -18,22 +18,22 @@ import java.util.UUID;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private IProductService IProductService;
     @Autowired
     private CategoryService categoryService;
 
 
     @GetMapping()
     public String all(Model model){
-        Iterable<Product> o = productService.all();
-        model.addAttribute("list", (ArrayList<Product>) o);
+        Iterable<Product> o = IProductService.all();
+        model.addAttribute("list", o);
         return "pages/product/index";
     }
 
 
     @GetMapping(value = "/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", productService.read(id));
+        model.addAttribute("item", IProductService.read(id));
         return "pages/product/info";
     }
 
@@ -48,7 +48,7 @@ public class ProductController {
 
     @PostMapping()
     public String create(@RequestParam String name, @RequestParam Float price, @RequestParam String description, Model model){
-        productService.create(name, price, description);
+        IProductService.create(name, price, description);
         model.addAttribute("categories", categoryService.all());
         return "redirect:/product";
     }
@@ -58,7 +58,7 @@ public class ProductController {
 
     @GetMapping("/{id}/edit")
     public String editPage(@PathVariable(value = "id") UUID id, Model model){
-                model.addAttribute("item", productService.read(id));
+                model.addAttribute("item", IProductService.read(id));
                 model.addAttribute("categories", categoryService.all());
                 return "pages/product/edit";
     }
@@ -66,7 +66,7 @@ public class ProductController {
 
     @PostMapping("/{id}/edit")
     public String update(@PathVariable(value = "id") UUID id, @RequestParam String name, @RequestParam Float price, @RequestParam String description){
-                productService.update(id, name, price, description);
+                IProductService.update(id, name, price, description);
                 return "redirect:/product/" + id;
             }
 
@@ -74,12 +74,17 @@ public class ProductController {
 
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
-        productService.delete(id);
+        IProductService.delete(id);
         return "redirect:/product";
     }
 
 
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> search(HttpServletRequest request) {
+        return IProductService.search(request.getParameter("term"));
+    }
 
 
     //    @GetMapping()

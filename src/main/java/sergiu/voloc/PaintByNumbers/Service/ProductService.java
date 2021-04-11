@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
 
     @Autowired
     private ProductRepository productRepository;
@@ -21,17 +21,20 @@ public class ProductService {
     private CategoryService categoryService;
 
 
+    @Override
     public Iterable<Product> all(){
         return productRepository.findAll();
     }
 
 
-    public Product read( UUID id){
+    @Override
+    public Product read(UUID id){
         return productRepository.findById(id).orElseThrow();
     }
 
 
-    public Product create( String name, Float price, String description){
+    @Override
+    public Product create(String name, Float price, String description){
         Product n = new Product();
         n.setName(name);
         n.setPrice(price);
@@ -58,7 +61,8 @@ public class ProductService {
 
 
 
-    public Product update( UUID id, String name, Float price, String description){
+    @Override
+    public Product update(UUID id, String name, Float price, String description){
         Product n = productRepository.findById(id).orElseThrow();
         n.setName(name);
         n.setPrice(price);
@@ -75,13 +79,22 @@ public class ProductService {
 
 
 
+    @Override
     public void delete(@PathVariable(value = "id") UUID id){
         productRepository.deleteById(id);
     }
 
 
     // this method implements Search field by product name
+    @Override
     public Iterable<Product> searchByName(String productName) {
         return productRepository.findByNameLike("%" + productName +"%");
     }
+
+    // Predictive Search
+    @Override
+    public List<String> search(String keyword) {
+        return productRepository.search(keyword);
+    }
+
 }
