@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="blocks/head :: head" />
 <body>
-<nav th:replace="blocks/navigation :: admin-navigation"></nav>
+<nav th:replace="blocks/navbar :: admin-navigation"></nav>
 <div class="container my-5">
     <div class="row">
         <div class="col-12">
@@ -58,7 +58,7 @@
                         <hr class="singleline">
                         <div class="order_info d-flex flex-row">
                             <form action="#">
-                        </div>
+                        </div> </div>
                         <div class="row">
                             <div class="col-xs-6" style="margin-left: 13px;">
                                 <div class="product_quantity"> <span>QTY: </span> <input id="quantity_input" type="text" pattern="[0-9]*" value="1">

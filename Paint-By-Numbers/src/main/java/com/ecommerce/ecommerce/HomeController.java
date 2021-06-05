@@ -2,7 +2,6 @@ package com.ecommerce.ecommerce;
 
 import com.ecommerce.ecommerce.modules.category.CategoryService;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
-import com.ecommerce.ecommerce.modules.kMeans.KMeansService;
 import com.ecommerce.ecommerce.modules.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +21,6 @@ public class HomeController {
     private ProductService productService;
     @Autowired
     private FileStorageService fileStorageService;
-    @Autowired
-    private KMeansService kMeansService;
 
     @GetMapping()
     public String index(
@@ -49,9 +46,5 @@ public class HomeController {
         return "403";
     }
 
-    @GetMapping("/personalized_image")
-    public String test(){
-        return "test passed";
-    }
 
 }

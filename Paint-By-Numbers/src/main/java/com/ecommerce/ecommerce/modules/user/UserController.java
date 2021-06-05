@@ -1,9 +1,5 @@
 package com.ecommerce.ecommerce.modules.user;
 
-import com.ecommerce.ecommerce.modules.attribute.Attribute;
-import com.ecommerce.ecommerce.modules.attribute.AttributeService;
-import com.ecommerce.ecommerce.modules.product.Product;
-import com.ecommerce.ecommerce.modules.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +29,7 @@ public class UserController {
     public  String addPage(Model model){
         return "pages/user/create";
     }
+
 
     @GetMapping("/{id}/edit")
     public String editPAge(@PathVariable(value = "id") UUID id, Model model){

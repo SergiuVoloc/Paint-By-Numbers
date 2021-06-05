@@ -27,24 +27,30 @@ public class AddressController {
         model.addAttribute("list", (ArrayList<Address>) o);
         return "pages/address/index";
     }
+
+
     @GetMapping(value ="/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", addressService.read(id));
-        return "pages/address/edit";
+        return "pages/address/read";
     }
-    @GetMapping("/{id}/create")
-    public  String addPage(@PathVariable(value = "id") UUID id,Model model){
+
+
+    @GetMapping("/create")
+    public  String addPage(Model model){
         return "pages/address/create";
     }
+
+
     @GetMapping("/{id}/edit")
     public String editPAge(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("o", addressService.read(id));
+        model.addAttribute("item", addressService.read(id));
         return "pages/address/edit";
     }
 
-    @PostMapping("/{id}/create")
+
+    @PostMapping()
     public String create(
-            @PathVariable(value = "id") UUID id,
             @RequestParam String full_name,
             @RequestParam String address1,
             @RequestParam String address2,
@@ -58,10 +64,9 @@ public class AddressController {
                 postcode,
                 phone
         );
-        a.setUser(userService.read(id));
         addressService.create(a);
-        return "redirect:/user" + a.getUser().getId();
-//        return "redirect:" + request.getHeader("Referer");
+//        return "redirect:/user" + a.getUser().getId();
+        return "pages/address/index";
     }
 
     @PostMapping("/{id}/edit")

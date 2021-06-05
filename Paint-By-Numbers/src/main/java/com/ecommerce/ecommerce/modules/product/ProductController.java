@@ -1,21 +1,17 @@
 package com.ecommerce.ecommerce.modules.product;
 
 import com.ecommerce.ecommerce.modules.attribute.AttributeService;
-import com.ecommerce.ecommerce.modules.category.Category;
 import com.ecommerce.ecommerce.modules.category.CategoryService;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("admin/product")
@@ -33,27 +29,31 @@ public class ProductController {
     private FileStorageService fileStorageService;
 
 
-    @GetMapping("/create")
-    public  String addPage(Model model){
-        model.addAttribute("categories", categoryService.all());
-        return "pages/product/create";
-    }
-
     @GetMapping()
     public String all(
             @RequestParam(defaultValue = "") String searchText,
             Model model
     ){
-        System.out.println("<--- Search --->");
+//        System.out.println("<--- Search --->");
         model.addAttribute("list", productService.all());
         return "pages/product/index";
     }
+
 
     @GetMapping(value ="/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", productService.read(id));
         return "pages/product/read";
     }
+
+
+    @GetMapping("/create")
+    public  String addPage(Model model){
+        model.addAttribute("categories", categoryService.all());
+        return "pages/product/create";
+    }
+
+
 
     @PostMapping()
     public String create(
@@ -68,11 +68,11 @@ public class ProductController {
                 description,
                 categories
         );
-        return "redirect:" + request.getHeader("Referer");
+        return "redirect:/admin/product";
     }
 
     @GetMapping("/{id}/edit")
-    public String editPAge(@PathVariable(value = "id") UUID id, Model model){
+    public String editPage(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", productService.read(id));
         model.addAttribute("categories", categoryService.all());
         model.addAttribute("attributes", attributeService.all());
@@ -101,13 +101,17 @@ public class ProductController {
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
         productService.delete(id);
-        return "redirect:/product";
+        return "redirect:/admin/product";
     }
+
+
     @GetMapping("/{pid}/rFile/{fid}")
     public String removeFile (@PathVariable(value = "pid") UUID pid,@PathVariable(value = "fid") UUID fid){
         productService.removeFile(pid, fid);
         return "redirect:" + request.getHeader("Referer");
     }
+
+
     @GetMapping("/{pid}/rPhoto/{fid}")
     public String removePhoto (@PathVariable(value = "pid") UUID pid,@PathVariable(value = "fid") UUID fid){
         productService.removePhoto(pid, fid);

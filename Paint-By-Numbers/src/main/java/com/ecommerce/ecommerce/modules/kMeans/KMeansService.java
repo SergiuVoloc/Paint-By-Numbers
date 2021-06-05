@@ -70,26 +70,33 @@ public class KMeansService {
 
 
     /**
-     * Determine clusters centers and writing them in centers.jpg
+     * Method helping to identify clusters centers and writing them in centers.jpg
      *
-     * @param cutout
+     * @param cutout input image
      * @param k represents number of clusters
-     * @return
+     * @return image, labels and it's centers passed as parameters to showClusters method
      */
     public static List<Mat> cluster(Mat cutout, int k) {
-        Mat blurred = new Mat();
+
         // Blurring the image using a Gaussian filter
+        Mat blurred = new Mat();
         Imgproc.GaussianBlur(cutout, blurred, new Size(1,1),0);
         Mat samplesLAB = blurred;
+
+        // morphological transformations using an erosion and dilation as basic operations
         Imgproc.morphologyEx(samplesLAB, samplesLAB, Imgproc.MORPH_OPEN, Mat.ones(5,5, CvType.CV_32F));
         Mat samples = samplesLAB.reshape(1, samplesLAB.cols() * samplesLAB.rows());
         System.out.println(samples.toString());
+
         Mat samples32f = new Mat();
         samples.convertTo(samples32f, CvType.CV_32F);
         System.out.println(samples32f.toString());
 
-        Mat labels = new Mat();
+        // Setting the termination criteria for iterative algorithm
         TermCriteria criteria = new TermCriteria(TermCriteria.COUNT, 100, 1);
+
+        // Applying KMeans Algorithm that finds centers of clusters
+        Mat labels = new Mat();
         Mat centers = new Mat();
         Core.kmeans(samples32f, k, labels, criteria, 3, Core.KMEANS_PP_CENTERS, centers);
         Imgcodecs.imwrite("output\\centers.jpg", centers);
@@ -101,36 +108,36 @@ public class KMeansService {
 
     /**
      *
-     * @param cutout
-     * @param labels
-     * @param centers
+     * @param cutout represents input image processed by KMeans
+     * @param labels input/output integer array that stores the cluster indices for image
+     * @param centers clusters centers of the image
      * @return
      */
     private static List<Mat> showClusters (Mat cutout, Mat labels, Mat centers) {
 
         List<Mat> rel = new ArrayList<Mat>();
-        Mat re = new Mat(cutout.size(),CvType.CV_8UC3);
-        Mat l2 = labels.reshape(1, cutout.rows());
-        System.out.println("labels"+l2.toString()+"cols"+l2.size());
+        Mat result = new Mat(cutout.size(),CvType.CV_8UC3);
+        Mat labels2 = labels.reshape(1, cutout.rows());
+        System.out.println("labels "+labels2.toString()+" cols "+labels2.size());
         for(int i = 0; i < cutout.rows();i++){
             for(int j = 0; j < cutout.cols();j++){
-                int label = (int) l2.get(i, j)[0];
-                double colr0 = centers.get(label, 0)[0];
-                double colr1 = centers.get(label, 1)[0];
-                double colr2 = centers.get(label, 2)[0];
-                double[] v = new double[]{colr0,colr1,colr2};
-                re.put(i, j, v);
+                int label = (int) labels2.get(i, j)[0];
+                double color0 = centers.get(label, 0)[0];
+                double color1 = centers.get(label, 1)[0];
+                double color2 = centers.get(label, 2)[0];
+                double[] v = new double[]{color0,color1,color2};
+                result.put(i, j, v);
 
             }
         }
-        rel.add(re);
+        rel.add(result);
 
         for(int i= 0; i< centers.rows();i++){
             Mat part = Mat.zeros(cutout.size(),CvType.CV_8UC1);
 
             for(int x = 0; x < cutout.rows();x++){
                 for(int y = 0; y < cutout.cols();y++){
-                    int label = (int) l2.get(x, y)[0];
+                    int label = (int) labels2.get(x, y)[0];
                     if(label==i){
                         part.put(x, y, 255.0);//array
                     }

@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="blocks/head :: head" />
 <body>
-<nav th:replace="blocks/navigation :: navigation"></nav>
+<nav th:replace="blocks/navbar :: navigation"></nav>
 <div class="container my-5">
     <div class="row">
-        <h1 class="col-6">Products</h1>
+        <h1 class="col-6">Your Addresses</h1>
         <div class="col-6">
-            <a class="btn btn-primary float-right" th:href="@{/admin/user/create}"
-               role="button">Create New User</a>
+            <a class="btn btn-primary float-right" th:href="@{/admin/address/create}"
+               role="button">Create New Address</a>
         </div>
     </div>
     <div class="row">
@@ -16,28 +16,25 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">User Name</th>
+                <th scope="col">Address 1</th>
+                <th scope="col">Address 2</th>
                 <th scope="col">Full Name</th>
-                <th scope="col">Date of Birth</th>
-                <th scope="col">Role</th>
                 <th scope="col">Phone</th>
-                <th scope="col">Active</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Post Code</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="u : ${list}">
-                <td scope="row"><a th:href="'/product/' + ${u.getId()}" th:text="${u.getId()}"></a></td>
-                <td th:text="${u.getUsername()}"></td>
-                <td th:text="${u.getFullName()}"></td>
-                <td th:text="${u.getDateOfBirth()}"></td>
-                <td th:text="${u.getRole()}"></td>
-                <td th:text="${u.getPhone()}"></td>
-                <td th:text="${u.getEnabled()}"></td>
+            <tr th:each="item : ${list}">
+                <td scope="row"><a th:href="'/address/' + ${item.getId()}" th:text="${item.getId()}"></a></td>
+                <td th:text="${item.getAddress1()}"></td>
+                <td th:text="${item.getAddress2()}"></td>
+                <td th:text="${item.getFull_name()}"></td>
+                <td th:text="${item.getPhone()}"></td>
+                <td th:text="${item.getPostcode()}"></td>
                 <td>
-                    <a th:href="'/admin/user/' + ${u.getId()} + '/edit'">Edit</a>
+                    <a th:href="'/admin/address/' + ${item.getId()} + '/edit'">Edit</a>
                     <a>&nbsp;|&nbsp;</a>
-                    <a th:href="'/admin/user/' + ${u.getId()} + '/delete'">Delete</a>
+                    <a th:href="'/admin/address/' + ${item.getId()} + '/delete'">Delete</a>
                 </td>
             </tr>
             </tbody>

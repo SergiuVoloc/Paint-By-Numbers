@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blocks/head :: head">
+    <title>Personalize image</title>
+</head>
+<body>
+<nav th:replace="blocks/navbar :: navigation"></nav>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div>
+<!--                    <form id="photo-form" th:action="@{/admin/file/photo4product/__${item.getId()}__}">-->
+<!--                        <input type="file" class="form-control"  placeholder="Browse" id="photo-input">-->
+<!--                    </form>-->
+                    <form action=""><input type="file" name="inputPhoto" id=""></form>
+                    <button type="submit" th:> Submit </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="blocks/footer :: footer"></footer>
+
+</body>
+</html>
