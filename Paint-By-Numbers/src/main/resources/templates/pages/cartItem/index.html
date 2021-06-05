@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blocks/head :: head" />
+<body>
+<nav th:replace="blocks/navigation :: navigation"></nav>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-8">
+            <div class="row">
+                <div class="col-5"><h1>Shopping Cart</h1></div>
+                <div class="col text-center" th:text="${#lists.size(list)} + ' items'"></div>
+            </div>
+            <div class="row">
+                <div class="row g-1" th:each="p : ${list}">
+                    <div class="col-3"><img class="img-fluid" th:src="@{/file/__${p.getProduct().getPhotos()[0].id}__}"></div>
+                    <div class="col-3" th:text="${p.getProduct().getName()}"></div>
+                    <div class="col-3">
+                        <div class="row justify-content-center g-0">
+                            <div class="col-auto"><a class="btn btn-primary" th:href="@{/cart/__${p.getId()}__/decreaseQty}"><i class="bi bi-dash"></i></a></div>
+                            <div class="col-6"><input class="form-control text-center" type="number" th:value="${p.qty}" disabled></div>
+                            <div class="col-auto"><a class="btn btn-primary" th:href="@{/cart/__${p.getId()}__/addQty}"><i class="bi bi-plus"></i></a></div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <input class="form-control" th:value="${p.getProduct().getPrice()}"  step="0.1" disabled />
+                    </div>
+                    <div class="col-1">
+                        <input class="form-control" th:value="${p.subtotal}" step="0.1" disabled />
+                    </div>
+                    <div class="col-1">
+                        <a class="btn btn-danger" th:href="@{/cart/__${p.getId()}__/delete}"><i class="bi bi-x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <a th:href="@{/}"><i class="bi bi-arrow-left"></i> Back to shop</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <h1>Summary</h1>
+            </div>
+            <div class="row">
+                <form th:action="@{/order/create}" method="post">
+                    <div class="col-12">
+                        <input class="form-control" type="number" step="0.1" name="subtotal" id="subtotal" th:value="${subtotal}" disabled />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">SHIPPING</label>
+                        <select class="form-select" name="delivery_fee" id="delivery_fee">
+                            <option value="5.00" selected>Standard-Delivery- 5.00</option>
+                            <option value="25.00">Fast-Delivery- 25.00</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Discount</label>
+                        <input class="form-control" type="text" name="discount" placeholder="Enter your code">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">TOTAL PRICE</label>
+                        <input class="form-control" type="text" name="total" id="total" disabled>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <label class="form-label">Delivery Address</label>
+                            <select class="form-control" name="address" id="user-addresses">
+                                <option th:each="a : ${user.getAddresses()}" th:value="${a.getId()}" th:text="${a.getFull_name()} + ' / ' + ${a.getAddress1()}"></option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <a class="form-label" th:href="@{/admin/address}">Add Address</a>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-3">
+                            <button class="btn btn-success">Checkout</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/>
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+        document.getElementById('total').value = parseFloat(document.getElementById('delivery_fee').value) + parseFloat(document.getElementById('subtotal').value);
+        document.getElementById('delivery_fee').addEventListener("change", (event) => {
+            document.getElementById('total').value = parseFloat(document.getElementById('subtotal').value) + parseFloat(event.target.value);
+        });
+
+        $('#user-addresses').select2();
+    } );
+</script>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blocks/head :: head" />
+<body>
+<nav th:replace="blocks/navigation :: admin-navigation"></nav>
+<div class="container my-5">
+    <div class="row">
+        <form class="col-12" action="/value" method="post">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label>Value</label>
+                    <input type="text" class="form-control" placeholder="Value" name="value">
+                </div>
+                <div class="form-group col-3">
+                    <label>Attribute</label>
+                    <select class="form-control" name="attribute" id="attribute">
+                        <option th:each="a : ${attributes}" th:text="${a.name}" th:value="${a.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label>Product</label>
+                    <select class="form-control" name="product" id="product">
+                        <option th:each="p : ${products}" th:text="${p.name}" th:value="${p.id}"></option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/></footer>
+<script>
+    $(document).ready(function() {
+        $('#product').select2();
+        $('#attribute').select2();
+    });
+</script>
+</body>
+</html>
+
+
+
+

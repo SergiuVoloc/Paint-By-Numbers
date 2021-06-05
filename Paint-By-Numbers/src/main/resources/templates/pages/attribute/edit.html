@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blocks/head :: head" />
+<body>
+<nav th:replace="blocks/navigation :: admin-navigation"></nav>
+<div class="container my-5">
+    <div class="row">
+        <h1>Edit Attribute</h1>
+        <form class="form-inline" method="post" > <!-- try put or patch-->
+            <input type="text" name="name" class="form-control" th:value="${item.name}">
+            <button type="submit" class="btn btn-success ml-5 ">Save</button>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/></footer>
+
+</body>
+</html>
+
+

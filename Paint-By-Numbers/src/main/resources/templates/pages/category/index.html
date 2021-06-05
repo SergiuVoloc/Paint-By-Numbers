@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="blocks/head :: head" />
+<body>
+<nav th:replace="blocks/navigation :: navigation"></nav>
+<div class="container my-5">
+    <div class="row">
+        <h1 class="col-6">Categories</h1>
+        <div class="col-6">
+            <a class="btn btn-primary float-right" th:href="@{/admin/category/create}"
+               role="button">Create New Category</a>
+        </div>
+    </div>
+    <div class="row">
+        <table id="table_id" class="table table-hover mt-4">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Slug</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${list}">
+                <td scope="row" th:text="${category.id}"></td>
+                <td th:text="${category.name}"></td>
+                <td th:text="${category.slug}"></td>
+                <td>
+                    <a th:href="'/admin/category/' + ${category.id} + '/edit'">Edit</a>
+                    <a>&nbsp;|&nbsp;</a>
+                    <a th:href="'/admin/category/' + ${category.id} + '/delete'">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/></footer>
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
+</body>
+</html>
+
+
+
+
+
+
+

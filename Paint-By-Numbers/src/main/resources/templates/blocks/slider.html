@@ -1,0 +1,26 @@
+<!-- Slider main container -->
+<div th:fragment="slider" class="swiper-container my-4">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide" data-title="Relieve stress and reveal your creative side" data-subtitle="" >
+            <img th:src="@{images/slider/1.jpg}" alt="slide 1">
+        </div>
+        <div class="swiper-slide" data-title="" data-subtitle=""><img th:src="@{images/slider/2.jpg}" alt="slide
+        2"></div>
+        <div class="swiper-slide" data-title="" data-subtitle=""><img th:src="@{images/slider/3.jpg}" alt="slide 3"></div>
+    </div>
+
+    <!-- Slide captions -->
+    <div class="slide-captions"></div>
+
+    <!-- pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- scrollbar -->
+    <div class="swiper-scrollbar"></div>
+</div>

@@ -1,0 +1,7 @@
+<div th:fragment="categories" class="col-2">
+    <h3 class="my-4">Categories</h3>
+    <div class="list-group" id="categories">
+        <button class="list-group-item" data-group="all">All</button>
+        <button class="list-group-item" th:each="c : ${categories}" th:text="${c.getName()}" th:data-group="${c.getSlug()}"></button>
+    </div>
+</div>
