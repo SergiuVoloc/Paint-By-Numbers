@@ -5,35 +5,41 @@
 <nav th:replace="blocks/navbar :: navigation"></nav>
 <div class="container my-5">
     <div class="row">
-        <form class="col-12" method="post" th:object="${o}" th:action="'/admin/address/' + ${o.getId() + '/edit'}">
+        <form class="col-12" method="post" th:object="${item}">
             <div class="row">
                 <div class="col-3">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" placeholder="Full Name" th:field="*{full_name}">
+                    <label class="form-label">Full Name
+                        <input type="text" class="form-control" placeholder="Full Name" th:field="*{full_name}">
+                    </label>
                 </div>
                 <div class="col-3">
-                    <label class="form-label">Phone</label>
-                    <input type="tel" class="form-control" placeholder="Phone" th:field="*{phone}">
+                    <label class="form-label">Phone
+                         <input type="tel" class="form-control" placeholder="Phone" th:field="*{phone}">
+                    </label>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <label class="form-label">Address 1</label>
-                        <input type="text" class="form-control" placeholder="Address 1"  th:field="*{address1}">
+                        <label class="form-label">Address 1
+                            <input type="text" class="form-control" placeholder="Address 1"  th:field="*{address1}">
+                        </label>
                     </div>
                     <div class="col-3">
-                        <label class="form-label">Address 2</label>
-                        <input type="text" class="form-control"  placeholder="Address 2" th:field="*{address2}">
+                        <label class="form-label">Address 2
+                            <input type="text" class="form-control"  placeholder="Address 2" th:field="*{address2}">
+                        </label>
                     </div>
                     <div class="col-3">
-                        <label class="form-label">Address 2</label>
-                        <input type="text" class="form-control"  placeholder="Post Code" th:field="*{postcode}">
+                        <label class="form-label">Post Code
+                            <input type="text" class="form-control"  placeholder="Post Code" th:field="*{postcode}">
+                        </label>
                     </div>
 
                 </div>
             </div>
             <div class="row mt-5">
                 <div class="col-1">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" >Save
+                    </button>
                 </div>
             </div>
         </form>

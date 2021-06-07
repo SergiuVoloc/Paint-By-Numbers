@@ -35,12 +35,12 @@ public class HomeController {
         } else {
             model.addAttribute("products",   productService.all());
         }
-
-
-
         model.addAttribute("categories", categoryService.all());
         return "index";
     }
+
+
+
     @GetMapping("/403")
     public String  error_403(){
         return "403";

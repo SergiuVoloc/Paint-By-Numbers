@@ -30,6 +30,7 @@ public class UserService {
         userRepository.save(u);
         return u;
     }
+
     public User update(@PathVariable(value = "id") UUID id, User o){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User c = userRepository.findById(id).orElseThrow();

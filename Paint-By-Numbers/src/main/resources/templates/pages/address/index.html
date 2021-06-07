@@ -7,34 +7,33 @@
     <div class="row">
         <h1 class="col-6">Your Addresses</h1>
         <div class="col-6">
-            <a class="btn btn-primary float-right" th:href="@{/admin/address/create}"
-               role="button">Create New Address</a>
+            <a class="btn btn-primary float-right" th:href="@{/user/address/create}"
+               role="button">Add New Address</a>
         </div>
     </div>
     <div class="row">
         <table class="table table-striped table-bordered" id="table_id">
             <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Address 1</th>
                 <th scope="col">Address 2</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Post Code</th>
+                <th scope="col"> </th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="item : ${list}">
-                <td scope="row"><a th:href="'/address/' + ${item.getId()}" th:text="${item.getId()}"></a></td>
                 <td th:text="${item.getAddress1()}"></td>
                 <td th:text="${item.getAddress2()}"></td>
                 <td th:text="${item.getFull_name()}"></td>
                 <td th:text="${item.getPhone()}"></td>
                 <td th:text="${item.getPostcode()}"></td>
                 <td>
-                    <a th:href="'/admin/address/' + ${item.getId()} + '/edit'">Edit</a>
+                    <a th:href="'/user/address/' + ${item.getId()} + '/edit'">Edit</a>
                     <a>&nbsp;|&nbsp;</a>
-                    <a th:href="'/admin/address/' + ${item.getId()} + '/delete'">Delete</a>
+                    <a th:href="'/user/address/' + ${item.getId()} + '/delete'">Delete</a>
                 </td>
             </tr>
             </tbody>
