@@ -24,8 +24,8 @@ public class AddressController {
 
     @GetMapping()
     public String all(Model model){
-        Iterable<Address> o = addressService.all();
-        model.addAttribute("list", o);
+        model.addAttribute("list", addressService.all());
+        model.addAttribute("userList", userService.all());
         return "pages/address/index";
     }
 
@@ -33,7 +33,7 @@ public class AddressController {
 
     @GetMapping(value ="/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", addressService.read(id));
+        model.addAttribute("item", userService.read(id));
         return "pages/address/read";
     }
 

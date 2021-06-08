@@ -47,7 +47,7 @@
                      th:data-title="${p.getName()}"
                 >
                     <div class="card">
-                        <a href="#"><img class="card-img-top" th:src="@{/file/__${p.getPhotos()[0].id}__}" alt=""></a>
+                        <a th:href="'/product/' + ${p.getId()}"><img class="card-img-top" th:src="@{/file/__${p.getPhotos()[0].id}__}" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a th:text="${p.getName()}" th:href="'/product/' + ${p.getId()}" />

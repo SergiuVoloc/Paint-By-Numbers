@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.UUID;
 
 @Controller
@@ -21,7 +20,7 @@ public class UserController {
 
     @GetMapping()
     public String all(Model model){
-        model.addAttribute("list", (ArrayList<User>) userService.all());
+        model.addAttribute("list", userService.all());
         return "pages/user/index";
     }
 

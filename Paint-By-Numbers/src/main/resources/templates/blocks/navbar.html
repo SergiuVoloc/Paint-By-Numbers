@@ -43,9 +43,9 @@
                 </li>
                 <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                     <a class="nav-link dropdown-toggle" th:href="@{/user}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${#httpServletRequest.remoteUser}"></a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
                         <li><a class="dropdown-item" th:href="@{/order}">Orders</a></li>
-                        <li><a class="dropdown-item" th:href="@{/user/address}">Addresses</a></li>
+                        <li><a class="dropdown-item"  th:href="@{/user/address/}">Addresses</a></li>
                         <li><a class="dropdown-item" th:href="@{/payment}">Payment Methods</a></li>
                         <li><a class="dropdown-item" th:href="@{/account}">Account Details</a></li>
                         <li><hr class="dropdown-divider"></li>
