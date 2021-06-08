@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("admin/user")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
