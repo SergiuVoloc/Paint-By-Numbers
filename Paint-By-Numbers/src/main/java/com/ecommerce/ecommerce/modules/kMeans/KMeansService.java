@@ -83,7 +83,7 @@ public class KMeansService {
         Imgproc.GaussianBlur(cutout, blurred, new Size(1,1),0);
         Mat samplesLAB = blurred;
 
-        // morphological transformations using an erosion and dilation as basic operations
+        // applying morphological transformations using an erosion and dilation as basic operations
         Imgproc.morphologyEx(samplesLAB, samplesLAB, Imgproc.MORPH_OPEN, Mat.ones(5,5, CvType.CV_32F));
         Mat samples = samplesLAB.reshape(1, samplesLAB.cols() * samplesLAB.rows());
         System.out.println(samples.toString());
@@ -156,16 +156,23 @@ public class KMeansService {
     /**
      * Identifying the edges of each cluster and inserting labels to each color
      *
-     * @param clusters
-     * @return
+     * @param clusters the clustered image processed by K-Means
+     * @return the image with each cluster identified by the outline and a number inside
      */
     private static Mat drawEdges(List<Mat> clusters){
+
+        // identifying the image size
         Mat re = Mat.zeros(clusters.get(0).size(),CvType.CV_8UC1);
+
+        // applying morphological transformations using an erosion and dilation as basic operations
         Imgproc.morphologyEx(re, re, Imgproc.MORPH_CLOSE, Mat.ones(5,5, CvType.CV_32F));
-        for(int i =1; i< clusters.size()-1;i++){
+
+        for(int i =1; i< clusters.size()-1; i++){
             Mat c = clusters.get(i);
             List<MatOfPoint> points = new ArrayList<MatOfPoint>();
             Mat hierarchy = new Mat();
+
+            // finding contours of the binary image using the algorithm CITE: Suzuki85
             Imgproc.findContours(c, points, hierarchy, Imgproc.RETR_EXTERNAL , Imgproc.CHAIN_APPROX_SIMPLE);
             //note! image border will be clipped
 
