@@ -29,14 +29,6 @@ public class UserController {
         return "pages/user/create";
     }
 
-
-    @GetMapping("/{id}/edit")
-    public String editPAge(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", userService.read(id));
-        return "pages/user/edit";
-    }
-
-
     @PostMapping()
     public String create(
             @RequestParam String username,
@@ -53,6 +45,13 @@ public class UserController {
     }
 
 
+    @GetMapping("/{id}/edit")
+    public String editPAge(@PathVariable(value = "id") UUID id, Model model){
+        model.addAttribute("item", userService.read(id));
+        return "pages/user/edit";
+    }
+
+
     @PostMapping("/{id}/edit")
     public String update(
             @PathVariable(value = "id") UUID id,
@@ -66,8 +65,10 @@ public class UserController {
     ){
         User u = new User(username, password, fullName, phone, role, dateOfBirth, enabled);
         userService.update(id, u);
-        return "redirect:" + request.getHeader("Referer");
+        return "redirect:/user";
     }
+
+
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
         userService.delete(id);

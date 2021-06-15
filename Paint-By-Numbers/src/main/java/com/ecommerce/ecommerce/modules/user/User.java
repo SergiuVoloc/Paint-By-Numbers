@@ -50,6 +50,14 @@ public class User {
         this.enabled = enabled;
     }
 
+    public User(String username, String password, String fullName, String phone, Date dateOfBirth) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public UUID getId() {
         return id;
     }
