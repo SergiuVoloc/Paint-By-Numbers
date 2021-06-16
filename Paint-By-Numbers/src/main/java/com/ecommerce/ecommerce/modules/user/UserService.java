@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User create(User u){
-        System.out.println(u.toString());
+//        System.out.println(u.toString());
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         u.setPassword(encoder.encode(u.getPassword()));
         u.setRole("ROLE_USER");
@@ -48,16 +48,31 @@ public class UserService {
         userRepository.save(c);
         return c;
     }
+
+
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+
 
     public void delete(@PathVariable(value = "id") UUID id){
         userRepository.deleteById(id);
     }
 
+
     public User getCurrent(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return findByUsername(auth.getName());
+    }
+
+
+    public boolean isUserAlreadyPresent(User user) {
+        boolean isUserAlreadyExists = false;
+        User existingUser = userRepository.findByUsername(user.getUsername());
+        // If user is found in database, then user already exists.
+        if(existingUser != null){
+            isUserAlreadyExists = true;
+        }
+        return isUserAlreadyExists;
     }
 }

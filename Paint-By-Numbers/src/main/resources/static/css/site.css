@@ -3,9 +3,6 @@
 body {
 
 }
-
-
-
 /* Slide Gallery */
 .gallery-top {
   height: 80%;
@@ -104,4 +101,14 @@ body {
   overflow: hidden;
   z-index: 999;
   background: #fff;
+}
+
+
+/* Center Horizontally */
+
+.center-custom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }

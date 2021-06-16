@@ -40,12 +40,6 @@ public class HomeController {
     }
 
 
-    @GetMapping("/register")
-    public  String registerUser(Model model){
-        return "register";
-    }
-
-
     @GetMapping("/403")
     public String  error_403(){
         return "403";

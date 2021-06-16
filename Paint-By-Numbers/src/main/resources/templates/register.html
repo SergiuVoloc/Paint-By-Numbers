@@ -1,42 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="blocks/head :: head" />
-<body>
+
+<body style="background-color: #ededed;">
+
 <nav th:replace="blocks/navbar :: navigation"></nav>
-<div class="container my-5">
-    <div class="row">
-        <form class="col-12" method="post"  action="/register">
-            <div class="row">
-                <div class="col-3">
-                    <label class="form-label">User Name</label>
-                    <input type="text" class="form-control" placeholder="User Name"  name="username">
-                </div>
-                <div class="col-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" placeholder="Password"  name="password">
-                </div>
-                <div class="col-3">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control"  placeholder="Full Name" name="fullName">
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <label class="form-label">Phone</label>
-                        <input type="tel" class="form-control" placeholder="Phone" name="phone">
-                    </div>
-                    <div class="col-2">
-                        <label class="form-label">Date Of Birth</label>
-                        <input type="date" class="form-control" name="dateOfBirth" placeholder="2018-07-22">
-                    </div>
+
+<div class="container my-5 ">
+        <form style="margin-top: 40px; margin-bottom: 60px;  border:none; margin-left: auto;
+    margin-right: auto;" th:class="col-lg-4" autocomplete="off" action="#" th:action="@{/register}" th:object="${user}"
+              method="post"
+               class="form-signin" role="form">
+            <h2 class="form-signin-heading">Registration Form</h2>
+
+            <div class="form-group">
+                <div class="mt-3">
+                    <input type="text" th:field="*{username}" placeholder="Username" class="form-control" required=""/>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-1">
-                    <button type="submit" class="btn btn-primary">Save</button>
+
+            <div class="form-group">
+                <div class="mt-3">
+                    <input type="text" th:field="*{fullName}" placeholder="Full Name" class="form-control" required=""/>
                 </div>
+            </div>
+            <div class="form-group">
+                <div class="mt-3">
+                    <input type="email" th:field="*{email}" placeholder="Email" class="form-control" required=""/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="mt-3">
+                    <input type="tel" th:field="*{phone}" placeholder="Phone" class="form-control" required=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="mt-3">
+                    <input type="date" th:field="*{dateOfBirth}" placeholder="Date of Birth" class="form-control" required=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="mt-3">
+                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" required=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="mt-4 center-custom" >
+                    <button type="submit" class=" btn btn-primary btn-block ">Register</button>
+                </div>
+            </div>
+            <b class="center-custom mt-2"><span th:utext="${successMessage}"></span></b>
+            <div class="alert alert-success alert-dismissible col-sm-12"
+                 th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">×</button>
+                <ul th:each="data : ${bindingResult.getAllErrors()}">
+                    <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+                </ul>
             </div>
         </form>
     </div>
+
+
+<!--    <div class="row">-->
+<!--        <form class="col-12" method="post"  action="/register">-->
+<!--            <div class="row">-->
+<!--                <div class="col-3">-->
+<!--                    <label class="form-label">User Name</label>-->
+<!--                    <input type="text" class="form-control" placeholder="User Name"  name="username">-->
+<!--                </div>-->
+<!--                <div class="col-3">-->
+<!--                    <label class="form-label">Password</label>-->
+<!--                    <input type="password" class="form-control" placeholder="Password"  name="password">-->
+<!--                </div>-->
+<!--                <div class="col-3">-->
+<!--                    <label class="form-label">Full Name</label>-->
+<!--                    <input type="text" class="form-control"  placeholder="Full Name" name="fullName">-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="col-3">-->
+<!--                        <label class="form-label">Phone</label>-->
+<!--                        <input type="tel" class="form-control" placeholder="Phone" name="phone">-->
+<!--                    </div>-->
+<!--                    <div class="col-2">-->
+<!--                        <label class="form-label">Date Of Birth</label>-->
+<!--                        <input type="date" class="form-control" name="dateOfBirth" placeholder="2018-07-22">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row mt-5">-->
+<!--                <div class="col-1">-->
+<!--                    <button type="submit" class="btn btn-primary">Save</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
 
 <footer th:replace="blocks/footer :: footer"/></footer>

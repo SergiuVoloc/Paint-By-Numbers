@@ -34,12 +34,13 @@ public class UserController {
             @RequestParam String username,
             @RequestParam String password,
             @RequestParam String fullName,
+            @RequestParam String email,
             @RequestParam String phone,
             @RequestParam String role,
             @RequestParam Date dateOfBirth,
             @RequestParam Boolean enabled
     ){
-        User u = new User(username, password, fullName, phone, role, dateOfBirth, enabled);
+        User u = new User(username, password, fullName, email, phone, role, dateOfBirth, enabled);
         userService.create(u);
         return "redirect:" + request.getHeader("Referer");
     }
@@ -61,9 +62,10 @@ public class UserController {
             @RequestParam String phone,
             @RequestParam String role,
             @RequestParam Date dateOfBirth,
-            @RequestParam Boolean enabled
+            @RequestParam Boolean enabled,
+            @RequestParam String email
     ){
-        User u = new User(username, password, fullName, phone, role, dateOfBirth, enabled);
+        User u = new User(username, password, fullName, email, phone, role, dateOfBirth, enabled);
         userService.update(id, u);
         return "redirect:/user";
     }

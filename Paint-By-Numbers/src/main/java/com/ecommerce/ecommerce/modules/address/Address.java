@@ -11,7 +11,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String full_name, address1, address2, postcode, phone;
+    private String fullName, address1, address2, postCode, phone;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -19,11 +19,11 @@ public class Address {
 
     public Address(){}
 
-    public Address(String full_name, String address1, String address2, String postcode, String phone) {
-        this.full_name = full_name;
+    public Address(String fullName, String address1, String address2, String postCode, String phone) {
+        this.fullName = fullName;
         this.address1 = address1;
         this.address2 = address2;
-        this.postcode = postcode;
+        this.postCode = postCode;
         this.phone = phone;
     }
 
@@ -35,12 +35,12 @@ public class Address {
         this.id = id;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String full_name) {
+        this.fullName = full_name;
     }
 
     public String getAddress1() {
@@ -59,12 +59,12 @@ public class Address {
         this.address2 = address2;
     }
 
-    public String getPostcode() {
-        return postcode;
+    public String getPostCode() {
+        return postCode;
     }
 
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
+    public void setPostCode(String postcode) {
+        this.postCode = postcode;
     }
 
     public String getPhone() {
@@ -87,10 +87,10 @@ public class Address {
     public String toString() {
         return "Address{" +
                 "id=" + id +
-                ", full_name='" + full_name + '\'' +
+                ", full_name='" + fullName + '\'' +
                 ", address1='" + address1 + '\'' +
                 ", address2='" + address2 + '\'' +
-                ", postcode='" + postcode + '\'' +
+                ", postcode='" + postCode + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
     }

@@ -26,7 +26,7 @@
             <tbody>
             <tr th:each="o : ${list}">
                 <td scope="row"><a th:href="@{/order/__${o.getId()}__}" th:text="${o.getId()}"></a></td>
-                <td th:text="${o.getAddress().getFull_name()}"></td>
+                <td th:text="${o.getAddress().getFullName()}"></td>
                 <td th:text="${o.getOrderStatus().getName()}"></td>
                 <td th:text="${o.getCreated_at()}"></td>
                 <td th:text="${o.getModified()}"></td>

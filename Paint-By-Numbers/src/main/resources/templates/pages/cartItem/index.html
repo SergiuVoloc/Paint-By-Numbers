@@ -66,7 +66,7 @@
                         <div class="col-8">
                             <label class="form-label">Delivery Address</label>
                             <select class="form-control" name="address" id="user-addresses">
-                                <option th:each="a : ${user.getAddresses()}" th:value="${a.getId()}" th:text="${a.getFull_name()} + ' / ' + ${a.getAddress1()}"></option>
+                                <option th:each="a : ${user.getAddresses()}" th:value="${a.getId()}" th:text="${a.getFullName()} + ' / ' + ${a.getAddress1()}"></option>
                             </select>
                         </div>
                         <div class="col-4">

@@ -1,9 +1,11 @@
 package com.ecommerce.ecommerce.modules.user;
 
 import com.ecommerce.ecommerce.modules.address.Address;
-
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +17,50 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private UUID id;
 
-    @Column(unique=true)
+    @NotNull(message="Username is compulsory")
+    @Column(name ="username", unique=true)
     private String username;
 
-    private String password, fullName, phone, role;
+    @NotNull(message="Password is compulsory")
+    @Length(min=5, message="Password should be at least 5 characters")
+    @Column(name = "password")
+    private String password;
+
+    @NotNull(message="First and Second Name are compulsory")
+    @Column(name = "full_name")
+    private String fullName;
+
+    @NotNull(message="Phone is compulsory")
+    @Column(name = "phone")
+    private String phone;
+
+    @NotNull(message="Email is compulsory")
+    @Email(message = "Email is invalid")
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "role")
+    private String role;
+
+    @NotNull(message="Date of Birth is compulsory")
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
+
+    @Column(name = "enabled")
     private Boolean enabled;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Address> addresses = new ArrayList<>();
 
     public User(){}
 
-    public User(String username, String password, String fullName, String phone, String role, Date dateOfBirth, Boolean enabled) {
+    public User(String username, String password, String fullName, String email, String phone, String role,
+                Date dateOfBirth,
+                Boolean enabled) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -37,9 +68,10 @@ public class User {
         this.role = role;
         this.dateOfBirth = dateOfBirth;
         this.enabled = enabled;
+        this.email = email;
     }
 
-    public User(UUID id, String username, String password, String fullName, String phone, String role, Date dateOfBirth, Boolean enabled) {
+    public User(UUID id, String username, String password, String fullName, String email, String phone, String role, Date dateOfBirth, Boolean enabled) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -48,14 +80,16 @@ public class User {
         this.role = role;
         this.dateOfBirth = dateOfBirth;
         this.enabled = enabled;
+        this.email = email;
     }
 
-    public User(String username, String password, String fullName, String phone, Date dateOfBirth) {
+    public User(String username, String password, String fullName, String email, String phone, Date dateOfBirth) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
+        this.email = email;
     }
 
     public UUID getId() {
@@ -122,6 +156,14 @@ public class User {
         this.role = role;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public List<Address> getAddresses() {
         return addresses;
     }
@@ -144,6 +186,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", enabled=" + enabled +

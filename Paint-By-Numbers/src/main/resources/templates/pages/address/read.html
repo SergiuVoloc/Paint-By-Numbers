@@ -47,10 +47,10 @@
                         <tbody>
                         <tr th:each="a : ${item.getAddresses()}">
                             <td scope="row" th:text="${a.id}"></td>
-                            <td th:text="${a.getFull_name}"></td>
+                            <td th:text="${a.fullName}"></td>
                             <td th:text="${a.address1}"></td>
                             <td th:text="${a.address2}"></td>
-                            <td th:text="${a.postcode}"></td>
+                            <td th:text="${a.postCode}"></td>
                             <td th:text="${a.phone}"></td>
                             <td>
                                 <a th:href="'/user/address/' + ${a.id} + '/edit'">Edit</a>

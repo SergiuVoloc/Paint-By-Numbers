@@ -1,4 +1,4 @@
-package com.ecommerce.ecommerce;
+package com.ecommerce.ecommerce.modules.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -44,12 +44,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/images/**",
 				"/auth/**",
 				"/register**").permitAll()
-			.antMatchers("/edit/*", "/delete/*").hasRole("ADMIN")
+			.antMatchers("/user/").hasRole("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin().permitAll()
 			.and()
-			.logout().permitAll()
+			.logout().permitAll().logoutSuccessUrl("/")
 			.and()
 			.csrf().disable()
 			.exceptionHandling().accessDeniedPage("/403")

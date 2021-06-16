@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,7 +58,7 @@ public class OrderService {
         float amount = cartItemService.total() + delivery_fee;
 
         OrderStatus orderStatus = orderStatusService.read(UUID.fromString("c1bf0443-ff39-4403-a425-f444b1c15fd5"));
-        Address address = addressService.read(UUIDAddress);
+        Address address = addressService.findById(UUIDAddress);
         Discount d = discountService.check(discount);
 //        e1b4dcdd-e314-4f5b-a51e-3be0fb4b5aa8
 //        55bc52f3-c60a-4004-a0e8-5f5be12c829d
