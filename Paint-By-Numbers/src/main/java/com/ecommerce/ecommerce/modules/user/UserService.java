@@ -42,6 +42,7 @@ public class UserService {
         c.setFullName(o.getFullName());
         c.setPhone(o.getPhone());
         c.setUsername(o.getUsername());
+        c.setEmail(o.getEmail());
         c.setRole(o.getRole());
         if (o.getPassword() != "")
             c.setPassword(encoder.encode(o.getPassword()));
@@ -67,8 +68,11 @@ public class UserService {
 
 
     public boolean isUserAlreadyPresent(User user) {
+
         boolean isUserAlreadyExists = false;
+
         User existingUser = userRepository.findByUsername(user.getUsername());
+
         // If user is found in database, then user already exists.
         if(existingUser != null){
             isUserAlreadyExists = true;

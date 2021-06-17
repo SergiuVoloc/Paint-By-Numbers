@@ -27,9 +27,10 @@
                 <td th:text="${p.getName()}"></td>
                 <td th:text="${p.getPrice()}"></td>
                 <td>
-                    <a th:href="@{/admin/product/__${p.getId()}__/edit}">Edit</a>
+                    <a class="btn btn-primary btn-sm"  th:href="@{/admin/product/__${p.getId()}__/edit}">Edit</a>
                     <a>&nbsp;|&nbsp;</a>
-                    <a th:href="@{/admin/product/__${p.getId()}__/delete}">Delete</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/admin/product/__${p.getId()}__/delete}" onclick="if
+                    (!(confirm('Are you sure you want to delete this product?'))) return false">Delete</a>
                 </td>
             </tr>
             </tbody>

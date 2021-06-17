@@ -42,7 +42,7 @@ public class UserController {
     ){
         User u = new User(username, password, fullName, email, phone, role, dateOfBirth, enabled);
         userService.create(u);
-        return "redirect:" + request.getHeader("Referer");
+        return "redirect:/user";
     }
 
 
