@@ -2,7 +2,7 @@ package com.ecommerce.ecommerce;
 
 import com.ecommerce.ecommerce.modules.category.CategoryService;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
-import com.ecommerce.ecommerce.modules.product.ProductService;
+import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ public class HomeController {
     @Autowired
     private CategoryService categoryService;
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
     @Autowired
     private FileStorageService fileStorageService;
 
@@ -29,11 +29,11 @@ public class HomeController {
             Model model){
 
         if (searchText.length() > 0){
-            model.addAttribute("products",   productService.search(searchText));
+            model.addAttribute("products",   productServiceImpl.search(searchText));
         } else if(searchInFile.length() > 0 ) {
             model.addAttribute("products",   fileStorageService.search(searchInFile));
         } else {
-            model.addAttribute("products",   productService.all());
+            model.addAttribute("products",   productServiceImpl.all());
         }
         model.addAttribute("categories", categoryService.all());
         return "index";

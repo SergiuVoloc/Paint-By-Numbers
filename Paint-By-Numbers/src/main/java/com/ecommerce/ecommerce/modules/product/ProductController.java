@@ -18,7 +18,7 @@ import java.util.UUID;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -35,14 +35,16 @@ public class ProductController {
             Model model
     ){
 //        System.out.println("<--- Search --->");
-        model.addAttribute("list", productService.all());
+        model.addAttribute("list", productServiceImpl.all());
         return "pages/product/index";
     }
 
 
+
+
     @GetMapping(value ="/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", productService.read(id));
+        model.addAttribute("item", productServiceImpl.read(id));
         return "pages/product/read";
     }
 
@@ -62,7 +64,7 @@ public class ProductController {
             @RequestParam String description,
             @RequestParam List<String> categories
     ){
-        productService.create(
+        productServiceImpl.create(
                 name,
                 price,
                 description,
@@ -71,13 +73,17 @@ public class ProductController {
         return "redirect:/admin/product";
     }
 
+
+
     @GetMapping("/{id}/edit")
     public String editPage(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", productService.read(id));
+        model.addAttribute("item", productServiceImpl.read(id));
         model.addAttribute("categories", categoryService.all());
         model.addAttribute("attributes", attributeService.all());
         return "pages/product/edit";
     }
+
+
 
     @PostMapping("/{id}/edit")
     public String update(
@@ -88,7 +94,7 @@ public class ProductController {
             @RequestParam List<String> categories,
             @RequestParam List<MultipartFile> files
     ){
-        productService.update(
+        productServiceImpl.update(
                 id,
                 name,
                 price,
@@ -96,25 +102,27 @@ public class ProductController {
                 categories,
                 files
         );
-        return "redirect:/product/" + id;
+        return "pages/product/edit";
     }
+
+
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
-        productService.delete(id);
+        productServiceImpl.delete(id);
         return "redirect:/admin/product";
     }
 
 
     @GetMapping("/{pid}/rFile/{fid}")
     public String removeFile (@PathVariable(value = "pid") UUID pid,@PathVariable(value = "fid") UUID fid){
-        productService.removeFile(pid, fid);
+        productServiceImpl.removeFile(pid, fid);
         return "redirect:" + request.getHeader("Referer");
     }
 
 
     @GetMapping("/{pid}/rPhoto/{fid}")
     public String removePhoto (@PathVariable(value = "pid") UUID pid,@PathVariable(value = "fid") UUID fid){
-        productService.removePhoto(pid, fid);
+        productServiceImpl.removePhoto(pid, fid);
         return "redirect:" + request.getHeader("Referer");
     }
 

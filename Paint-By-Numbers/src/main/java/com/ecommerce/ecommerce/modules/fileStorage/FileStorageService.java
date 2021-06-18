@@ -1,8 +1,8 @@
 package com.ecommerce.ecommerce.modules.fileStorage;
 
 import com.ecommerce.ecommerce.modules.product.Product;
-import com.ecommerce.ecommerce.modules.product.ProductService;
-import lombok.SneakyThrows;
+import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -23,20 +23,17 @@ import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import org.apache.commons.io.FilenameUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +44,7 @@ public class FileStorageService {
     @Autowired
     private FileStorageRepository fileStorageRepository;
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
 
     public String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
@@ -75,6 +72,8 @@ public class FileStorageService {
                     + ". Please try again!");
         }
     }
+
+
     public FileStorage uploadFile(MultipartFile file, String pid) {
         try {
             String fileName = UUID.randomUUID().toString();
@@ -96,6 +95,8 @@ public class FileStorageService {
                     + ". Please try again!");
         }
     }
+
+
 
     private FileStorage getFileStorage(MultipartFile file, String fileName, String ext, Path path) {
         FileStorage f = new FileStorage();
@@ -143,7 +144,7 @@ public class FileStorageService {
             for (ScoreDoc sd : foundDocs.scoreDocs)
             {
                 Document d = searcher.doc(sd.doc);
-                results.add(productService.read(UUID.fromString(d.get("product"))));
+                results.add(productServiceImpl.read(UUID.fromString(d.get("product"))));
 //                results.add(fileStorageRepository.findByInternalName(d.get("product")));
             }
 

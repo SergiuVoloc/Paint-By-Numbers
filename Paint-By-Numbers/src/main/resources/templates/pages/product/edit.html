@@ -105,11 +105,12 @@
                         </thead>
                         <tbody>
                         <tr th:each="photo : ${item.photos}">
-                            <td scope="row" th:text="${photo.id}"></td>
+                            <td scope="row" th:text="${photo.id}" style="width: fit-content;"></td>
                             <td th:text="${photo.name}"></td>
                             <td><img th:src="@{/file/__${photo.id}__}" alt="" width="300"></td>
                             <td>
-                                <a th:href="@{/admin/product/__${item.getId()}__/rPhoto/__${photo.getId()}__}">Delete</a>
+                                <a th:href="@{/admin/product/__${item.getId()}__/rPhoto/__${photo.getId()}__}"
+                                   class="btn btn-danger btn-sm mt-5"> Delete</a>
                             </td>
                         </tr>
                         </tbody>

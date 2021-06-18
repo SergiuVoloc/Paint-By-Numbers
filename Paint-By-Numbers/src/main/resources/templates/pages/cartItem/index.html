@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="blocks/head :: head" />
+<head> <title>Paint By Numbers - Your Basket</title>
+    <div th:replace="blocks/head :: head"></div>
+</head>
 <body>
 <nav th:replace="blocks/navbar :: navigation"></nav>
 <div class="container my-5">
@@ -64,7 +66,7 @@
                     </div>
                     <div class="row">
                         <div class="col-8">
-                            <label class="form-label">Delivery Address</label>
+                            <label for="user-addresses" class="form-label">Delivery Address</label>
                             <select class="form-control" name="address" id="user-addresses">
                                 <option th:each="a : ${user.getAddresses()}" th:value="${a.getId()}" th:text="${a.getFullName()} + ' / ' + ${a.getAddress1()}"></option>
                             </select>

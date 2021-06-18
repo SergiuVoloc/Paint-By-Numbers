@@ -1,12 +1,10 @@
 package com.ecommerce.ecommerce.modules.product;
 
-import com.ecommerce.ecommerce.modules.attribute.AttributeService;
 import com.ecommerce.ecommerce.modules.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import java.util.UUID;
 public class ProductGuestController {
 
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
     @Autowired
     private CategoryService categoryService;
 
@@ -34,7 +32,7 @@ public class ProductGuestController {
 
     @GetMapping(value ="/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", productService.read(id));
+        model.addAttribute("item", productServiceImpl.read(id));
         return "pages/product/read";
     }
 
@@ -44,7 +42,7 @@ public class ProductGuestController {
     @ResponseBody
     public List<String> search(){
         List<String> list = new ArrayList<>();
-        productService.all().forEach((e)-> {
+        productServiceImpl.all().forEach((e)-> {
             list.add(e.getName());
         });
         return list;

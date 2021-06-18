@@ -28,7 +28,7 @@
                 <div class="product-price text-danger" th:text="${@environment.getProperty('currency')} + ${item.price}"></div>
                 <form th:action="@{/cart/addProduct}" method="post">
                     <input type="text" name="pid" th:value="${item.getId()}" hidden>
-                    <input class="form-control" type="number" name="qty" placeholder="Quantity">
+                    <input class="form-control" type="number" name="qty" value="1" placeholder="Quantity">
                     <button class="btn btn-primary">Add to Cart</button>
                 </form>
             </div>

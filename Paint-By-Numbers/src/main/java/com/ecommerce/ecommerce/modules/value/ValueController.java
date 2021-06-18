@@ -3,7 +3,7 @@ package com.ecommerce.ecommerce.modules.value;
 import com.ecommerce.ecommerce.modules.attribute.Attribute;
 import com.ecommerce.ecommerce.modules.attribute.AttributeService;
 import com.ecommerce.ecommerce.modules.product.Product;
-import com.ecommerce.ecommerce.modules.product.ProductService;
+import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ public class ValueController {
     @Autowired
     private ValueService valueService;
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
     @Autowired
     private AttributeService attributeService;
     @Autowired
@@ -28,7 +28,7 @@ public class ValueController {
 
     @GetMapping("/create")
     public  String addPage(Model model){
-        model.addAttribute("products", (ArrayList<Product>) productService.all());
+        model.addAttribute("products", (ArrayList<Product>) productServiceImpl.all());
         model.addAttribute("attributes", (ArrayList<Attribute>) attributeService.all());
         return "pages/value/create";
     }
@@ -36,7 +36,7 @@ public class ValueController {
     @GetMapping()
     public String all(Model model){
         model.addAttribute("list", (ArrayList<Value>) valueService.all());
-        model.addAttribute("products", (ArrayList<Product>) productService.all());
+        model.addAttribute("products", (ArrayList<Product>) productServiceImpl.all());
         model.addAttribute("attributes", (ArrayList<Attribute>) attributeService.all());
         return "pages/value/index";
     }
@@ -80,7 +80,7 @@ public class ValueController {
             @RequestParam String value,
             @RequestParam Attribute attribute
     ){
-        valueService.create(value, attribute, productService.read(id));
+        valueService.create(value, attribute, productServiceImpl.read(id));
         return "redirect:" + request.getHeader("Referer");
     }
 }

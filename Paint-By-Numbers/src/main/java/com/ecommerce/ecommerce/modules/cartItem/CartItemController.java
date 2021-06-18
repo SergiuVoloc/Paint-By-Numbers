@@ -1,13 +1,11 @@
 package com.ecommerce.ecommerce.modules.cartItem;
 
 import com.ecommerce.ecommerce.modules.product.Product;
-import com.ecommerce.ecommerce.modules.product.ProductService;
+import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
 import com.ecommerce.ecommerce.modules.user.User;
 import com.ecommerce.ecommerce.modules.user.UserService;
 import com.ecommerce.ecommerce.modules.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +29,7 @@ public class CartItemController {
     private UserService userService;
 
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
 
 
 //    Pages
@@ -54,7 +52,7 @@ public class CartItemController {
     ){
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getCurrent();
-        Product p = productService.read(pid);
+        Product p = productServiceImpl.read(pid);
         cartItemService.create(new CartItem(qty, user, p));
         return "redirect:" + request.getHeader("Referer");
     }
