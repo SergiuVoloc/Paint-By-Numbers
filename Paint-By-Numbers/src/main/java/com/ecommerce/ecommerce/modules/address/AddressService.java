@@ -22,6 +22,14 @@ public class AddressService {
         return addressRepository.findAllByOrderByAddress1Asc();
     }
 
+
+    public List<Address> findAllByUser(UUID userId){
+
+
+        return addressRepository.findAddressesByUserId(userId);
+    }
+
+
     public Address findById(UUID theId) {
         Optional<Address> result = addressRepository.findById(theId);
 
@@ -30,7 +38,7 @@ public class AddressService {
         if(result.isPresent()){
             theAddress = result.get();
         }else{
-            throw new RuntimeException("Did not find emlpoyee id: " + theId);
+            throw new RuntimeException("Did not find address id: " + theId);
         }
         return theAddress;
     }
@@ -53,6 +61,8 @@ public class AddressService {
         addressRepository.save(newAddress);
         return newAddress;
     }
+
+
 
 
     public Address update(@PathVariable(value = "id") UUID id, Address o){

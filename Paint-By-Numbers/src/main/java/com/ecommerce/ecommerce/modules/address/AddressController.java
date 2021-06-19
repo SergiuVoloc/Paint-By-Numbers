@@ -22,17 +22,31 @@ public class AddressController {
 
 
 
+//    @GetMapping(value ="/user/address")
+//    public String listAddresses(Model model){
+//
+//        List<Address> addressList = addressService.findAll();
+//
+//        // <addresses> is a variable from the index page
+//        model.addAttribute("addresses", addressList);
+//
+//
+//        return "pages/address/index";
+//    }
+
+
+    // returns specific user addresses
     @GetMapping(value ="/user/address")
     public String listAddresses(Model model){
 
-        List<Address> addressList = addressService.findAll();
+        List<Address> userAddresses = userService.getCurrent().getAddresses();
 
         // <addresses> is a variable from the index page
-        model.addAttribute("addresses", addressList);
-//        model.addAttribute("addresses", addressService.findAll());
+        model.addAttribute("addresses", userAddresses);
 
         return "pages/address/index";
     }
+
 
 
 
@@ -44,6 +58,17 @@ public class AddressController {
 
 
     // Create Form
+//    @GetMapping(value = "/user/address/create")
+//    public  String addPage(Model model){
+//
+//        Address newAddress = new Address();
+//
+//
+//        model.addAttribute("address", newAddress);
+//
+//        return "pages/address/create";
+//    }
+
     @GetMapping(value = "/user/address/create")
     public  String addPage(Model model){
 
@@ -55,6 +80,9 @@ public class AddressController {
     }
 
 
+
+
+
     //    Create/Update and save to db
     @PostMapping(value = "/user/address/save")
     public String saveAddress(@ModelAttribute("address") Address newAddress){
@@ -62,18 +90,20 @@ public class AddressController {
         // save the address
         addressService.save(newAddress);
 
+
         // use a redirect to prevent duplicate submission using the "Post/Redirect/Get" pattern
         return "redirect:/user/address";
     }
 
-//
+
 //    @PostMapping(value = "/user/address/create")
 //    public String create(
 //            @RequestParam String full_name,
 //            @RequestParam String address1,
 //            @RequestParam String address2,
 //            @RequestParam String postcode,
-//            @RequestParam String phone){
+//            @RequestParam String phone,
+//            ){
 //        addressService.create(full_name,address1,address2,postcode,phone);
 //        return "pages/address/index";
 //    }

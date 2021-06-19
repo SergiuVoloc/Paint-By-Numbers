@@ -9,4 +9,6 @@ public interface AddressRepository extends CrudRepository<Address, UUID> {
 
     // custom method to find all addresses and sort them ascending using Spring Data JPA
     public List<Address> findAllByOrderByAddress1Asc();
+
+    public List<Address> findAddressesByUserId(UUID userId);
 }

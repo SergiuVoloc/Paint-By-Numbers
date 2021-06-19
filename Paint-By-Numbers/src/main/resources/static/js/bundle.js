@@ -1,3 +1,7 @@
+function confirmDelete() {
+    if (!(confirm('Are you sure you want to delete this product?'))) return false;
+}
+
 function fileUpload(form, input, spinner) {
     var fileForm = document.getElementById(form);
     var fileInput = document.getElementById(input);

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="blocks/head :: head" />
+<body>
+<nav th:replace="blocks/navbar :: navigation"></nav>
+<div class="container my-5">
+    <div class="row">
+        <h1 th:text="'Product: ' + ${item.name}"></h1>
+    </div>
+    <div class="row">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a
+                    class="nav-link active"
+                    id="details-tab"
+                    data-toggle="tab"
+                    href="#details"
+                    role="tab"
+                    aria-controls="details"
+                    aria-selected="true"
+                >Details</a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link"
+                    id="photos-tab"
+                    data-toggle="tab"
+                    href="#photos"
+                    role="tab"
+                    aria-controls="photos"
+                    aria-selected="false"
+                >Photos</a>
+            </li>
+            <li class="nav-item">
+                <a
+                        class="nav-link"
+                        id="files-tab"
+                        data-toggle="tab"
+                        href="#files"
+                        role="tab"
+                        aria-controls="files"
+                        aria-selected="false"
+                >Files</a>
+            </li>
+            <li class="nav-item">
+                <a
+                        class="nav-link"
+                        id="attributes-tab"
+                        data-toggle="tab"
+                        href="#attributes"
+                        role="tab"
+                        aria-controls="attributes"
+                        aria-selected="false"
+                >Attributes</a>
+            </li>
+        </ul>
+        <div class="tab-content my-5" id="myTabContent">
+            <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                <form class="row" method="post" enctype="multipart/form-data" th:object="${item}">
+                    <div class="col-6">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="Name"  th:field="*{name}">
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label">Price</label>
+                        <input type="number" step=".01" class="form-control"  placeholder="Price" th:field="*{price}">
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label">Categories</label>
+                        <select class="form-control" th:field="*{categories}" id="product-categories" multiple="multiple">
+                            <option th:each="categ : ${categories}" th:text="${categ.name}" th:value="${categ.id}" th:selected="${#lists.contains(item.categories, categ)}"></option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="3" id="editor" th:field="*{description}"></textarea>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+                <div class="row">
+                    <div class="col-6 my-3">
+                        <form id="photo-form" th:action="@{/admin/file/photo4product/__${item.getId()}__}">
+                            <input type="file" class="form-control"  placeholder="Browse" id="photo-input" multiple>
+                        </form>
+                    </div>
+                    <div id="photo-loading" class="col-1 mt-3 d-none">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered col-12" id="photo_table" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Photo</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="photo : ${item.photos}">
+                            <td scope="row" th:text="${photo.id}" style="width: fit-content;"></td>
+                            <td th:text="${photo.name}"></td>
+                            <td><img th:src="@{/file/__${photo.id}__}" alt="" width="300"></td>
+                            <td>
+                                <a th:href="@{/admin/product/__${item.getId()}__/rPhoto/__${photo.getId()}__}"
+                                   class="btn btn-danger btn-sm mt-5"> Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
+                <div class="row">
+                    <div class="form-group col-6 my-3">
+                        <form id="file-form" th:action="@{/admin/file/file4product/__${item.getId()}__}">
+                            <input type="file" class="form-control"  placeholder="Browse" id="file-input" multiple>
+                        </form>
+                    </div>
+                    <div id="file-loading" class="col-1 mt-3 d-none">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered" id="file_table" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="f : ${item.getFiles()}">
+                            <td scope="row" th:text="${f.id}"></td>
+                            <td><a th:href="@{/file/__${f.id}__}" th:text="${f.name}" target="_blank"></a></td>
+                            <td th:text="${f.mime_type}"></td>
+                            <td>
+                                <a th:href="@{/admin/product/__${item.getId()}__/rFile/__${f.getId()}__}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="attributes" role="tabpanel" aria-labelledby="attributes-tab">
+                <form class="row my-3" th:action="@{/admin/value/value4product/__${item.getId()}__}" method="post">
+                    <div class="col">
+                        <label class="form-label">Value</label>
+                        <input type="text" class="form-control" placeholder="Value" name="value">
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label">Attribute</label>
+                        <select class="form-control" name="attribute" id="attribute" style="width: 100%;">
+                            <option th:each="a : ${attributes}" th:text="${a.name}" th:value="${a.id}"></option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <label class="form-label">&nbsp;</label>
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </div>
+                </form>
+                <table class="table table-striped table-bordered" id="attributes_table" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Attribute</th>
+                        <th scope="col">Value</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="a : ${item.attributes}">
+                        <td scope="row" th:text="${a.id}"></td>
+                        <td th:text="${a.attribute.name}"></td>
+                        <td th:text="${a.value}"></td>
+                        <td>
+                            <a th:href="@{/admin/value/__${a.id}__/edit}">Edit</a>
+                            <a>&nbsp;|&nbsp;</a>
+                            <a th:href="@{/admin/value/__${a.id}__/delete}">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/></footer>
+
+
+<script>
+    $(document).ready(function() {
+        $('#product-categories').select2();
+        $('#attribute').select2();
+
+        $('#photo_table').DataTable();
+        $('#file_table').DataTable();
+        $('#attributes_table').DataTable();
+
+
+        $('#editor').summernote();
+
+
+        $('#myTab a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+
+        fileUpload('file-form', 'file-input', 'file-loading');
+        fileUpload('photo-form', 'photo-input', 'photo-loading');
+    });
+</script>
+
+</body>
+</html>
+
+

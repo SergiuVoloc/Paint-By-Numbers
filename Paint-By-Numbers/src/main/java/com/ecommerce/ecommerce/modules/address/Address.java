@@ -11,7 +11,15 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String fullName, address1, address2, postCode, phone;
+    private String fullName;
+
+    private String address1;
+
+    private String address2;
+
+    private String postCode;
+
+    private String phone;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -26,6 +34,7 @@ public class Address {
         this.postCode = postCode;
         this.phone = phone;
     }
+
 
     public UUID getId() {
         return id;

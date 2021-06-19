@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blocks/head :: head" />
+<body>
+<nav th:replace="blocks/navbar :: navigation"></nav>
+<div class="container my-5">
+    <form class="row" method="post"  action="/pbn" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-4">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" placeholder="Name"  name="name">
+            </div>
+            <div class="col-6">
+                <label class="form-label">File</label>
+                <input type="file" class="form-control"  placeholder="Browse" id="file-input" name="file">
+            </div>
+            <div class="col-2">
+                <label class="form-label">Size:</label>
+                <select class="form-control" name="size" id="pbn-size">
+                    <option value="40x50">40x50</option>
+                    <option value="40x60">40x60</option>
+                    <option value="50x50">50x50</option>
+                    <option value="50x70">50x70</option>
+                    <option value="60x60">60x60</option>
+                    <option value="60x80">60x80</option>
+                    <option value="60x100">60x100</option>
+                    <option value="70x70">70x70</option>
+                    <option value="70x100">70x100</option>
+                    <option value="70x140">70x140</option>
+                    <option value="80x120">80x120</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/></footer>
+<script>
+    $(document).ready(function() {
+        $('#product-categories').select2();
+        $('#editor').summernote();
+    });
+</script>
+
+</body>
+</html>
+
+

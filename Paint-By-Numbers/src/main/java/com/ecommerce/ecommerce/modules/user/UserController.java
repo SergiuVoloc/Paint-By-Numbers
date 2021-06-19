@@ -71,6 +71,38 @@ public class UserController {
     }
 
 
+
+//  Account Details
+    @GetMapping("/details")
+    public String editAccountDetails(Model model){
+
+        User user = userService.getCurrent();
+
+        model.addAttribute("user", user);
+
+        return "pages/user/accountDetails";
+    }
+
+    @PostMapping("/details")
+    public String updateAccountDetails(
+            @RequestParam String username,
+            @RequestParam String password,
+            @RequestParam String fullName,
+            @RequestParam String phone,
+            @RequestParam String role,
+            @RequestParam Date dateOfBirth,
+            @RequestParam Boolean enabled,
+            @RequestParam String email
+    ){
+        User u = new User(username, password, fullName, email, phone, role, dateOfBirth, enabled);
+        userService.update(userService.getCurrent().getId(), u);
+        return "redirect:/";
+    }
+
+
+
+
+
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
         userService.delete(id);
