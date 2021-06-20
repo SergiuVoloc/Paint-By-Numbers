@@ -24,21 +24,19 @@ public class OrderStatusController {
         model.addAttribute("list", (ArrayList<OrderStatus>) o);
         return "pages/orderStatus/index";
     }
-    @GetMapping("/create")
-    public  String addPage(){
-        return "pages/orderStatus/create";
-    }
+
     @GetMapping(value ="/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", orderStatusService.read(id));
         return "pages/orderStatus/edit";
     }
-    @GetMapping("/{id}/edit")
-    public String editPAge(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", orderStatusService.read(id));
-        return "pages/orderStatus/edit";
-    }
 
+
+
+    @GetMapping("/create")
+    public  String addPage(){
+        return "pages/orderStatus/create";
+    }
 
 
     @PostMapping("/create")
@@ -50,6 +48,13 @@ public class OrderStatusController {
         return "redirect:" + request.getHeader("Referer");
     }
 
+
+    @GetMapping("/{id}/edit")
+    public String editPAge(@PathVariable(value = "id") UUID id, Model model){
+        model.addAttribute("item", orderStatusService.read(id));
+        return "pages/orderStatus/edit";
+    }
+
     @PostMapping("/{id}/edit")
     public String update(
             @PathVariable(value = "id") UUID id,
@@ -59,6 +64,8 @@ public class OrderStatusController {
         orderStatusService.update(id, a);
         return "redirect:" + request.getHeader("Referer");
     }
+
+
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
         orderStatusService.delete(id);

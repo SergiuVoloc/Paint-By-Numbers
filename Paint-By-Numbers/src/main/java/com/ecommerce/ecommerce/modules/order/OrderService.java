@@ -77,6 +77,9 @@ public class OrderService {
         orderRepository.save(order);
         cartItemService.clear();
     }
+
+
+
     public Order update(UUID id, Order o){
         Order c = orderRepository.findById(id).orElseThrow();
         orderRepository.save((Order) objectUtils.update(c,o));
