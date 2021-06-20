@@ -45,9 +45,11 @@
                 <h1>Summary</h1>
             </div>
             <div class="row">
-                <form th:action="@{/order/create}" method="post">
+                <form th:action="@{/cart/pay}" method="post">
                     <div class="col-12">
-                        <input class="form-control" type="number" step="0.1" name="subtotal" id="subtotal" th:value="${subtotal}" disabled />
+                        <label for="subtotal">Subtotal</label>
+                        <input class="form-control" type="number" step="0.1"
+                               name="subtotal" id="subtotal" th:value="${subtotal}" disabled />
                     </div>
                     <div class="col-12">
                         <label class="form-label">SHIPPING</label>

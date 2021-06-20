@@ -8,7 +8,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.text.DecimalFormat;
 import java.util.UUID;
 
 @Entity

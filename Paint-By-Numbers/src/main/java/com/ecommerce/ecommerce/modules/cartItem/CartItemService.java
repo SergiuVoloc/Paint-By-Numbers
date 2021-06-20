@@ -55,15 +55,20 @@ public class CartItemService {
 
     }
 
+
     public CartItem productExistInCart(UUID pid){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return cartItemRepository.findByProduct_IdAndUser_Id(pid, userService.findByUsername(auth.getName()).getId());
     }
+
+
     public void addQty(UUID id){
         CartItem c = cartItemRepository.findById(id).orElseThrow();
         c.setQty(c.getQty() + 1);
         cartItemRepository.save(c);
     }
+
+
     public void decreaseQty(UUID id){
         CartItem c = cartItemRepository.findById(id).orElseThrow();
         if(c.getQty() == 1){

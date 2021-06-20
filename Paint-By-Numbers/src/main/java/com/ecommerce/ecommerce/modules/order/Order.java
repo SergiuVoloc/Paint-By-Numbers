@@ -21,6 +21,11 @@ public class Order {
 
     private Date created_at, modified;
     private float delivery_fee, amount;
+    private final String currency = "USD";
+    private final String method = "PayPal";
+    private final String description = "Payment to PaintByNumbers.com";
+    private final String intent = "ORDER";
+
 
 
     @ManyToOne
@@ -57,6 +62,22 @@ public class Order {
         this.user = user;
         this.discount = discount;
         this.orderStatus = orderStatus;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public String getIntent() {
+        return intent;
     }
 
     public UUID getId() {
