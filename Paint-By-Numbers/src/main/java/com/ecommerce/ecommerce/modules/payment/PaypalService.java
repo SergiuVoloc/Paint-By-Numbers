@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.modules.payment;
 
 
+import com.ecommerce.ecommerce.modules.orderItem.OrderItem;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -26,6 +27,7 @@ public class PaypalService {
             String currency,
             String method,
             String intent,
+            List<OrderItem> items,
             String cancelUrl,
             String successUrl) throws PayPalRESTException{
 
@@ -38,10 +40,10 @@ public class PaypalService {
 
         amount.setTotal(String.format("%.2f", finalPrice));
 
-
         Transaction transaction = new Transaction();
         transaction.setDescription(description);
         transaction.setAmount(amount);
+//        transaction.setItemList((ItemList) items);
 
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
@@ -53,6 +55,7 @@ public class PaypalService {
         payment.setIntent(intent);
         payment.setPayer(payer);
         payment.setTransactions(transactions);
+
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);

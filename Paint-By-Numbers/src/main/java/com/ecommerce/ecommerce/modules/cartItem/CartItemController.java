@@ -6,6 +6,7 @@ import com.ecommerce.ecommerce.modules.product.Product;
 import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
 import com.ecommerce.ecommerce.modules.user.User;
 import com.ecommerce.ecommerce.modules.user.UserService;
+import com.ecommerce.ecommerce.modules.utils.EmailSenderService;
 import com.ecommerce.ecommerce.modules.utils.ObjectUtils;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -16,10 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("cart")
+@RequestMapping("/cart")
 public class CartItemController {
     @Autowired
     private HttpServletRequest request;
@@ -39,8 +42,12 @@ public class CartItemController {
     @Autowired
     PaypalService paypalService;
 
-    public static final String SUCCESS_URL = "pay/success";
-    public static final String CANCEL_URL  = "pay/cancel";
+    @Autowired
+    EmailSenderService emailSenderService;
+
+
+    public static final String SUCCESS_URL = "/pay/success";
+    public static final String CANCEL_URL  = "/pay/cancel";
 
 
 
@@ -99,8 +106,9 @@ public class CartItemController {
                     order.getCurrency(),
                     order.getMethod(),
                     order.getIntent(),
-                    "http://localhost:80/" + CANCEL_URL,
-                    "http://localhost:80/" + SUCCESS_URL);
+                    order.getItems(),
+                    "http://localhost/cart" + CANCEL_URL,
+                    "http://localhost/cart" + SUCCESS_URL);
 
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
@@ -116,24 +124,52 @@ public class CartItemController {
     }
 
 
+
     @GetMapping(value = CANCEL_URL)
     public String cancelPay() {
         return "pages/payment/cancel";
     }
 
+
+
     @GetMapping(value = SUCCESS_URL)
     public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
-            System.out.println(payment.toJSON());
+
+//          System.out.println(payment.toJSON());
+
+
+
+
+
+
+            try (FileWriter file = new
+                    FileWriter("src/main/resources/payments/" + paymentId + "txt")) {
+
+                file.write(payment.toJSON());
+                file.flush();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             if (payment.getState().equals("approved")) {
+
+//                String receiverEmail = payment.getPayer().getPayerInfo().getEmail();
+//                emailSenderService.sendPurchaseConfirmationEmail(
+//                        "sergiuvoloc0@gmail.com",
+//                        "Paint By Numbers. Purchase confirmation! ",
+//                        "Your order " + paymentId + " has been registered an soon will be sent to You! "
+//                );
+
                 return "pages/payment/success";
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
-        }
-        return "redirect:/";
-    }
 
+        }
+        return "redirect:/cart" + CANCEL_URL;
+    }
 
 }
