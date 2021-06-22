@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blocks/head :: head" > <title> Payment Canceled</title></head>
 <body>
-<h1>Payment Canceled</h1>
+<nav th:replace="blocks/navbar :: navigation"></nav>
+
+<div class="jumbotron text-center mt-5">
+    <h1 class="display-3 mt-5 text-danger">Oops! </h1>
+    <p class="lead">Something went wrong. Please try again.</p>
+    <hr>
+    <p>
+        Having trouble? <a href="mailto:voloc.sergiu.i7c@student.ucv.ro">Contact us</a>
+    </p>
+    <p class="lead">
+        <a class="btn btn-primary btn-sm mb-5" th:href="@{/}" role="button">Go to homepage</a>
+    </p>
+</div>
+
+<footer th:replace="blocks/footer :: footer"/></footer>
+
 </body>
 </html>
+
+

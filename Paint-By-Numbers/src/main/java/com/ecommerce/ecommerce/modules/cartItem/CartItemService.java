@@ -43,10 +43,12 @@ public class CartItemService {
         cartItemRepository.save((CartItem) objectUtils.update(c,o));
         return c;
     }
+
     public ArrayList<CartItem> findAllByUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return cartItemRepository.findAllByUser_Id(userService.findByUsername(auth.getName()).getId());
     }
+
 
     public float total() {
         return findAllByUser().stream()

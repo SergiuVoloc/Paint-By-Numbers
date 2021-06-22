@@ -16,10 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/cart")
@@ -97,7 +102,9 @@ public class CartItemController {
 
     // PayPal Payment endpoints
     @PostMapping("/pay")
-    public String payment(@ModelAttribute("order") Order order) {
+    public String payment(@ModelAttribute("order") Order order, Product product) {
+
+
         try {
             Payment payment = paypalService.createPayment(
                     cartItemService.total(),
@@ -106,7 +113,6 @@ public class CartItemController {
                     order.getCurrency(),
                     order.getMethod(),
                     order.getIntent(),
-                    order.getItems(),
                     "http://localhost/cart" + CANCEL_URL,
                     "http://localhost/cart" + SUCCESS_URL);
 
@@ -139,15 +145,25 @@ public class CartItemController {
 
 //          System.out.println(payment.toJSON());
 
+            // Regex expression to extract products name
+            Pattern pattern = Pattern.compile(" name='([A-Z].+?)',");
+            Matcher matcher = pattern.matcher(cartItemService.findAllByUser().toString());
+
+            List<String> purchasedItems = new ArrayList<String>();
+
+            while (matcher.find()){
+
+                purchasedItems.add(matcher.group(1));
+            }
 
 
-
-
-
+            // save order details to file
             try (FileWriter file = new
-                    FileWriter("src/main/resources/payments/" + paymentId + "txt")) {
+                    FileWriter("src/main/resources/payments/" + paymentId + ".txt")) {
 
-                file.write(payment.toJSON());
+                file.write("\n Products: " + purchasedItems +
+                        "\n\n Order Details: \n" + payment.toJSON());
+
                 file.flush();
 
             } catch (IOException e) {
@@ -156,18 +172,32 @@ public class CartItemController {
 
             if (payment.getState().equals("approved")) {
 
-//                String receiverEmail = payment.getPayer().getPayerInfo().getEmail();
-//                emailSenderService.sendPurchaseConfirmationEmail(
-//                        "sergiuvoloc0@gmail.com",
-//                        "Paint By Numbers. Purchase confirmation! ",
-//                        "Your order " + paymentId + " has been registered an soon will be sent to You! "
-//                );
+                String receiverEmail = payment.getPayer().getPayerInfo().getEmail();
+
+                // Email for Customer with purchase confirmation
+                emailSenderService.sendPurchaseConfirmationEmail(
+                        receiverEmail,
+                        "Paint By Numbers. Purchase confirmation! ",
+                        "Your order " + paymentId +
+                                " has been registered and soon will be sent to You! \n\n Your Products are: " + purchasedItems + "." + "\n\n If You have any questions, reply to this mail." + "\n\n Regards, \n Paint By Numbers Team.");
+
+
+                // Email with attachment details about order for factory
+                emailSenderService.sendEmailWithAttachment(
+                        "voloc.sergiu.i7c@student.ucv.ro",
+                        "New Order! ",
+                        "<h1>Check attachment for details!</h1>",
+                        "src/main/resources/payments/" + paymentId + ".txt");
 
                 return "pages/payment/success";
             }
-        } catch (PayPalRESTException e) {
+        } catch (PayPalRESTException  e) {
             System.out.println(e.getMessage());
 
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return "redirect:/cart" + CANCEL_URL;
     }
