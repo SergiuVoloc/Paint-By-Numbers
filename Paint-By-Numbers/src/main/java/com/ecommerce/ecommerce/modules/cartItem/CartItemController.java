@@ -140,6 +140,7 @@ public class CartItemController {
 
     @GetMapping(value = SUCCESS_URL)
     public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+            String text  = cartItemService.findAllByUser().toString();
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
 
@@ -147,7 +148,7 @@ public class CartItemController {
 
             // Regex expression to extract products name
             Pattern pattern = Pattern.compile(" name='([A-Z].+?)',");
-            Matcher matcher = pattern.matcher(cartItemService.findAllByUser().toString());
+            Matcher matcher = pattern.matcher(text);
 
             List<String> purchasedItems = new ArrayList<String>();
 
@@ -182,13 +183,15 @@ public class CartItemController {
                                 " has been registered and soon will be sent to You! \n\n Your Products are: " + purchasedItems + "." + "\n\n If You have any questions, reply to this mail." + "\n\n Regards, \n Paint By Numbers Team.");
 
 
-                // Email with attachment details about order for factory
+                // Email with attachment details about new order for factory
                 emailSenderService.sendEmailWithAttachment(
                         "voloc.sergiu.i7c@student.ucv.ro",
                         "New Order! ",
                         "<h1>Check attachment for details!</h1>",
                         "src/main/resources/payments/" + paymentId + ".txt");
 
+                // Empty users basket
+                cartItemService.clear();
                 return "pages/payment/success";
             }
         } catch (PayPalRESTException  e) {

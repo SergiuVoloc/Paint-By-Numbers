@@ -30,11 +30,8 @@ public class ProductController {
 
 
     @GetMapping()
-    public String all(
-            @RequestParam(defaultValue = "") String searchText,
-            Model model
-    ){
-//        System.out.println("<--- Search --->");
+    public String all(@RequestParam(defaultValue = "") String searchText, Model model){
+
         model.addAttribute("list", productServiceImpl.all());
         return "pages/product/index";
     }
@@ -125,5 +122,9 @@ public class ProductController {
         productServiceImpl.removePhoto(pid, fid);
         return "redirect:" + request.getHeader("Referer");
     }
+
+
+
+
 
 }

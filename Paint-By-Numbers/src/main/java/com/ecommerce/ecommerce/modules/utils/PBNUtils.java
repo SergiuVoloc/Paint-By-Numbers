@@ -19,11 +19,14 @@
 //public class PBNUtils {
 //    static {
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+////        OpenCV.loadLocally();
+//
 //    }
-//    public void process(String filename) throws IOException {
+//
+//    public static void process(String filename) throws IOException {
 //
 //
-//        Mat img = Imgcodecs.imread("/uploads/0e962eff-77b3-456c-9d1c-d84ba3b37732.jpg");
+//        Mat img = Imgcodecs.imread("/static/uploads/0e962eff-77b3-456c-9d1c-d84ba3b37732.jpg");
 //
 //        System.out.println();
 //
@@ -116,7 +119,7 @@
 //        Mat labels = new Mat();
 //        Mat centers = new Mat();
 //        Core.kmeans(samples32f, k, labels, criteria, 3, Core.KMEANS_PP_CENTERS, centers);
-//        Imgcodecs.imwrite("output\\centers.jpg", centers);
+//        Imgcodecs.imwrite("/static/images/ProcessingIMG/output/centers.jpg", centers);
 //        System.out.println(labels.toString());
 //        return showClusters(samplesLAB, labels, centers);
 //    }
@@ -224,7 +227,7 @@
 ////                Imgproc.putText(cont, ""+i, new Point (contour2.get(0,0)[0],contour2.get(0,0)[1]), Imgproc.FONT_HERSHEY_PLAIN, 1, new Scalar(255));
 ////	        }
 //
-//            Imgcodecs.imwrite("output\\cont_"+i+".png", cont);
+//            Imgcodecs.imwrite("/static/images/ProcessingIMG/output/cont_"+i+".png", cont);
 //        }
 //
 //        Mat allwhite = Mat.ones(clusters.get(0).size(),CvType.CV_8UC1);
@@ -250,7 +253,7 @@
 //        System.out.println(reInv2);
 //        System.out.println(bott);
 //        reInv2.push_back(bott);
-//        Imgcodecs.imwrite("output\\PBN.png", reInv2);
+//        Imgcodecs.imwrite("/static/images/ProcessingIMG/output/PBN.png", reInv2);
 //
 //        return reInv;
 //    }

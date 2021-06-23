@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 public class EmailSenderService {
@@ -45,7 +46,7 @@ public class EmailSenderService {
 
         FileSystemResource file = new FileSystemResource(new File(attachment));
 
-        helper.addAttachment(file.getFilename(), file);
+        helper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
 
         mailSender.send(message);
 

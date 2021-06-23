@@ -12,6 +12,9 @@ import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
@@ -151,6 +154,14 @@ public class ProductServiceImpl implements ProductService{
 
         productRepository.save(personalizedProduct);
         return personalizedProduct;
+    }
+
+    @Override
+    public Page<Product> findPaginated(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+
+        return this.productRepository.findAll(pageable);
     }
 
 }

@@ -41,7 +41,7 @@
                 <input type="submit" hidden>
             </form>
             <div class="row mt-3" id="js-shuffle" >
-                <div th:each="p,pStat : ${products}"
+                <div th:each="p,pStat : ${productList}"
 
                      class="col-4 product-item my-3"
                      th:data-groups="${p.getCategories2String()}"
@@ -49,22 +49,45 @@
 
                     <!-- To avoid Personalized product to appear among other products on home page :
                     th:unless="${pStat.index == 5}" -->
-                    <div class="card" th:unless="${pStat.index == 5}">
+                    <div class="card" th:unless="${pStat.index == 5}" >
                         <a th:href="'/product/' + ${p.getId()}"><img class="card-img-top"
-                           th:src="@{/file/__${p.getPhotos()[0].id}__}" alt=""
-
-                           ></a>
+                           th:src="@{/file/__${p.getPhotos()[0].id}__}" alt="" ></a>
                         <div class="card-body container">
                             <h4 class="card-title">
                                 <a th:text="${p.getName()}" th:href="'/product/' + ${p.getId()}"/>
                             </h4>
                             <h5 th:text="${p.getPrice()}" />
-                            <ul class="m-0 p-0" th:each="pc : ${p.getCategories()}"
-                                th:text="${pc.getName()}"></ul>
+<!--                            <ul class="m-0 p-0" th:each="pc : ${p.getCategories()}"-->
+<!--                                th:text="${pc.getName()}"></ul>-->
                         </div>
                     </div>
                 </div>
                 <div class="col-1 my-sizer-element"></div>
+            </div>
+        </div>
+        <div th:if="${totalPages > 1}">
+
+            <div class="row col-sm-10 mt-3 mb-5 ">
+                <div class="col-sm-2"> Total Products:&nbsp;[[${totalItems}]]</div>
+
+                <div class="col-sm-1 ">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+                </div>
+
+                <div class="col-sm-1 ">
+                    <span th:each=" i: ${#numbers.sequence(1,totalPages)}">
+                    <a th:if="${currentPage != i}"
+                       th:href="@{'/page/' + ${i}}"> [[${i}]]</a>
+                    <span th:unless="${currentPage != i}"> [[${i}]] </span> &nbsp;
+                        &nbsp;
+                    </span>
+                </div>
+
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+                </div>
             </div>
         </div>
     </div>
