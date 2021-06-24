@@ -3,13 +3,15 @@ package com.ecommerce.ecommerce.modules.fileStorage;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
 @Indexed
-public class FileStorage {
+public class  FileStorage {
 
 //    <--- Properties --->
     @Id

@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -47,6 +48,26 @@ public class EmailSenderService {
         FileSystemResource file = new FileSystemResource(new File(attachment));
 
         helper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
+
+        mailSender.send(message);
+
+    }
+    public void sendEmailWithAttachment(String receiver, String subject, String body, List<String> attachments) throws MessagingException,
+            IOException {
+
+        MimeMessage message = mailSender.createMimeMessage();
+
+        // true = multipart message
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(receiver);
+        helper.setSubject(subject);
+        helper.setText(body, true);
+
+        for(String attachment: attachments) {
+            FileSystemResource file = new FileSystemResource(new File(attachment));
+            helper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
+        }
 
         mailSender.send(message);
 

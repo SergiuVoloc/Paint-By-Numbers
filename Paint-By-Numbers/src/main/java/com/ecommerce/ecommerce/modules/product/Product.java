@@ -3,9 +3,9 @@ package com.ecommerce.ecommerce.modules.product;
 import com.ecommerce.ecommerce.modules.category.Category;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorage;
 import com.ecommerce.ecommerce.modules.value.Value;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.search.annotations.*;
-import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,6 +29,10 @@ public class Product {
     private String description;
     @Field
     private float price;
+    @Field
+    private Boolean frame;
+    @Field
+    private String size;
     @Field
     private Date created_at;
 
@@ -66,7 +70,8 @@ public class Product {
     @IndexedEmbedded(depth=1)
     private List<Value> attributes = new ArrayList<>();
 
-    public Product(UUID id, String name, String description, Float price, List<Category> categories, List<FileStorage> photos, List<Value> attributes) {
+    public Product(UUID id, String name, String description, Float price, List<Category> categories,
+                   List<FileStorage> photos, List<Value> attributes, Boolean frame, String size) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -74,6 +79,8 @@ public class Product {
         this.categories = categories;
         this.attributes = attributes;
         this.photos = photos;
+        this.frame = frame;
+        this.size = size;
         this.created_at = new Date();
     }
 
@@ -151,6 +158,7 @@ public class Product {
         }
         return r.substring(0,r.length()-1) + "]";
     }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -158,9 +166,29 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", frame=" + frame +
+                ", size='" + size + '\'' +
+                ", created_at=" + created_at +
                 ", categories=" + categories +
                 ", photos=" + photos +
+                ", files=" + files +
                 ", attributes=" + attributes +
                 '}';
+    }
+
+    public Boolean getFrame() {
+        return frame;
+    }
+
+    public void setFrame(Boolean frame) {
+        this.frame = frame;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

@@ -29,72 +29,55 @@
 
         <div class="col-md-4 float-right">
             <h1> Personalized Photo </h1>
-            <div class="product-description mb-5"> <h3>Make Your Own Photo</h3> </div>
+            <div class=" mb-5"><h3>Make Your Own Photo</h3></div>
             <div class="product-box ">
                 <div class="product-price text-danger" > </div>
 
-                <form th:action="@{/cart/addProduct}" method="post" >
+                <form class="p-3"
+                      th:action="@{/personalize/addProduct}" method="post"
+                      enctype="multipart/form-data"
+                >
                     <input type="text" name="pid" th:value="${product.getId()}" hidden>
-
+                    <div class="mt-5">
+                        <label class="form-label"><b>Upload Your Photo:</b></label>
+                        <input type="file"
+                               class="form-control"  placeholder="Browse" id="file-input" name="imageFile">
+                    </div>
                     <label for="image-size" class="text-left"><b>Canvas Size:</b></label>
                     <select class="form-control" name="size" id="image-size">
-                        <option value="40x50">40x50</option>
-                        <option value="40x60">40x60</option>
-                        <option value="50x50">50x50</option>
-                        <option value="50x70">50x70</option>
-                        <option value="60x60">60x60</option>
-                        <option value="60x80">60x80</option>
-                        <option value="60x100">60x100</option>
-                        <option value="70x70">70x70</option>
-                        <option value="70x100">70x100</option>
-                        <option value="70x140">70x140</option>
-                        <option value="80x120">80x120</option>
-<!--                        <option th:each="a : ${user.getAddresses()}" th:value="${a.getId()}" th:text="${a.getFullName()} + ' / ' + ${a.getAddress1()}"></option>-->
+                        <option value="40x50">40x50cm</option>
+                        <option value="40x60">40x60cm</option>
+                        <option value="50x50">50x50cm</option>
+                        <option value="50x70">50x70cm</option>
+                        <option value="60x60">60x60cm</option>
+                        <option value="60x80">60x80cm</option>
+                        <option value="60x100">60x100cm</option>
+                        <option value="70x70">70x70cm</option>
+                        <option value="70x100">70x100cm</option>
+                        <option value="70x140">70x140cm</option>
+                        <option value="80x120">80x120cm</option>
                     </select>
 
+                    <label for="frame-presence" class="text-left mt-3"><b>Frame:</b> </label> <br>
+                    <select name="frame" id="frame-presence">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
                     <label class="mt-3 "> <b>Quantity:</b></label>
-                        <input class="form-control " type="number" name="qty" value="1" placeholder="Quantity">
+                    <input id="qty" class="form-control" type="number" name="qty" value="1" placeholder="Quantity">
 
-
-                    <label for="frame" class="text-left mt-3"><b>Frame:</b> </label> <br>
-                    <select name="frame-presence" id="frame">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-
-<!--                    <label for="image-upload" class="mt-3"> <b>Upload your image:</b>-->
-<!--                    <input class="mt-3" type="file" id="image-upload" name="image-upload" alt="image-upload">-->
-<!--                    </label>-->
-
-
-<!--                    <form method="POST" enctype="multipart/form-data" action="/admin/file/upload/personalized">-->
-<!--                        <input type="file" name="imageUpload">-->
-<!--                        <input type="submit" value="Upload">-->
-<!--                    </form>-->
-
-
-                    <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
-                        <div class="row">
-                            <div class="form-group col-6 my-3">
-                                <form id="file-form" th:action="@{/admin/file/file4product/__${product.getId()}__}">
-                                    <input type="file" class="form-control"  placeholder="Browse" id="file-input" multiple>
-                                </form>
-                            </div>
-                            <div id="file-loading" class="col-1 mt-3 d-none">
-                                <div class="spinner-border text-success" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div class="product-price text-danger center-custom mt-2" style="font-size: x-large"
-                         th:text="${@environment.getProperty('currency')} + ${product.price}">
-                    </div>
+                    <input id="productPrice" th:value="${product.price}" hidden />
+                    <input id="sizePrice" value="0" hidden />
+                    <input id="framePrice" value="0" hidden />
+                    <h5>Total:
+                        <input
+                                id="total"
+                                name="total"
+                                class="product-price text-danger center-custom mt-2"
+                                th:value="${product.price}"
+                                style="border: 0;"
+                        />
+                    </h5>
 
                     <div class="center-custom">
                         <button onclick="OnclickPopUp()" class="btn btn-primary mt-4">Add to Cart</button>
@@ -105,10 +88,10 @@
 
         <div class="col-md-1"></div>
     </div>
-    <div class="row col-md-12">
+    <div class="row col-md-12 mt-5">
         <br>
-        <h3 th:class="mt-5">Description</h3>
-        <hr>
+        <h3 th:class="mt-5">Description <hr> </h3>
+
         <div class="product-description" th:utext="${product.description}"></div>
     </div>
 </div>
@@ -145,24 +128,24 @@
 
 
     $(document).ready(function() {
-        $('#product-categories').select2();
-        $('#attribute').select2();
+        $(document).ready( function () {
+            let sizePrice = 0;
+            document.getElementById('image-size').addEventListener("change", () => {
+                document.getElementById('sizePrice').value =  size2price(document.getElementById('image-size').value);
+                priceUpdate();
+            }, false);
 
-        $('#photo_table').DataTable();
-        $('#file_table').DataTable();
-        $('#attributes_table').DataTable();
-
-
-        $('#editor').summernote();
-
-
-        $('#myTab a').on('click', function (e) {
-            e.preventDefault()
-            $(this).tab('show')
-        })
-
-        fileUpload('file-form', 'file-input', 'file-loading');
-        fileUpload('photo-form', 'photo-input', 'photo-loading');
+            document.getElementById('frame-presence').addEventListener("change", () => {
+                let framePrice = 0;
+                if(document.getElementById('frame-presence').value === "true"){
+                    framePrice = 10;
+                } else {
+                    framePrice = 0;
+                };
+                document.getElementById('framePrice').value =  framePrice;
+                priceUpdate();
+            }, false);
+        });
     });
 </script>
 

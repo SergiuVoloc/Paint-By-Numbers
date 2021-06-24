@@ -10,29 +10,54 @@
                 <label class="form-label">Name</label>
                 <input type="text" class="form-control" placeholder="Name"  name="name">
             </div>
-            <div class="col-6">
+            <div class="col-2">
                 <label class="form-label">File</label>
                 <input type="file" class="form-control"  placeholder="Browse" id="file-input" name="file">
             </div>
             <div class="col-2">
-                <label class="form-label">Size:</label>
-                <select class="form-control" name="size" id="pbn-size">
-                    <option value="40x50">40x50</option>
-                    <option value="40x60">40x60</option>
-                    <option value="50x50">50x50</option>
-                    <option value="50x70">50x70</option>
-                    <option value="60x60">60x60</option>
-                    <option value="60x80">60x80</option>
-                    <option value="60x100">60x100</option>
-                    <option value="70x70">70x70</option>
-                    <option value="70x100">70x100</option>
-                    <option value="70x140">70x140</option>
-                    <option value="80x120">80x120</option>
+                <label for="image-size" class="text-left"><b>Canvas Size:</b></label>
+                <select class="form-control" name="size" id="image-size">
+                    <option value="40x50">40x50cm</option>
+                    <option value="40x60">40x60cm</option>
+                    <option value="50x50">50x50cm</option>
+                    <option value="50x70">50x70cm</option>
+                    <option value="60x60">60x60cm</option>
+                    <option value="60x80">60x80cm</option>
+                    <option value="60x100">60x100cm</option>
+                    <option value="70x70">70x70cm</option>
+                    <option value="70x100">70x100cm</option>
+                    <option value="70x140">70x140cm</option>
+                    <option value="80x120">80x120cm</option>
                 </select>
+            </div>
+            <div class="col-2">
+                <label for="frame-presence" class="text-left mt-3"><b>Frame:</b> </label> <br>
+                <select name="frame" id="frame-presence">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <label class="mt-3 "> <b>Quantity:</b></label>
+                <input id="qty" class="form-control" type="number" name="qty" value="1" placeholder="Quantity">
+            </div>
+            <div class="col-2">
+                <input id="productPrice" th:value="30" hidden />
+                <input id="sizePrice" value="0" hidden />
+                <input id="framePrice" value="0" hidden />
+                <h5>Total:
+                    <input
+                            id="total"
+                            name="total"
+                            class="product-price text-danger center-custom mt-2"
+                            th:value="30"
+                            style="border: 0;"
+                    />
+                </h5>
             </div>
         </div>
         <div class="row">
-            <div class="col-1">
+            <div class="col-1 p-3">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </div>
@@ -42,8 +67,22 @@
 <footer th:replace="blocks/footer :: footer"/></footer>
 <script>
     $(document).ready(function() {
-        $('#product-categories').select2();
-        $('#editor').summernote();
+        let sizePrice = 0;
+        document.getElementById('image-size').addEventListener("change", () => {
+            document.getElementById('sizePrice').value =  size2price(document.getElementById('image-size').value);
+            priceUpdate();
+        }, false);
+
+        document.getElementById('frame-presence').addEventListener("change", () => {
+            let framePrice = 0;
+            if(document.getElementById('frame-presence').value === "true"){
+                framePrice = 10;
+            } else {
+                framePrice = 0;
+            };
+            document.getElementById('framePrice').value =  framePrice;
+            priceUpdate();
+        }, false);
     });
 </script>
 

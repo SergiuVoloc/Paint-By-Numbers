@@ -40,13 +40,12 @@ import java.util.UUID;
 
 @Service
 public class FileStorageService {
-
     @Autowired
     private FileStorageRepository fileStorageRepository;
     @Autowired
     private ProductServiceImpl productServiceImpl;
 
-    public String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
+    public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
     public String indexPath = System.getProperty("user.dir") + "/data/lucene/indexedFiles";
 
@@ -54,6 +53,24 @@ public class FileStorageService {
 
     public FileStorage read(UUID id){
         return fileStorageRepository.findById(id).orElse(null);
+    }
+    public FileStorage save(FileStorage f){
+        return fileStorageRepository.save(f);
+    }
+
+    public FileStorage uploadFile(File file) {
+        try {
+            FileStorage f = new FileStorage();
+            f.setName(file.getName());
+            f.setInternalName(file.getName());
+            f.setPath(file.getAbsolutePath());
+            f.setExtension("png");
+            f.setPublic_path("uploads/" + file.getName());
+            f.setSize(file.getTotalSpace());
+            return fileStorageRepository.save(f);
+        } catch (Exception e) {
+            throw new FileStorageException("Could not store file . Please try again!");
+        }
     }
 
     public FileStorage uploadFile(MultipartFile file) {
@@ -72,7 +89,6 @@ public class FileStorageService {
                     + ". Please try again!");
         }
     }
-
 
     public FileStorage uploadFile(MultipartFile file, String pid) {
         try {
@@ -96,8 +112,6 @@ public class FileStorageService {
         }
     }
 
-
-
     private FileStorage getFileStorage(MultipartFile file, String fileName, String ext, Path path) {
         FileStorage f = new FileStorage();
         f.setName(file.getOriginalFilename());
@@ -109,6 +123,17 @@ public class FileStorageService {
         f.setMime_type(file.getContentType());
         return fileStorageRepository.save(f);
     }
+    private FileStorage getFileStorage(File file) {
+        System.out.println(file.toString());
+        FileStorage f = new FileStorage();
+        f.setName(file.getName());
+        f.setInternalName(file.getName());
+        f.setPath(file.getAbsolutePath());
+        f.setExtension("png");
+        f.setPublic_path("uploads/" + file.getName());
+        f.setSize(file.getTotalSpace());
+        return fileStorageRepository.save(f);
+    }
 
     public void delete(UUID id){
         FileStorage f = fileStorageRepository.findById(id).orElseThrow();
@@ -117,6 +142,7 @@ public class FileStorageService {
         fileStorageRepository.deleteById(id);
         file.delete();
     }
+
     public FileStorage findByName(String imageName) {
         return fileStorageRepository.findByName(imageName);
     }

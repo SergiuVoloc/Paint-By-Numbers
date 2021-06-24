@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             <tr th:each="p : ${list}">
-                <td scope="row"><a th:href="'/product/' + ${p.getId()}" th:text="${p.getId()}"></a></td>
+                <td scope="row"><a th:href="'/pbn/' + ${p.getId()}" th:text="${p.getId()}"></a></td>
                 <td th:text="${p.name}"></td>
                 <td>
                     <a class="btn btn-primary btn-sm"  th:href="@{/admin/product/__${p.getId()}__/edit}">Edit</a>

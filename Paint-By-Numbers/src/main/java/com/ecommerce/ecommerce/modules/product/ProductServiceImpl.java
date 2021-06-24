@@ -145,6 +145,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
 
+
     public Product saveUploadedImage(List<MultipartFile> imageFile) throws Exception {
         Product personalizedProduct = new Product();
         personalizedProduct.setPhotos(new ArrayList<>());
@@ -155,6 +156,9 @@ public class ProductServiceImpl implements ProductService{
         productRepository.save(personalizedProduct);
         return personalizedProduct;
     }
+
+
+
 
     @Override
     public Page<Product> findPaginated(int pageNo, int pageSize) {

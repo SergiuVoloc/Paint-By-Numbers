@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="blocks/head :: head" />
+<head> <title>Paint By Numbers - Product View </title>
+    <div th:replace="blocks/head :: head"></div>
+</head>
 <body>
 <nav th:replace="blocks/navbar :: navigation"></nav>
-<div class="container my-5">
+<div class="container my-5 col-md-10">
     <div class="row">
-        <div class="col-4">
+        <div class="col-md-5 ml-5">
             <div class="swiper-container gallery-top" >
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" th:each="photo : ${item.getPhotos()}" th:style="'background: url(' + @{/file/__${photo.id}__} + '); background-position:center; background-size: cover;'"></div>
@@ -19,29 +21,90 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4 float-right">
             <h1 class="product-title" th:text="${item.name}"></h1>
-            <div class="product-description" th:utext="${item.description}"></div>
-        </div>
-        <div class="col-2">
-            <div class="product-box text-center">
-                <div class="product-price text-danger" th:text="${@environment.getProperty('currency')} + ${item.price}"></div>
-                <form th:action="@{/cart/addProduct}" method="post">
+
+            <div class="product-box">
+
+                <form class="p-3" th:action="@{/cart/addProduct}" method="post" enctype="multipart/form-data">
                     <input type="text" name="pid" th:value="${item.getId()}" hidden>
-                    <input class="form-control" type="number" name="qty" value="1" placeholder="Quantity">
-                    <button class="btn btn-primary" onclick="if
-                    (!(confirm('Your product was placed into basket!'))) return false">Add to Cart</button>
+
+                    <label for="image-size" class="text-left"><b>Canvas Size:</b></label>
+                    <select class="form-control" name="size" id="image-size">
+                        <option value="40x50">40x50cm</option>
+                        <option value="40x60">40x60cm</option>
+                        <option value="50x50">50x50cm</option>
+                        <option value="50x70">50x70cm</option>
+                        <option value="60x60">60x60cm</option>
+                        <option value="60x80">60x80cm</option>
+                        <option value="60x100">60x100cm</option>
+                        <option value="70x70">70x70cm</option>
+                        <option value="70x100">70x100cm</option>
+                        <option value="70x140">70x140cm</option>
+                        <option value="80x120">80x120cm</option>
+                    </select>
+
+                    <label for="frame-presence" class="text-left mt-3"><b>Frame:</b> </label> <br>
+                    <select name="frame" id="frame-presence">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                    <label class="mt-3 "> <b>Quantity:</b></label>
+                    <input id="qty" class="form-control" type="number" name="qty" value="1" placeholder="Quantity">
+
+                    <input id="productPrice" th:value="${item.price}" hidden />
+                    <input id="sizePrice" value="0" hidden />
+                    <input id="framePrice" value="0" hidden />
+                    <h5>Total:
+                        <input
+                                id="total"
+                                name="total"
+                                class="product-price text-danger center-custom mt-2"
+                                th:value="${item.price}"
+                                style="border: 0;"
+                        />
+                    </h5>
+                    <div class="center-custom">
+                    <button class="btn btn-primary mt-4" onclick="if(!(confirm('Your product was placed into the basket!'))) return false">Add to Cart</button>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
-    <div class="row">
 
+    <div class="col-md-1"></div>
+    </div>
+    <div class="row col-md-12 mt-5">
+        <br>
+        <h3 th:class="mt-5">Description <hr> </h3>
+
+        <div class="product-description" th:utext="${item.description}"></div>
     </div>
 </div>
 
 <footer th:replace="blocks/footer :: footer"/></footer>
+
+
 <script>
+    $(document).ready( function () {
+        let sizePrice = 0;
+        document.getElementById('image-size').addEventListener("change", () => {
+            document.getElementById('sizePrice').value =  size2price(document.getElementById('image-size').value);
+            priceUpdate();
+        }, false);
+
+        document.getElementById('frame-presence').addEventListener("change", () => {
+            let framePrice = 0;
+            if(document.getElementById('frame-presence').value === "true"){
+                framePrice = 10;
+            } else {
+                framePrice = 0;
+            };
+            document.getElementById('framePrice').value =  framePrice;
+            priceUpdate();
+        }, false);
+    });
     var galleryThumbs = new Swiper('.gallery-thumbs', {
         spaceBetween: 10,
         slidesPerView: 4,
@@ -60,6 +123,8 @@
             swiper: galleryThumbs
         }
     });
+
+
 </script>
 
 </body>

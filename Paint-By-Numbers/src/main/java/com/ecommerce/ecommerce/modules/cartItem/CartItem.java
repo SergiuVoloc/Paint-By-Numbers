@@ -1,13 +1,18 @@
 package com.ecommerce.ecommerce.modules.cartItem;
 
 
+import com.ecommerce.ecommerce.modules.fileStorage.FileStorage;
+import com.ecommerce.ecommerce.modules.pbn.PBN;
 import com.ecommerce.ecommerce.modules.product.Product;
 import com.ecommerce.ecommerce.modules.user.User;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,14 +24,18 @@ public class CartItem {
 
     private int qty;
     private float subtotal;
+    private Boolean frame;
+    private String size;
+
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne
+    private PBN pbn;
 
     @CreatedDate
     private Date createdAt;
@@ -41,6 +50,48 @@ public class CartItem {
         this.user = user;
         this.product = product;
         this.subtotal = this.product.getPrice() * this.qty;
+    }
+    public CartItem(int qty, User user, Product product, float subtotal) {
+        this.qty = qty;
+        this.user = user;
+        this.product = product;
+        this.subtotal = subtotal * this.qty;
+    }
+    public CartItem(int qty, User user, Product product, PBN pbn, float subtotal, Boolean frame, String size) {
+        this.qty = qty;
+        this.user = user;
+        this.pbn = pbn;
+        this.product = product;
+        this.subtotal = subtotal * this.qty;
+        this.size = size;
+        this.frame = frame;
+    }
+    @OneToMany(
+            targetEntity = FileStorage.class,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @IndexedEmbedded(depth=1)
+    private List<FileStorage> files = new ArrayList<>();
+
+
+    public PBN getPbn() {
+        return pbn;
+    }
+
+    public void setPbn(PBN pbn) {
+        this.pbn = pbn;
+    }
+
+    public void addFile(FileStorage file) { this.files.add(file); }
+
+    public void removeFile(FileStorage file) { this.files.remove(file); }
+
+    public List<FileStorage> getFiles() {
+        return files;
+    }
+    public void setFiles(List<FileStorage> files) {
+        this.files = files;
     }
 
     public UUID getId() {
@@ -99,20 +150,43 @@ public class CartItem {
         this.subtotal = subtotal;
     }
 
+
+    public Boolean getFrame() {
+        return frame;
+    }
+
+    public void setFrame(Boolean frame) {
+        this.frame = frame;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     @Override
     public String toString() {
         return "CartItem{" +
                 "id=" + id +
                 ", qty=" + qty +
+                ", subtotal=" + subtotal +
+                ", frame=" + frame +
+                ", size='" + size + '\'' +
                 ", user=" + user +
                 ", product=" + product +
+                ", pbn=" + pbn +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", files=" + files +
                 '}';
     }
 
-    @PreUpdate
-    public void preUpdate(){
-        this.subtotal = this.product.getPrice()*this.qty;
-    }
+
+    //    @PreUpdate
+//    public void preUpdate(){
+//        this.subtotal = this.product.getPrice()*this.qty ;
+//    }
 }

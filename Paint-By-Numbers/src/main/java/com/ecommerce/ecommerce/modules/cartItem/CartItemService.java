@@ -1,5 +1,7 @@
 package com.ecommerce.ecommerce.modules.cartItem;
 
+import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
+import com.ecommerce.ecommerce.modules.user.User;
 import com.ecommerce.ecommerce.modules.user.UserService;
 import com.ecommerce.ecommerce.modules.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +21,55 @@ public class CartItemService {
     private ObjectUtils objectUtils;
     @Autowired
     private UserService userService;
+    @Autowired
+    FileStorageService fileStorageService;
 
     public Iterable<CartItem> all(){
         return cartItemRepository.findAll();
     }
 
+
     public CartItem read(UUID id){
         return cartItemRepository.findById(id).orElseThrow();
     }
 
+
     public void create(CartItem a){
-        CartItem q = productExistInCart(a.getProduct().getId());
-        if ( q!= null){
-            q.setQty(q.getQty() + a.getQty());
-            cartItemRepository.save(q);
-        } else {
-            cartItemRepository.save(a);
-        }
+//        CartItem q = productExistInCart(a.getProduct().getId());
+//        if ( q != null){
+//            q.setQty(q.getQty() + a.getQty());
+//            q.setPbn(null);
+//            cartItemRepository.save(q);
+//        }
+//
+//        CartItem q1 = pbnExistInCart(a.getPbn().getId());
+//        if ( q1 != null) {
+//            q1.setProduct(null);
+//            q1.setQty(q1.getQty() + a.getQty());
+//            cartItemRepository.save(q1);
+//        }
+
+        cartItemRepository.save(a);
     }
+
+//    public CartItem create(int quantity, User user, UUID productId, Boolean frame, MultipartFile imageFile, String size){
+//        CartItem cartItem = new CartItem();
+//        Product theProduct = new Product();
+//        cartItem.setQty(quantity);
+//        cartItem.setUser(user);
+////        cartItem.getProduct().setId(productId);
+//        theProduct.setId(productId);
+//        cartItem.setFrame(frame);
+//        cartItem.setSize(size);
+//        cartItem.addFile(fileStorageService.uploadFile(imageFile));
+//
+//
+//        // Image processing method
+////        pbnUtils.process(cartItem.getFiles().get(0).getPath());
+//
+//        return cartItem;
+//    }
+
 
     public CartItem update(UUID id, CartItem o) throws IllegalAccessException, InstantiationException {
         CartItem c = cartItemRepository.findById(id).orElseThrow();
@@ -59,8 +92,12 @@ public class CartItemService {
 
 
     public CartItem productExistInCart(UUID pid){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return cartItemRepository.findByProduct_IdAndUser_Id(pid, userService.findByUsername(auth.getName()).getId());
+        User user = userService.getCurrent();
+        return cartItemRepository.findByProduct_IdAndUser_Id(pid, user.getId());
+    }
+    public CartItem pbnExistInCart(UUID pid){
+        User user = userService.getCurrent();
+        return cartItemRepository.findByPbn_IdAndUser_Id(pid, user.getId());
     }
 
 

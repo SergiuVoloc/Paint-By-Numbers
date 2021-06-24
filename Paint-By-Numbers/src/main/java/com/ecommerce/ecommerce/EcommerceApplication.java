@@ -10,12 +10,6 @@ public class EcommerceApplication {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(EcommerceApplication.class, args);
-
-
-		// PBNUtils.process("/static/images/ProcessingIMG/icon.png");
-
-
-
 	}
 
 }

@@ -14,8 +14,14 @@
             </div>
             <div class="row">
                 <div class="row g-1" th:each="p : ${list}">
-                    <div class="col-3"><img class="img-fluid" th:src="@{/file/__${p.getProduct().getPhotos()[0].id}__}"></div>
-                    <div class="col-3" th:text="${p.getProduct().getName()}"></div>
+                    <div class="col-3">
+                        <img class="img-fluid"
+                             th:src="@{/file/__${(p.product != null && !#strings.isEmpty(p.product)) ? p.product.photos[0].id : p.pbn.files[1].id}__}"/>
+                    </div>
+                    <div class="col-3"
+                         th:text="${p.product!= null} ?
+                            ${p.getProduct().getName()} :
+                            ${p.getPbn().getName()}"></div>
                     <div class="col-3">
                         <div class="row justify-content-center g-0">
                             <div class="col-auto"><a class="btn btn-primary" th:href="@{/cart/__${p.getId()}__/decreaseQty}"><i class="bi bi-dash"></i></a></div>
@@ -24,7 +30,7 @@
                         </div>
                     </div>
                     <div class="col-1">
-                        <input class="form-control" th:value="${p.getProduct().getPrice()}"  step="0.1" disabled />
+<!--                        <input class="form-control" th:value="${p.getProduct().getPrice()}"  step="0.1" disabled />-->
                     </div>
                     <div class="col-1">
                         <input class="form-control" th:value="${p.subtotal}" step="0.1" disabled />
