@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.modules.cartItem;
 
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
+import com.ecommerce.ecommerce.modules.product.Product;
 import com.ecommerce.ecommerce.modules.user.User;
 import com.ecommerce.ecommerce.modules.user.UserService;
 import com.ecommerce.ecommerce.modules.utils.ObjectUtils;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -52,23 +54,25 @@ public class CartItemService {
         cartItemRepository.save(a);
     }
 
-//    public CartItem create(int quantity, User user, UUID productId, Boolean frame, MultipartFile imageFile, String size){
-//        CartItem cartItem = new CartItem();
-//        Product theProduct = new Product();
-//        cartItem.setQty(quantity);
-//        cartItem.setUser(user);
-////        cartItem.getProduct().setId(productId);
-//        theProduct.setId(productId);
-//        cartItem.setFrame(frame);
-//        cartItem.setSize(size);
-//        cartItem.addFile(fileStorageService.uploadFile(imageFile));
-//
-//
-//        // Image processing method
-////        pbnUtils.process(cartItem.getFiles().get(0).getPath());
-//
-//        return cartItem;
-//    }
+
+
+    public CartItem create(int quantity, User user, UUID productId, Boolean frame, MultipartFile imageFile, String size){
+        CartItem cartItem = new CartItem();
+        Product theProduct = new Product();
+        cartItem.setQty(quantity);
+        cartItem.setUser(user);
+//        cartItem.getProduct().setId(productId);
+        theProduct.setId(productId);
+        cartItem.setFrame(frame);
+        cartItem.setSize(size);
+        cartItem.addFile(fileStorageService.uploadFile(imageFile));
+
+
+        // Image processing method
+//        pbnUtils.process(cartItem.getFiles().get(0).getPath());
+
+        return cartItem;
+    }
 
 
     public CartItem update(UUID id, CartItem o) throws IllegalAccessException, InstantiationException {

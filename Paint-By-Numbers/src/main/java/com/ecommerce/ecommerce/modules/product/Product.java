@@ -2,7 +2,6 @@ package com.ecommerce.ecommerce.modules.product;
 
 import com.ecommerce.ecommerce.modules.category.Category;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorage;
-import com.ecommerce.ecommerce.modules.value.Value;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -62,22 +61,15 @@ public class Product {
     @IndexedEmbedded(depth=1)
     private List<FileStorage> files = new ArrayList<>();
 
-    @OneToMany(
-            targetEntity = Value.class,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    @IndexedEmbedded(depth=1)
-    private List<Value> attributes = new ArrayList<>();
+
 
     public Product(UUID id, String name, String description, Float price, List<Category> categories,
-                   List<FileStorage> photos, List<Value> attributes, Boolean frame, String size) {
+                   List<FileStorage> photos,  Boolean frame, String size) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.categories = categories;
-        this.attributes = attributes;
         this.photos = photos;
         this.frame = frame;
         this.size = size;
@@ -139,12 +131,7 @@ public class Product {
     public void setFiles(List<FileStorage> files) {
         this.files = files;
     }
-    public List<Value> getAttributes() {
-        return attributes;
-    }
-    public void setAttributes(List<Value> attributes) {
-        this.attributes = attributes;
-    }
+
     public Date getCreated_at() {
         return created_at;
     }
@@ -172,7 +159,6 @@ public class Product {
                 ", categories=" + categories +
                 ", photos=" + photos +
                 ", files=" + files +
-                ", attributes=" + attributes +
                 '}';
     }
 

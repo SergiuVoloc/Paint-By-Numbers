@@ -1,6 +1,5 @@
 package com.ecommerce.ecommerce.modules.product;
 
-import com.ecommerce.ecommerce.modules.attribute.AttributeService;
 import com.ecommerce.ecommerce.modules.category.CategoryService;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,7 @@ public class ProductController {
     private ProductServiceImpl productServiceImpl;
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private AttributeService attributeService;
+
     @Autowired
     private HttpServletRequest request;
     @Autowired
@@ -76,7 +74,6 @@ public class ProductController {
     public String editPage(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", productServiceImpl.read(id));
         model.addAttribute("categories", categoryService.all());
-        model.addAttribute("attributes", attributeService.all());
         return "pages/product/edit";
     }
 
@@ -99,7 +96,7 @@ public class ProductController {
                 categories,
                 files
         );
-        return "pages/product/edit";
+        return "redirect:" + request.getHeader("Referer");
     }
 
 

@@ -1,21 +1,17 @@
 package com.ecommerce.ecommerce.modules.product;
 
-import ch.qos.logback.classic.Logger;
-import com.ecommerce.ecommerce.modules.cartItem.CartItem;
 import com.ecommerce.ecommerce.modules.cartItem.CartItemService;
-import com.ecommerce.ecommerce.modules.fileStorage.FileStorage;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
-import com.ecommerce.ecommerce.modules.user.User;
+import com.ecommerce.ecommerce.modules.pbn.PBNService;
 import com.ecommerce.ecommerce.modules.user.UserService;
 import com.ecommerce.ecommerce.modules.utils.EmailSenderService;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.UUID;
 
 
@@ -26,8 +22,6 @@ public class PersonalizeController {
     @Autowired
     private ProductServiceImpl productServiceImpl;
     @Autowired
-    private HttpServletRequest request;
-    @Autowired
     UserService userService;
     @Autowired
     CartItemService cartItemService;
@@ -35,8 +29,8 @@ public class PersonalizeController {
     FileStorageService fileStorageService;
     @Autowired
     EmailSenderService emailSenderService;
-
-    Logger log = (Logger) LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    PBNService pbnService;
 
 
     @GetMapping(value ="/{id}")
@@ -66,22 +60,38 @@ public class PersonalizeController {
 
 //    @PostMapping("/c6a08882-212f-431b-a60f-8e5189c77381")
 //    public String addPersonalizedItemToCart(
-//            @RequestParam(value = "pid") UUID productId,
+//            @RequestParam String name,
 //            @RequestParam(value = "size") String size,
 //            @RequestParam(value = "qty") Integer quantity,
 //            @RequestParam(value = "frame") Boolean frame,
-//            @RequestParam(value = "imageFile") MultipartFile imageFile
+//            @RequestParam(value = "file") MultipartFile imageFile,
+//            @RequestParam float total
 //    ) throws IOException {
-//        productId = UUID.fromString("c6a08882-212f-431b-a60f-8e5189c77381");
-//        User user = userService.getCurrent();
 //
-////        cartItemService.create(quantity, user, productId, frame, imageFile, size);
+//        pbnService.create(quantity, total, name, frame, size, imageFile);
 //
 //        return "redirect:/cart";
 //    }
 
 
-    //////    Actions
+
+    @PostMapping()
+    public String addPersonalizedItemToCart(
+            @RequestParam String name,
+            @RequestParam String size,
+            @RequestParam Integer quantity,
+            @RequestParam Boolean frame,
+            @RequestParam MultipartFile imageFile,
+            @RequestParam float total
+    ) throws IOException {
+
+        pbnService.create(quantity, total, name, frame, size, imageFile);
+
+        return "redirect:/cart";
+    }
+
+
+
 //    @PostMapping("/addProduct")
 //    public String addProduct(
 //            @RequestParam("pid") UUID pid,
@@ -94,7 +104,7 @@ public class PersonalizeController {
 //        User user = userService.getCurrent();
 //        Product p = productServiceImpl.read(pid);
 //        FileStorage pbn = fileStorageService.uploadFile(imageFile);
-//        cartItemService.create(new CartItem(qty, user, p, total, pbn, frame, size));
+//        cartItemService.create(new CartItem(qty, user, p, pbn, total, frame, size));
 //
 //
 //

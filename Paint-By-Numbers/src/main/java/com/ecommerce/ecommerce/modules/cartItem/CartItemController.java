@@ -76,7 +76,7 @@ public class CartItemController {
         User user = userService.getCurrent();
         Product p = productServiceImpl.read(pid);
         cartItemService.create(new CartItem(qty, user, p, null, total, frame, size));
-        return "redirect:" + request.getHeader("Referer");
+        return "redirect:/cart";
     }
 
 
