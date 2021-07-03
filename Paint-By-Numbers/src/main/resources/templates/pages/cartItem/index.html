@@ -64,27 +64,12 @@
                             <option value="25.00">Fast-Delivery- 25.00</option>
                         </select>
                     </div>
-                    <div class="col-12">
-                        <label class="form-label">Discount</label>
-                        <input class="form-control" type="text" name="discount" placeholder="Enter your code">
-                    </div>
+
                     <div class="col-12">
                         <label class="form-label">TOTAL PRICE</label>
                         <input class="form-control" type="text" name="total" id="total" disabled>
                     </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <label for="user-addresses" class="form-label">Delivery Address</label>
-                            <select class="form-control" name="address" id="user-addresses">
-                                <option th:each="a : ${user.getAddresses()}" th:value="${a.getId()}" th:text="${a.getFullName()} + ' / ' + ${a.getAddress1()}"></option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            <a class="form-label"
-                               th:href="@{/user/address/create}">Add
-                                Address</a>
-                        </div>
-                    </div>
+
                     <div class="row justify-content-center mt-3">
                         <div class="col-3">
                             <button class="btn btn-success">Checkout</button>

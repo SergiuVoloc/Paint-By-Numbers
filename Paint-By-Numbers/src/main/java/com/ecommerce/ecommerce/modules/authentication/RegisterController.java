@@ -2,7 +2,7 @@ package com.ecommerce.ecommerce.modules.authentication;
 
 
 import com.ecommerce.ecommerce.modules.user.User;
-import com.ecommerce.ecommerce.modules.user.UserService;
+import com.ecommerce.ecommerce.modules.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class RegisterController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private HttpServletRequest request;
 
@@ -63,12 +63,12 @@ public class RegisterController {
             modelAndView.addObject("successMessage", "Please correct the errors in form!");
             modelMap.addAttribute("bindingResult", bindingResult);
         }
-        else if(userService.isUserAlreadyPresent(user)){
+        else if(userServiceImpl.isUserAlreadyPresent(user)){
             modelAndView.addObject("successMessage", "User with this Username already exists!");
         }
         // we will save the user if, no binding errors
         else {
-            userService.create(user);
+            userServiceImpl.create(user);
             modelAndView.addObject("successMessage", "User is registered successfully!");
         }
         modelAndView.addObject("user", new User());

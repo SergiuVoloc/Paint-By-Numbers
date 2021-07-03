@@ -1,0 +1,105 @@
+
+ Products: Test2[40x50+]Frame:false | The Scream - Edvard Munch[40x50+]Frame:false | 
+
+ Order Details: 
+{
+  "id": "PAYID-MDLRBRA9TG061932N2367418",
+  "intent": "order",
+  "payer": {
+    "payment_method": "paypal",
+    "status": "UNVERIFIED",
+    "payer_info": {
+      "email": "SergiuVoloc0@gmail.com",
+      "first_name": "Sergiu",
+      "last_name": "Voloc",
+      "payer_id": "R6YN9LNQWXBXS",
+      "country_code": "RO",
+      "shipping_address": {
+        "recipient_name": "Sergiu Voloc",
+        "line1": "25 doljului street",
+        "line2": "Dolj",
+        "city": "Craiova",
+        "country_code": "RO",
+        "postal_code": "200166",
+        "state": ""
+      }
+    }
+  },
+  "cart": "8DA35361YL276732A",
+  "transactions": [
+    {
+      "related_resources": [
+        {
+          "order": {
+            "id": "O-9FM53114932513744",
+            "amount": {
+              "currency": "USD",
+              "total": "60.99",
+              "details": {}
+            },
+            "state": "PENDING",
+            "reason_code": "ORDER",
+            "parent_payment": "PAYID-MDLRBRA9TG061932N2367418",
+            "create_time": "2021-06-26T11:34:46Z",
+            "update_time": "2021-06-26T11:34:46Z",
+            "links": [
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-9FM53114932513744",
+                "rel": "self",
+                "method": "GET"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAYID-MDLRBRA9TG061932N2367418",
+                "rel": "parent_payment",
+                "method": "GET"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-9FM53114932513744/do-void",
+                "rel": "void",
+                "method": "POST"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-9FM53114932513744/authorize",
+                "rel": "authorization",
+                "method": "POST"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-9FM53114932513744/capture",
+                "rel": "capture",
+                "method": "POST"
+              }
+            ]
+          }
+        }
+      ],
+      "amount": {
+        "currency": "USD",
+        "total": "60.99",
+        "details": {}
+      },
+      "payee": {
+        "merchant_id": "ZMJYLV4TVEELL"
+      },
+      "item_list": {
+        "shipping_address": {
+          "recipient_name": "Sergiu Voloc",
+          "line1": "25 doljului street",
+          "line2": "Dolj",
+          "city": "Craiova",
+          "country_code": "RO",
+          "postal_code": "200166",
+          "state": ""
+        }
+      }
+    }
+  ],
+  "state": "approved",
+  "create_time": "2021-06-26T11:34:46Z",
+  "links": [
+    {
+      "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAYID-MDLRBRA9TG061932N2367418",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}

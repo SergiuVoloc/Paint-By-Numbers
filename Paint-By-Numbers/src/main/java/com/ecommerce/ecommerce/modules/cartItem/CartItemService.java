@@ -3,7 +3,7 @@ package com.ecommerce.ecommerce.modules.cartItem;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
 import com.ecommerce.ecommerce.modules.product.Product;
 import com.ecommerce.ecommerce.modules.user.User;
-import com.ecommerce.ecommerce.modules.user.UserService;
+import com.ecommerce.ecommerce.modules.user.UserServiceImpl;
 import com.ecommerce.ecommerce.modules.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,7 +22,7 @@ public class CartItemService {
     @Autowired
     private ObjectUtils objectUtils;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     FileStorageService fileStorageService;
 
@@ -83,7 +83,7 @@ public class CartItemService {
 
     public ArrayList<CartItem> findAllByUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return cartItemRepository.findAllByUser_Id(userService.findByUsername(auth.getName()).getId());
+        return cartItemRepository.findAllByUser_Id(userServiceImpl.findByUsername(auth.getName()).getId());
     }
 
 
@@ -96,11 +96,11 @@ public class CartItemService {
 
 
     public CartItem productExistInCart(UUID pid){
-        User user = userService.getCurrent();
+        User user = userServiceImpl.getCurrent();
         return cartItemRepository.findByProduct_IdAndUser_Id(pid, user.getId());
     }
     public CartItem pbnExistInCart(UUID pid){
-        User user = userService.getCurrent();
+        User user = userServiceImpl.getCurrent();
         return cartItemRepository.findByPbn_IdAndUser_Id(pid, user.getId());
     }
 

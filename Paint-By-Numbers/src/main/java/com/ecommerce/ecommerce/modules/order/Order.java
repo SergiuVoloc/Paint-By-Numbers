@@ -1,9 +1,7 @@
 package com.ecommerce.ecommerce.modules.order;
 
-import com.ecommerce.ecommerce.modules.address.Address;
-import com.ecommerce.ecommerce.modules.discount.Discount;
+
 import com.ecommerce.ecommerce.modules.orderItem.OrderItem;
-import com.ecommerce.ecommerce.modules.orderStatus.OrderStatus;
 import com.ecommerce.ecommerce.modules.user.User;
 
 import javax.persistence.*;
@@ -29,20 +27,10 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_id")
-    private Discount discount;
 
-    @ManyToOne
-    @JoinColumn(name = "orderStatus_id")
-    private OrderStatus orderStatus;
 
     @OneToMany(
             targetEntity = OrderItem.class,
@@ -53,15 +41,12 @@ public class Order {
 
     public Order(){}
 
-    public Order(float delivery_fee, float amount, Address address, User user, Discount discount, OrderStatus orderStatus) {
+    public Order(float delivery_fee, float amount, User user) {
         this.created_at = new Date();
         this.modified = new Date();
         this.delivery_fee = delivery_fee;
         this.amount = amount;
-        this.address = address;
         this.user = user;
-        this.discount = discount;
-        this.orderStatus = orderStatus;
     }
 
     public String getDescription() {
@@ -96,14 +81,6 @@ public class Order {
         this.created_at = created_at;
     }
 
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
     public float getDelivery_fee() {
         return delivery_fee;
     }
@@ -120,13 +97,6 @@ public class Order {
         this.amount = amount;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     public User getUser() {
         return user;
@@ -136,21 +106,6 @@ public class Order {
         this.user = user;
     }
 
-    public Discount getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
-    }
-
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
 
     public List<OrderItem> getItems() {
         return items;
@@ -171,10 +126,7 @@ public class Order {
                 ", modified=" + modified +
                 ", delivery_fee=" + delivery_fee +
                 ", amount=" + amount +
-                ", address=" + address +
                 ", user=" + user +
-                ", discount=" + discount +
-                ", orderStatus=" + orderStatus +
                 ", items=" + items +
                 '}';
     }

@@ -1,7 +1,7 @@
 package com.ecommerce.ecommerce.modules.order;
 
 import com.ecommerce.ecommerce.modules.cartItem.CartItemService;
-import com.ecommerce.ecommerce.modules.user.UserService;
+import com.ecommerce.ecommerce.modules.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private CartItemService cartItemService;
 

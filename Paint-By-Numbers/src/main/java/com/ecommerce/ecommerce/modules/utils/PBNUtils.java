@@ -27,7 +27,7 @@ public class PBNUtils {
         List<File> files = new ArrayList<>();
         String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
         Mat img = Imgcodecs.imread(filename);
-        int k = 10;
+        int k = 15;
         String uuid = UUID.randomUUID().toString();
         List<Mat> clusters = cluster(img, k);
         Imgcodecs.imwrite(uploadDir + "\\"+uuid+".png", clusters.get(0));
@@ -54,11 +54,9 @@ public class PBNUtils {
         // applying morphological transformations using an erosion and dilation as basic operations
         Imgproc.morphologyEx(samplesLAB, samplesLAB, Imgproc.MORPH_OPEN, Mat.ones(5,5, CvType.CV_32F));
         Mat samples = samplesLAB.reshape(1, samplesLAB.cols() * samplesLAB.rows());
-//        System.out.println(samples.toString());
 
         Mat samples32f = new Mat();
         samples.convertTo(samples32f, CvType.CV_32F);
-//        System.out.println(samples32f.toString());
 
         // Setting the termination criteria for iterative algorithm
         TermCriteria criteria = new TermCriteria(TermCriteria.COUNT, 100, 1);

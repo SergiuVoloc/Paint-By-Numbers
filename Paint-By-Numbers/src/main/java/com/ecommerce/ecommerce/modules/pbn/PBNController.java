@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.modules.pbn;
 
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
+import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/pbn")
+@RequestMapping()
 public class PBNController {
 
     @Autowired
@@ -21,9 +22,11 @@ public class PBNController {
     private HttpServletRequest request;
     @Autowired
     private FileStorageService fileStorageService;
+    @Autowired
+    private ProductServiceImpl productServiceImpl;
 
 
-    @GetMapping()
+    @GetMapping("/pbn")
     public String all(Model model){
         model.addAttribute("list", pbnService.all());
         return "pages/pbn/index";
@@ -32,21 +35,44 @@ public class PBNController {
 
 
 
-    @GetMapping(value ="/{id}")
+    @GetMapping(value ="pbn/{id}")
     public String read(@PathVariable(value = "id") UUID id, Model model){
         model.addAttribute("item", pbnService.read(id));
         return "pages/pbn/read";
     }
 
 
-    @GetMapping("/create")
+    @GetMapping(value ="personalize/{id}")
+    public String indexPage(@PathVariable(value = "id") UUID id, Model model){
+        model.addAttribute("product", productServiceImpl.read(id));
+        return "pages/personalizedImages/index";
+    }
+
+
+    @PostMapping("personalize/create")
+    public String addPersonalizedItemToCart(
+            @RequestParam String name,
+            @RequestParam String size,
+            @RequestParam Integer quantity,
+            @RequestParam Boolean frame,
+            @RequestParam MultipartFile imageFile,
+            @RequestParam float total
+    ) throws IOException {
+
+        pbnService.create(quantity, total, name, frame, size, imageFile);
+
+        return "redirect:/cart";
+    }
+
+
+    @GetMapping("pbn/create")
     public  String addPage(Model model){
         return "pages/pbn/create";
     }
 
 
 
-    @PostMapping()
+    @PostMapping("pbn/create")
     public String create(
             @RequestParam String name,
             @RequestParam MultipartFile file,
@@ -61,56 +87,20 @@ public class PBNController {
 
 
 
-//    @GetMapping("/{id}/edit")
-//    public String editPage(@PathVariable(value = "id") UUID id, Model model){
-//        model.addAttribute("item", productServiceImpl.read(id));
-//        model.addAttribute("categories", categoryService.all());
-//        model.addAttribute("attributes", attributeService.all());
-//        return "pages/product/edit";
-//    }
-//
-//
-//
-//    @PostMapping("/{id}/edit")
-//    public String update(
-//            @PathVariable(value = "id") UUID id,
-//            @RequestParam String name,
-//            @RequestParam Float price,
-//            @RequestParam String description,
-//            @RequestParam List<String> categories,
-//            @RequestParam List<MultipartFile> files
-//    ){
-//        productServiceImpl.update(
-//                id,
-//                name,
-//                price,
-//                description,
-//                categories,
-//                files
-//        );
-//        return "pages/product/edit";
-//    }
-//
-//
-    @GetMapping("/{id}/delete")
+
+    @GetMapping("pbn/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
         pbnService.delete(id);
         return "redirect:/pbn";
     }
-    @GetMapping("/clean")
+
+
+    @GetMapping("pbn/clean")
     public String clean(){
         for(PBN pbn : pbnService.all()){
             pbnService.delete(pbn.getId());
         }
         return "redirect:/pbn";
     }
-//
-//
-//    @GetMapping("/{pid}/rFile/{fid}")
-//    public String removeFile (@PathVariable(value = "pid") UUID pid,@PathVariable(value = "fid") UUID fid){
-//        productServiceImpl.removeFile(pid, fid);
-//        return "redirect:" + request.getHeader("Referer");
-//    }
-
 
 }

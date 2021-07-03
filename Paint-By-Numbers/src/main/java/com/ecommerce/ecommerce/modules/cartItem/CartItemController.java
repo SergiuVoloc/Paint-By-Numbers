@@ -7,8 +7,8 @@ import com.ecommerce.ecommerce.modules.payment.PaypalService;
 import com.ecommerce.ecommerce.modules.product.Product;
 import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
 import com.ecommerce.ecommerce.modules.user.User;
-import com.ecommerce.ecommerce.modules.user.UserService;
-import com.ecommerce.ecommerce.modules.utils.EmailSenderService;
+import com.ecommerce.ecommerce.modules.user.UserServiceImpl;
+import com.ecommerce.ecommerce.modules.utils.EmailSender;
 import com.ecommerce.ecommerce.modules.utils.ObjectUtils;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -36,13 +36,13 @@ public class CartItemController {
     @Autowired
     private ObjectUtils objectUtils;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private ProductServiceImpl productServiceImpl;
     @Autowired
     private PaypalService paypalService;
     @Autowired
-    private EmailSenderService emailSenderService;
+    private EmailSender emailSender;
     @Autowired
     private FileStorageService fileStorageService;
 
@@ -56,7 +56,7 @@ public class CartItemController {
     @GetMapping()
     public String all(Model model){
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getCurrent();
+        User user = userServiceImpl.getCurrent();
         model.addAttribute("list", cartItemService.findAllByUser());
         model.addAttribute("subtotal", cartItemService.total());
         model.addAttribute("user", user);
@@ -73,7 +73,7 @@ public class CartItemController {
             @RequestParam String size,
             @RequestParam(value = "total") float total
     ){
-        User user = userService.getCurrent();
+        User user = userServiceImpl.getCurrent();
         Product p = productServiceImpl.read(pid);
         cartItemService.create(new CartItem(qty, user, p, null, total, frame, size));
         return "redirect:/cart";
@@ -122,8 +122,6 @@ public class CartItemController {
     // PayPal Payment endpoints for Checkout feature
     @PostMapping("/pay")
     public String payment(@ModelAttribute("order") Order order, Product product) {
-
-
         try {
             Payment payment = paypalService.createPayment(
                     cartItemService.total(),
@@ -140,21 +138,17 @@ public class CartItemController {
                     return "redirect:"+link.getHref();
                 }
             }
-
         } catch (PayPalRESTException e) {
-
             e.printStackTrace();
         }
         return "redirect:/";
     }
 
 
-
     @GetMapping(value = CANCEL_URL)
     public String cancelPay() {
         return "pages/payment/cancel";
     }
-
 
 
     @GetMapping(value = SUCCESS_URL)
@@ -184,19 +178,6 @@ public class CartItemController {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
 
-//          System.out.println(payment.toJSON());
-
-//            // Regex expression to extract products name
-//            Pattern pattern = Pattern.compile(" name='([A-Z].+?)',");
-//            Matcher matcher = pattern.matcher(text);
-//
-//
-//            while (matcher.find()){
-//                purchasedItems.add(matcher.group(1));
-//            }
-
-
-
             // save order details to file
             try (FileWriter file = new
                     FileWriter("src/main/resources/payments/" + paymentId + ".txt")) {
@@ -216,23 +197,15 @@ public class CartItemController {
 
 
                 // Email for Customer with purchase confirmation
-                emailSenderService.sendPurchaseConfirmationEmail(
+                emailSender.sendPurchaseConfirmationEmail(
                         receiverEmail,
                         "Paint By Numbers. Purcha   se confirmation! ",
                         "Your order " + paymentId +
                                 " has been registered and soon will be sent to You! \n\n Your Products are: " + products + "." + "\n\n If You have any questions, reply to this mail." + "\n\n Regards, \n Paint By Numbers Team.");
 
 
-
-
-                // Email with attachment details about new order for factory
-//                emailSenderService.sendEmailWithAttachment(
-//                        "voloc.sergiu.i7c@student.ucv.ro",
-//                        "New Order! ",
-//                        "<h1>Check attachment for details!</h1>",
-//                        "src/main/resources/payments/" + paymentId + ".txt");
                 pbns.add("src/main/resources/payments/" + paymentId + ".txt");
-                emailSenderService.sendEmailWithAttachment(
+                emailSender.sendEmailWithAttachment(
                         "voloc.sergiu.i7c@student.ucv.ro",
                         "New Order! ",
                         "<h1>Check attachment for details!</h1>",

@@ -11,12 +11,12 @@
             <div class="row" th:replace="blocks/slider :: slider"></div>
             <form class="row" action="/" id="searchForm">
                 <div class="col-4">
-                    <label class="form-label">Search</label>
+                    <label class="form-label">Search by name:</label>
                     <input name="searchText" id="searchInput" class="form-control filter__search js-shuffle-search" type="search" />
                 </div>
                 <div class="col-3">
-                    <label class="form-label">Search In File</label>
-                    <input name="searchInFile" id="searchInputInFile" class="form-control" type="search" placeholder="Search in files"/>
+                    <label class="form-label">Search by any keyword:</label>
+                    <input name="searchInFile" id="searchInputInFile" class="form-control" type="search"/>
                 </div>
                 <div class="col-2">
                     <label class="form-label">Filter</label>
@@ -41,7 +41,7 @@
                 <input type="submit" hidden>
             </form>
             <div class="row mt-3" id="js-shuffle" >
-                <div th:each="p,pStat : ${productList}"
+                <div th:each="p,pStat : ${products}"
 
                      class="col-4 product-item my-3"
                      th:data-groups="${p.getCategories2String()}"

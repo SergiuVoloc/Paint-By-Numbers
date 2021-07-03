@@ -26,12 +26,8 @@
             <tbody>
             <tr th:each="o : ${list}">
                 <td scope="row"><a th:href="@{/order/__${o.getId()}__}" th:text="${o.getId()}"></a></td>
-                <td th:text="${o.getAddress().getFullName()}"></td>
-                <td th:text="${o.getOrderStatus().getName()}"></td>
                 <td th:text="${o.getCreated_at()}"></td>
-                <td th:text="${o.getModified()}"></td>
                 <td th:text="${o.getDelivery_fee()}"></td>
-                <td th:text="${o.getDiscount()}"></td>
                 <td th:text="${#lists.size(o.items)} "></td>
                 <td th:text="${o.getAmount()}"></td>
 <!--                <td>-->

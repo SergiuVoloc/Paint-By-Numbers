@@ -1,0 +1,105 @@
+
+ Products: Starry Night - Van Gogh[40x50+]Frame:false | 
+
+ Order Details: 
+{
+  "id": "PAYID-MDLRGPA0SP70248GM7025427",
+  "intent": "order",
+  "payer": {
+    "payment_method": "paypal",
+    "status": "UNVERIFIED",
+    "payer_info": {
+      "email": "SergiuVoloc0@gmail.com",
+      "first_name": "Sergiu",
+      "last_name": "Voloc",
+      "payer_id": "R6YN9LNQWXBXS",
+      "country_code": "RO",
+      "shipping_address": {
+        "recipient_name": "Sergiu Voloc",
+        "line1": "25 doljului street",
+        "line2": "Dolj",
+        "city": "Craiova",
+        "country_code": "RO",
+        "postal_code": "200166",
+        "state": ""
+      }
+    }
+  },
+  "cart": "1T962545XS765215K",
+  "transactions": [
+    {
+      "related_resources": [
+        {
+          "order": {
+            "id": "O-1XN46272YE593041M",
+            "amount": {
+              "currency": "USD",
+              "total": "30.99",
+              "details": {}
+            },
+            "state": "PENDING",
+            "reason_code": "ORDER",
+            "parent_payment": "PAYID-MDLRGPA0SP70248GM7025427",
+            "create_time": "2021-06-26T11:45:12Z",
+            "update_time": "2021-06-26T11:45:12Z",
+            "links": [
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-1XN46272YE593041M",
+                "rel": "self",
+                "method": "GET"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAYID-MDLRGPA0SP70248GM7025427",
+                "rel": "parent_payment",
+                "method": "GET"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-1XN46272YE593041M/do-void",
+                "rel": "void",
+                "method": "POST"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-1XN46272YE593041M/authorize",
+                "rel": "authorization",
+                "method": "POST"
+              },
+              {
+                "href": "https://api.sandbox.paypal.com/v1/payments/orders/O-1XN46272YE593041M/capture",
+                "rel": "capture",
+                "method": "POST"
+              }
+            ]
+          }
+        }
+      ],
+      "amount": {
+        "currency": "USD",
+        "total": "30.99",
+        "details": {}
+      },
+      "payee": {
+        "merchant_id": "ZMJYLV4TVEELL"
+      },
+      "item_list": {
+        "shipping_address": {
+          "recipient_name": "Sergiu Voloc",
+          "line1": "25 doljului street",
+          "line2": "Dolj",
+          "city": "Craiova",
+          "country_code": "RO",
+          "postal_code": "200166",
+          "state": ""
+        }
+      }
+    }
+  ],
+  "state": "approved",
+  "create_time": "2021-06-26T11:45:13Z",
+  "links": [
+    {
+      "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAYID-MDLRGPA0SP70248GM7025427",
+      "rel": "self",
+      "method": "GET"
+    }
+  ]
+}

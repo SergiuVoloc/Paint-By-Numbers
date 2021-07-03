@@ -1,8 +1,6 @@
 package com.ecommerce.ecommerce.modules.payment;
 
 
-import com.ecommerce.ecommerce.modules.cartItem.CartItemService;
-import com.ecommerce.ecommerce.modules.product.ProductServiceImpl;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -19,13 +17,6 @@ public class PaypalService {
 
     @Autowired
     private APIContext apiContext;
-
-    @Autowired
-    private CartItemService cartItemService;
-
-    @Autowired
-    private ProductServiceImpl productService;
-
 
     public Payment createPayment(
             float total,
@@ -66,7 +57,6 @@ public class PaypalService {
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);
         payment.setRedirectUrls(redirectUrls);
-
 
         return payment.create(apiContext);
     }

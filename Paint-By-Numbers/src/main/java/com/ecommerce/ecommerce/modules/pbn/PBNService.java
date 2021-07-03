@@ -5,7 +5,7 @@ import com.ecommerce.ecommerce.modules.cartItem.CartItem;
 import com.ecommerce.ecommerce.modules.cartItem.CartItemService;
 import com.ecommerce.ecommerce.modules.fileStorage.FileStorageService;
 import com.ecommerce.ecommerce.modules.user.User;
-import com.ecommerce.ecommerce.modules.user.UserService;
+import com.ecommerce.ecommerce.modules.user.UserServiceImpl;
 import com.ecommerce.ecommerce.modules.utils.PBNUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +32,10 @@ public class PBNService {
     @Autowired
     private CartItemService cartItemService;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     public List<PBN> all(){
-        User user = userService.getCurrent();
+        User user = userServiceImpl.getCurrent();
         if(user.getRole().equals("ROLE_ADMIN"))
             return (List<PBN>) pbnRepository.findAll();
         else
@@ -54,7 +54,7 @@ public class PBNService {
 
 
     public PBN create(Integer qty, float total, String name, Boolean frame, String size, MultipartFile file) throws IOException {
-        User user = userService.getCurrent();
+        User user = userServiceImpl.getCurrent();
         PBN n = new PBN();
         n.setName(name);
         n.setUser(user);

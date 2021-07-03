@@ -14,21 +14,25 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private HttpServletRequest request;
 
+
+    // Display all users from database
     @GetMapping()
     public String all(Model model){
-        model.addAttribute("list", userService.all());
+        model.addAttribute("list", userServiceImpl.all());
         return "pages/user/index";
     }
 
+    // Create an user by Admin GET
     @GetMapping("/create")
     public  String addPage(Model model){
         return "pages/user/create";
     }
 
+    // Create an user by Admin POST
     @PostMapping()
     public String create(
             @RequestParam String username,
@@ -41,18 +45,19 @@ public class UserController {
             @RequestParam Boolean enabled
     ){
         User u = new User(username, password, fullName, email, phone, role, dateOfBirth, enabled);
-        userService.create(u);
+        userServiceImpl.create(u);
         return "redirect:/user";
     }
 
 
+    // Update an existing user GET
     @GetMapping("/{id}/edit")
     public String editPAge(@PathVariable(value = "id") UUID id, Model model){
-        model.addAttribute("item", userService.read(id));
+        model.addAttribute("item", userServiceImpl.read(id));
         return "pages/user/edit";
     }
 
-
+    // Update an existing user POST
     @PostMapping("/{id}/edit")
     public String update(
             @PathVariable(value = "id") UUID id,
@@ -66,23 +71,24 @@ public class UserController {
             @RequestParam String email
     ){
         User u = new User(username, password, fullName, email, phone, role, dateOfBirth, enabled);
-        userService.update(id, u);
+        userServiceImpl.update(id, u);
         return "redirect:/user";
     }
 
 
 
-//  Account Details
+    //  Account Details GET
     @GetMapping("/details")
     public String editAccountDetails(Model model){
 
-        User user = userService.getCurrent();
+        User user = userServiceImpl.getCurrent();
 
         model.addAttribute("user", user);
 
         return "pages/user/accountDetails";
     }
 
+    //  Account Details POST
     @PostMapping("/details")
     public String updateAccountDetails(
             @RequestParam String username,
@@ -95,24 +101,18 @@ public class UserController {
             @RequestParam String email
     ){
         User u = new User(username, password, fullName, email, phone, role, dateOfBirth, enabled);
-        userService.update(userService.getCurrent().getId(), u);
+        userServiceImpl.update(userServiceImpl.getCurrent().getId(), u);
         return "redirect:/";
     }
 
 
 
-
-
+    // Delete an user
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable(value = "id") UUID id){
-        userService.delete(id);
+        userServiceImpl.delete(id);
         return "redirect:" + request.getHeader("Referer");
     }
 
 
-//    @PostMapping("/{id}/add_address")
-//    public String value4product(@PathVariable(value = "id") UUID id, @RequestParam String value, @RequestParam Attribute attribute){
-////        userService.create(value, attribute, productService.read(id));
-//        return "redirect:/product/" + id + "/edit";
-//    }
 }

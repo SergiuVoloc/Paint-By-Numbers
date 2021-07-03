@@ -54,11 +54,16 @@ public class HomeController {
 
         List<Product> productList = page.getContent();
 
+//        // creating UUID
+//        UUID personalizedProduct = UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d");
+//
+//
+//        productList.removeIf(product -> product.getId(UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d")));
 
         model.addAttribute("currentPage",pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("productList", productList);
+        model.addAttribute("products", productList);
 
         model.addAttribute("categories", categoryService.all());
 

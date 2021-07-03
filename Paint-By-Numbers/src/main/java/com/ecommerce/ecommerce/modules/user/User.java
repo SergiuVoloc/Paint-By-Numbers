@@ -1,14 +1,9 @@
 package com.ecommerce.ecommerce.modules.user;
 
-import com.ecommerce.ecommerce.modules.address.Address;
 import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,41 +15,32 @@ public class User {
     @Column(name = "user_id")
     private UUID id;
 
-    @NotNull(message="Username is compulsory")
     @Column(name ="username", unique=true)
     private String username;
 
-    @NotNull(message="Password is compulsory")
     @Length(min=5, message="Password should be at least 5 characters")
     @Column(name = "password")
     private String password;
 
-    @NotNull(message="First and Second Name are compulsory")
     @Column(name = "full_name")
     private String fullName;
 
-    @NotNull(message="Phone is compulsory")
     @Column(name = "phone")
     private String phone;
 
-    @NotNull(message="Email is compulsory")
-    @Email(message = "Email is invalid")
+    @Email
     @Column(name = "email")
     private String email;
 
     @Column(name = "role")
     private String role;
 
-    @NotNull(message="Date of Birth is compulsory")
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     @Column(name = "enabled")
     private Boolean enabled;
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Address> addresses = new ArrayList<>();
 
     public User(){}
 
@@ -164,20 +150,6 @@ public class User {
         this.email = email;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-    public void addAddress(Address item){
-        this.addresses.add(item);
-    }
-    public void removeAddress(Address item){
-        this.addresses.remove(item);
-    }
-
 
     @Override
     public String toString() {
@@ -191,7 +163,6 @@ public class User {
                 ", role='" + role + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", enabled=" + enabled +
-                ", addresses=" + addresses +
                 '}';
     }
 }
