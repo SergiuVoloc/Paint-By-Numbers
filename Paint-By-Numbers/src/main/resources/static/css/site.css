@@ -3,6 +3,26 @@
 body {
 
 }
+
+.loading{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://i.stack.imgur.com/MnyxU.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.loading:after {
+  content: "Transforming your image into art...";
+  text-align : right;
+  padding-left : 25px;
+}
+
+
 /* Slide Gallery */
 .gallery-top {
   height: 80%;
