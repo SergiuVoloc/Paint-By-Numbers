@@ -47,11 +47,24 @@
                      th:data-groups="${p.getCategories2String()}"
                      th:data-title="${p.getName()}">
 
-                    <!-- To avoid Personalized product to appear among other products on home page :
+                    <!-- To exclude Personalized product from home page :
                     th:unless="${pStat.index == 5}" -->
-                    <div class="card" th:unless="${pStat.index == 5}" >
-                        <a th:href="'/product/' + ${p.getId()}"><img class="card-img-top"
-                           th:src="@{/file/__${p.getPhotos()[0].id}__}" alt="" ></a>
+                    <div class="card" >
+<!--                        <a th:href="'/product/' + ${p.getId()}">
+                               <img class="card-img-top"-->
+<!--                           th:src="@{/file/__${p.getPhotos()[0].id}__}" alt="" >
+                            </a>-->
+
+
+
+                        <a class="swiper-wrapper" th:each="photo : ${p.getPhotos()[0]}"
+                           th:href="'/product/' + ${p.getId()}"
+                           th:style="'background: url(' + @{/file/__${photo.id}__} + ');
+                              background-position:center; background-size: cover;'">
+
+                        </a>
+
+
                         <div class="card-body container">
                             <h4 class="card-title">
                                 <a th:text="${p.getName()}" th:href="'/product/' + ${p.getId()}"/>
@@ -70,12 +83,12 @@
             <div class="row col-sm-10 mt-3 mb-5 ">
                 <div class="col-sm-2"> Total Products:&nbsp;[[${totalItems}]]</div>
 
-                <div class="col-sm-1 ">
+                <div class="col-sm-1 custom-left-margin">
                     <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
                     <span th:unless="${currentPage < totalPages}">Next</span>
                 </div>
 
-                <div class="col-sm-1 ">
+                <div  class="fix-pagination">
                     <span th:each=" i: ${#numbers.sequence(1,totalPages)}">
                     <a th:if="${currentPage != i}"
                        th:href="@{'/page/' + ${i}}"> [[${i}]]</a>

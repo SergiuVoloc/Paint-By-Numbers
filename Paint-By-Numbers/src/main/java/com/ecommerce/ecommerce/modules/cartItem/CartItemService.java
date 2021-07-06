@@ -41,16 +41,21 @@ public class CartItemService {
 //        if ( q != null){
 //            q.setQty(q.getQty() + a.getQty());
 //            q.setPbn(null);
+////            q.setFrame(q.getProduct().getFrame());
+////            q.setSize(q.getProduct().getSize());
+//            q.setSubtotal(q.getQty() * q.getSubtotal());
 //            cartItemRepository.save(q);
-//        }
+//        }else {
+//            cartItemRepository.save(a);
 //
+//        }
+
 //        CartItem q1 = pbnExistInCart(a.getPbn().getId());
 //        if ( q1 != null) {
 //            q1.setProduct(null);
 //            q1.setQty(q1.getQty() + a.getQty());
 //            cartItemRepository.save(q1);
 //        }
-
         cartItemRepository.save(a);
     }
 
@@ -108,6 +113,7 @@ public class CartItemService {
     public void addQty(UUID id){
         CartItem c = cartItemRepository.findById(id).orElseThrow();
         c.setQty(c.getQty() + 1);
+        c.setSubtotal(c.getQty() * c.getSubtotal());
         cartItemRepository.save(c);
     }
 
@@ -116,8 +122,10 @@ public class CartItemService {
         CartItem c = cartItemRepository.findById(id).orElseThrow();
         if(c.getQty() == 1){
             this.delete(c.getId());
+            c.setSubtotal(c.getQty() * c.getSubtotal());
         } else {
             c.setQty(c.getQty() - 1);
+            c.setSubtotal(c.getQty() * c.getSubtotal());
             cartItemRepository.save(c);
         }
     }

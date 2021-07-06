@@ -1,7 +1,133 @@
-<footer th:fragment="footer" class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Paint By Numbers Website 2021</p>
-    </div>
+<footer th:fragment="footer" class="mt-5 bg-dark text-center text-lg-start bg-light text-muted">
+
+
+        <!-- Section: Social media -->
+        <section
+                class="text-white d-flex justify-content-center mt-5 border-bottom">
+            <!-- Left -->
+            <div class="d-none d-lg-block p-4">
+                <h5>Get connected with us on social networks:</h5>
+            </div>
+            <!-- Left -->
+
+            <!-- Right -->
+            <div class="mt-4">
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-facebook-square " style='font-size:30px'></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-twitter" style='font-size:30px'></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-google" style='font-size:30px'></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-instagram" style='font-size:30px'></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-linkedin" style='font-size:30px'></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-github" style='font-size:30px'></i>
+                </a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="text-white">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class=" mb-4">
+                            <img th:src="@{/images/logo/2.png}" width="100%"/>
+                        </h6>
+                        <p class="custom-left-margin">
+                            We value secure transfers! <br> Pay with PayPal!
+                            <img th:src="@{/images/logo/paypal.png}" width="80%" alt="paypal">
+                        </p>
+                        <p>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4 text-white">
+                            Top Categories
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset text-white">Abstract</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-white">City Life</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-white">Popular Art</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset text-white">Nature</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4 text-white">
+                            Useful links
+                        </h6>
+                        <p>
+                            <a th:href="@{/page/1}" class="text-reset text-white">Homepage</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/user/details}" class="text-reset text-white">Account Details</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/personalize/c6a08882-212f-431b-a60f-8e5189c77381}" class="text-reset text-white">Personalized image</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/about}" class="text-reset text-white">Basket</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4 text-white">
+                            Contact
+                        </h6>
+                        <p><i class="fas fa-home me-3 text-white"></i> Craiova, Dolj 200166, RO</p>
+                        <p>
+                            <i class="fas fa-envelope me-3 text-white"></i>
+                            support@payntbynumbers.com
+                        </p>
+                        <p><i class="fas fa-phone me-3 text-white"></i> + 40 234 567 88</p>
+                        <p><i class="fas fa-print me-3 text-white"></i> + 40 234 567 89</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            Copyright &copy; Paint By Numbers Website 2021
+        </div>
+        <!-- Copyright -->
+
+
+
+
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!--    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>

@@ -5,7 +5,7 @@
 </head>
 <body>
 <nav th:replace="blocks/navbar :: navigation"></nav>
-<div class="container my-5">
+<div class="container my-5 ">
     <div class="row">
         <div class="col-8">
             <div class="row">
@@ -25,7 +25,8 @@
                     <div class="col-3">
                         <div class="row justify-content-center g-0">
                             <div class="col-auto"><a class="btn btn-primary" th:href="@{/cart/__${p.getId()}__/decreaseQty}"><i class="bi bi-dash"></i></a></div>
-                            <div class="col-6"><input class="form-control text-center" type="number" th:value="${p.qty}" disabled></div>
+                            <div class="col-6"><input class="form-control text-center" id="quantity" type="number"
+                                                      th:value="${p.qty}" disabled></div>
                             <div class="col-auto"><a class="btn btn-primary" th:href="@{/cart/__${p.getId()}__/addQty}"><i class="bi bi-plus"></i></a></div>
                         </div>
                     </div>
@@ -81,17 +82,23 @@
     </div>
 </div>
 
+
 <footer th:replace="blocks/footer :: footer"/>
 <script>
     $(document).ready( function () {
         $('#table_id').DataTable();
-        document.getElementById('total').value = parseFloat(document.getElementById('delivery_fee').value) + parseFloat(document.getElementById('subtotal').value);
+        document.getElementById('total').value = parseFloat(document.getElementById('delivery_fee').value) +
+            parseFloat(document.getElementById('subtotal').value);
+
         document.getElementById('delivery_fee').addEventListener("change", (event) => {
             document.getElementById('total').value = parseFloat(document.getElementById('subtotal').value) + parseFloat(event.target.value);
         });
 
         $('#user-addresses').select2();
     } );
+
+
+
 </script>
 </body>
 </html>

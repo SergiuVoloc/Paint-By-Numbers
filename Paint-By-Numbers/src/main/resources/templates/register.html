@@ -7,7 +7,7 @@
 
 <nav th:replace="blocks/navbar :: navigation"></nav>
 
-<div class="container my-5 ">
+<div class="container my-5">
         <form style="margin-top: 40px; margin-bottom: 60px;  border:none; margin-left: auto;
     margin-right: auto;" th:class="col-lg-4" autocomplete="off" action="#" th:action="@{/register}" th:object="${user}"
               method="post"
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <b class="center-custom mt-2"><span th:utext="${successMessage}"></span></b>
-            <div class="alert alert-success alert-dismissible col-sm-12"
+            <div class="alert alert-success alert-dismissible col-sm-12 mb-5"
                  th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}">
                 <button type="button" class="close" data-dismiss="alert"
                         aria-hidden="true">×</button>
@@ -63,7 +63,6 @@
             </div>
         </form>
     </div>
-</div>
 
 <footer th:replace="blocks/footer :: footer"/></footer>
 

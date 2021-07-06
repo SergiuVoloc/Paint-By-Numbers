@@ -11,12 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 
 @Controller
+@RequestMapping("/")
 public class HomeController {
 
     @Autowired
@@ -28,7 +30,7 @@ public class HomeController {
     @Autowired
     ProductRepository productRepository;
 
-    @GetMapping("/")
+    @GetMapping()
     public String index(
             @RequestParam(defaultValue = "") String searchText,
             @RequestParam(defaultValue = "") String searchInFile,
@@ -54,12 +56,6 @@ public class HomeController {
 
         List<Product> productList = page.getContent();
 
-//        // creating UUID
-//        UUID personalizedProduct = UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d");
-//
-//
-//        productList.removeIf(product -> product.getId(UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d")));
-
         model.addAttribute("currentPage",pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
@@ -71,6 +67,10 @@ public class HomeController {
     }
 
 
+    @GetMapping("/about")
+    public String aboutPage(){
+        return "/about";
+    }
 
     @GetMapping("/403")
     public String  error_403(){

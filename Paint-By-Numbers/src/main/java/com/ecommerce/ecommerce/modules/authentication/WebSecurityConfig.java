@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 //				.anyRequest().permitAll()
 				.antMatchers("/",
-				"/personalize/**",
+				"/about/**",
 				"/page/**",
 				"/slider/**",
 				"/product/**",
@@ -46,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/images/**",
 				"/auth/**",
 				"/register**").permitAll()
-			.antMatchers("/user/", "/admin/*").hasRole("ADMIN")
+			.antMatchers("/user/*", "/admin/*").hasRole("ADMIN")
+//			.antMatchers("/personalize/**").hasRole("USER")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin().permitAll()
