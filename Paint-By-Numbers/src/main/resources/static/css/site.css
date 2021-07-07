@@ -5,6 +5,11 @@ body {
 }
 
 
+#paypalImg {
+  height: 200px;
+  width: 200px;
+}
+
 .card{
   height: 530px!important;
 }

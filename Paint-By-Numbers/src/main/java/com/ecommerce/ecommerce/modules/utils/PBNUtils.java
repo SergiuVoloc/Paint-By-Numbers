@@ -27,7 +27,7 @@ public class PBNUtils {
         List<File> files = new ArrayList<>();
         String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
         Mat img = Imgcodecs.imread(filename);
-        int k = 15;
+        int k = 10;
         String uuid = UUID.randomUUID().toString();
         List<Mat> clusters = cluster(img, k);
         Imgcodecs.imwrite(uploadDir + "\\"+uuid+".png", clusters.get(0));
@@ -189,7 +189,8 @@ public class PBNUtils {
             double col1 = centers.get(l, 0)[0];
             double col2 = centers.get(l, 1)[0];
             double col3 = centers.get(l, 2)[0];
-            Imgproc.putText(bott, l+1+":", new Point(10+l*swidth,40), Imgproc.FONT_HERSHEY_SIMPLEX, 1.5, new Scalar(255,255,255),2);
+            Imgproc.putText(bott, l+1+":", new Point(10+l*swidth,40),
+                    Imgproc.FONT_HERSHEY_SIMPLEX, 1.5, new Scalar(255,255,255),2);
             Imgproc.rectangle(bott, new Point(58+l*swidth,5), new Point(rectwidth+l*swidth,45), new Scalar(255,255,255));
             Imgproc.rectangle(bott, new Point(59+l*swidth,6), new Point(rectwidth-1+l*swidth,44), new Scalar(col1,col2,col3),-1);
         }

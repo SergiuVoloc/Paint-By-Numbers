@@ -42,6 +42,7 @@ public class HomeController {
             model.addAttribute("products",   fileStorageService.search(searchInFile));
         } else {
             model.addAttribute("products",   productServiceImpl.all());
+
         }
         model.addAttribute("categories", categoryService.all());
 //        return "index";

@@ -42,28 +42,20 @@
             </form>
             <div class="row mt-3" id="js-shuffle" >
                 <div th:each="p,pStat : ${products}"
-
                      class="col-4 product-item my-3"
                      th:data-groups="${p.getCategories2String()}"
-                     th:data-title="${p.getName()}">
+                     th:data-title="${p.getName()}"
+                    >
 
-                    <!-- To exclude Personalized product from home page :
-                    th:unless="${pStat.index == 5}" -->
-                    <div class="card" >
-<!--                        <a th:href="'/product/' + ${p.getId()}">
-                               <img class="card-img-top"-->
-<!--                           th:src="@{/file/__${p.getPhotos()[0].id}__}" alt="" >
-                            </a>-->
-
-
+<!--                    To exclude Personalized product from home page :-->
+<!--                    th:unless="${pStat.index == 4}"-->
+                    <div class="card"  >
 
                         <a class="swiper-wrapper" th:each="photo : ${p.getPhotos()[0]}"
                            th:href="'/product/' + ${p.getId()}"
                            th:style="'background: url(' + @{/file/__${photo.id}__} + ');
                               background-position:center; background-size: cover;'">
-
                         </a>
-
 
                         <div class="card-body container">
                             <h4 class="card-title">
